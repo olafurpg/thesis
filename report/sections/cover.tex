@@ -1,0 +1,89 @@
+% Example of title page for the projects carried out within the lasec
+
+% Simply include it in your mastex tex file:
+%        \input{cover}
+
+
+% Updated March 2006 (SP)
+
+
+\newcommand{\logoepfl}[0]{
+  \begin{center}
+    \includegraphics[width=4cm]{logo_epfl_coul.eps}
+  \end{center}
+  \vspace{0.3cm}
+  \hrule
+}
+\newcommand{\logolasec}[0]{
+  \vspace{1cm}
+  \hrule
+  \begin{center}
+    \includegraphics[width=4.5cm]{logo_lasec_coul.eps}
+  \end{center}
+}
+\newcommand{\project}[1]{
+  \begin{center}
+    \large{#1}
+  \end{center}
+  \vspace{1cm}
+}
+\newcommand{\department}[1]{
+  \begin{center}
+    \large{#1}
+  \end{center}
+}
+\newcommand{\supervisor}[3]{
+  \begin{center}
+    \begin{normalsize}{
+        \bf #1}\\#2\\#3
+    \end{normalsize}
+  \end{center}
+}
+\renewcommand{\author}[1]{
+  \begin{center}
+    \Large{#1}
+  \end{center}
+  \vspace{0.5cm}
+}
+\renewcommand{\title}[1]{
+  \vspace{3cm}
+  \begin{center}
+    \huge{#1}
+  \end{center}
+  \vspace{1.7cm}
+}
+\renewcommand{\date}[2]{
+  \begin{center}
+    \normalsize{#1 #2}
+  \end{center}
+  \vspace{0.5cm}
+}
+
+
+\thispagestyle{empty}
+
+
+% begin title page
+  \logoepfl
+
+  \title{Scalafmt: pretty-printing scala.}
+
+  \author{Ólafur Páll Geirsson}
+  \department{School of Computer and Communication Sciences}
+  \project{Semester Project}
+
+  \date{June}{2015}
+
+  \begin{center}
+    \begin{tabular}{cc}
+      \begin{tabular}{p{4.0cm}}
+        \supervisor{Responsible}{Prof. Martin Odersky}{EPFL / LAMP}
+      \end{tabular}&
+      \begin{tabular}{p{4.0cm}}
+        \supervisor{Supervisor}{Eugene Burmako}{EPFL / LAMP}
+      \end{tabular}
+    \end{tabular}
+  \end{center}
+
+% end title page
+

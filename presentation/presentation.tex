@@ -1,0 +1,167 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage[english]{babel}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage[norelsize,ruled,vlined]{algorithm2e}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{caption}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.multipart}
+
+\theoremstyle{definition}
+\newtheorem{proposition}{Proposition}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3} } }
+\captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize} }
+
+\newcommand{\fancyh}{\mathcal{H}}
+\newcommand{\gangle}[1]{\langle{} #1 \rangle{}}
+\newcommand{\myd}{\mathrm{d}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{language=Scala,
+  aboveskip=3mm,
+  basicstyle={\normalsize\ttfamily},
+  belowskip=3mm,
+  gobble=20,
+  breakatwhitespace=true,
+  breaklines=true,
+  columns=flexible,
+  commentstyle=\color{dkgreen},
+  keywordstyle=\color{blue},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  stepnumber=1,
+  stringstyle=\color{mauve},
+  tabsize=2,
+}
+
+
+
+\mode<presentation>
+{\setbeamertemplate{navigation symbols}{}
+    \setbeamertemplate{items}[ball]
+    % \setbeamertemplate{blocks}[rounded][shadow=true]
+    \beamertemplatenavigationsymbolsempty
+    \usecolortheme[named=Sepia]{structure}
+    \usetheme{Warsaw}
+    \useoutertheme{infolines}
+    \setbeamercovered{transparent}
+}
+
+\definecolor{mygreen}{rgb}{0, 178, 115}
+
+\tikzstyle{block} = [rectangle, draw, font=\tiny, text centered, rounded corners, minimum height=1em, node distance=1.5cm, minimum width=2em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{value} = [label, black, font=\tiny, thick, node distance=0.4cm]
+
+\title[Scalafmt]{Scalafmt \\ {\small Pretty-printing Scala}}
+\author{Ólafur Páll Geirsson}
+% \department{School of Computer and Communication Sciences}
+% \project{Semester Project}
+\institute[EPFL]{École Polytechnique Fédérale de Lausanne \\
+    School of Computer and Communication Sciences\\
+\logoepfl}
+\date{\today}
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSection[]
+{\begin{frame}<beamer>{Overview}
+        \tableofcontents[
+            sections={1-6},
+            currentsection,
+            currentsubsection,
+            hideothersubsections,
+            sectionstyle=show/shaded,
+        subsectionstyle=show/shaded/hide]
+    \end{frame}
+}
+
+\begin{document}
+
+\newcommand{\logoepfl}[0]{\begin{center}
+    \includegraphics[width=2cm]{logo_epfl_coul.eps}
+    \vspace{-0.5cm}
+  \end{center}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 0. Titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \titlepage{}
+\end{frame}
+% \begin{frame}{Today's agenda}
+% \tableofcontents[hideallsubsections,
+%     sections={1-6}
+% ]
+% \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1. Motivation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivation} % (fold)
+\label{sec:Motivation}
+\begin{frame}[fragile]
+    \frametitle{Motivation}
+    \begin{block}{Mission statement}
+        ???
+    \end{block}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2. Scalafmt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Scalafmt} % (fold)
+\label{sec:Scalafmt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3. Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion} % (fold)
+\label{sec:Conclusion}
+
+\begin{frame}[fragile]
+    \frametitle{Conclusion}
+    \begin{block}{Scalafmt}
+        \begin{itemize}
+            \item ???
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{The End}
+    \begin{center}
+        \Huge
+        Thank you!
+    \end{center}
+\end{frame}
+
+% subsection Evaluation (end)
+
+
+\end{document}

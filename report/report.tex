@@ -1,0 +1,103 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[colorlinks=true,breaklinks=false]{hyperref}
+\usepackage{listings}
+\usepackage[norelsize,ruled,vlined]{algorithm2e}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage{ifthen}
+\usepackage{keyval}
+\usepackage{etoolbox}
+\usepackage{etex}
+\usepackage{datetime}
+\usepackage{eurosym}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{paralist}
+\usepackage{biblatex}
+\usepackage{xcolor}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3} } }
+\captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize} }
+
+\addbibresource{project.bib}
+
+% Single spacing after dots and colons
+\frenchspacing
+% \hyphenation{directembedding}
+% \hyphenation{DSLVirtualization}
+% \hyphenation{ReificationTransformation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{language=Scala,
+  aboveskip=3mm,
+  basicstyle={\small\ttfamily},
+  belowskip=3mm,
+  breakatwhitespace=true,
+  breaklines=true,
+  columns=flexible,
+  commentstyle=\color{dkgreen},
+  keywordstyle=\color{blue},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  stepnumber=1,
+  stringstyle=\color{mauve},
+  tabsize=2,
+}
+
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols}
+\tikzset{>=stealth',
+  punktchain/.style={rectangle,
+    rounded corners,
+    % fill=black!10,
+    draw=black, very thick,
+    text width=12.5em,
+    minimum height=2.5em,
+    text centered,
+    on chain},
+  every join/.style={->, shorten >=2pt},
+}
+
+\include{sections/cover}
+
+    \begin{abstract}
+        Formatting is important.
+    \end{abstract}
+
+\tableofcontents
+
+\section{Introduction} % (fold)
+\label{sec:Introduction}
+The main contributions presented in this report are the following:
+\begin{itemize}
+    \item Make Scala pretty.
+\end{itemize}
+Throughout the paper we assume familiarity with the basics of the Scala Programming Language~\autocite{odersky_scala_2004}.
+
+% section Introduction (end)
+% \input{sections/directembedding}
+
+\printbibliography{}
+\end{document}
+
