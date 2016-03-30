@@ -43,61 +43,12 @@
 
 \begin{document}
 
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
-\lstset{language=Scala,
-  aboveskip=3mm,
-  basicstyle={\small\ttfamily},
-  belowskip=3mm,
-  breakatwhitespace=true,
-  breaklines=true,
-  columns=flexible,
-  commentstyle=\color{dkgreen},
-  keywordstyle=\color{blue},
-  numbers=left,
-  numberstyle=\tiny\color{gray},
-  showstringspaces=false,
-  stepnumber=1,
-  stringstyle=\color{mauve},
-  tabsize=2,
-}
-
-\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
-    decorations.pathreplacing,decorations.pathmorphing,shapes,%
-    matrix,shapes.symbols}
-\tikzset{>=stealth',
-  punktchain/.style={rectangle,
-    rounded corners,
-    % fill=black!10,
-    draw=black, very thick,
-    text width=12.5em,
-    minimum height=2.5em,
-    text centered,
-    on chain},
-  every join/.style={->, shorten >=2pt},
-}
-
+\include{sections/settings}
 \include{sections/cover}
-
-    \begin{abstract}
-        Formatting is important.
-    \end{abstract}
-
+\include{sections/abstract}
 \tableofcontents
-
-\section{Introduction} % (fold)
-\label{sec:Introduction}
-The main contributions presented in this report are the following:
-\begin{itemize}
-    \item Make Scala pretty.
-\end{itemize}
-Throughout the paper we assume familiarity with the basics of the Scala Programming Language~\autocite{odersky_scala_2004}.
-
-% section Introduction (end)
-% \input{sections/directembedding}
-
+\include{sections/introduction}
 \printbibliography{}
+
 \end{document}
 
