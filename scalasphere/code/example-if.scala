@@ -5,4 +5,3 @@ val newColumn = if(split == Newline) newIndent
 val newColumn =
   if (split == Newline) newIndent
   else column + split.length
-
