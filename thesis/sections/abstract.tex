@@ -1,18 +1,17 @@
 \begin{abstract}
-  Automatic code formatters bring a lot of benefits to software development.
-  When done right, code formatters produce readable, idiomatic and consistent
-  looking code, relieving the developer's attention from manipulating
-  syntactic trivia. %  and enforce a consistent coding style between developers.
-  However, developing a good code formatter is still somewhat of a black art and yet,
-  little research has been made towards the algorithms and tools that power such code formatters.
+  Automatic code formatters bring many benefits to software development.
+  When done right, code formatters relieve the developer's attention from manipulating
+  syntactic trivia while enforcing a consistent coding style between teams.
+  Still, little research has been made towards the algorithms and tools that make it possible to develop such code formatters.
 
-  This thesis addresses the problem of developing a feature-rich code formatter for a custom programming language.
+  This thesis addresses the problem of developing an advanced code formatter for a custom programming language.
   % A critical feature of such a formatter is enforcing a column-width limit, which turns out to be a hard problem.
   Our contributions are twofold.
-  First, we present a language agnostic framework that consists of core data structures, algorithms and tooling 
+  First, we present xmft, a language agnostic framework that consists of core data structures, algorithms and tooling 
   that allow rapid development and testing of such a code formatter.
-  Secondly, and provide a concrete implementation of a code formatter, \texttt{scalafmt}, that uses our framework.
-  We show that the framework 
+  Secondly, we provide a implementation of a code formatter, \texttt{scalafmt}, that uses our framework.
 
-
+  We show that the framework can support rich formatting options such as
+  column-width limitation and configurable vertical alignment.
+  In one month, the formatter has been installed over 2.000 times and XXX success metric.
 \end{abstract}
