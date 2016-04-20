@@ -46,27 +46,72 @@
 \include{sections/settings}
 \include{sections/cover}
 \include{sections/abstract}
+\begin{abstract}
+  Automatic code formatters bring many benefits to software development.
+  When done right, code formatters relieve the developer's attention from manipulating
+  syntactic trivia while enforcing a consistent coding style between teams.
+  Still, little research has been made towards the algorithms and tools that make it possible to develop such code formatters.
+
+  This thesis addresses the problem of developing an advanced code formatter for a custom programming language.
+  % A critical feature of such a formatter is enforcing a column-width limit, which turns out to be a hard problem.
+  Our contributions are twofold.
+  First, we present xmft, a language agnostic framework that consists of core data structures, algorithms and tooling 
+  that allow rapid development and testing of such a code formatter.
+  Secondly, we provide a implementation of a code formatter, \texttt{scalafmt}, that uses our framework.
+
+  We show that the framework can support rich formatting options such as
+  column-width limitation and configurable vertical alignment.
+  In one month, the formatter has been installed over 2.000 times and XXX success metric.
+\end{abstract}
 \tableofcontents
 \include{sections/introduction}
 \section{Background}
-\subsection{Code formatters}
 \begin{enumerate}
-  \item Jindent - commercial "beautifier"
-  \item Scalariform - beautifier
-  \item Clang-format - code tidying
+  \item Optimal line breaking
+  \item Oppen
+  \item rustfmt
 \end{enumerate}
-\subsection{Optimal line breaking}
-\subsection{Pretty printing libraries}
+\subsection{Combinator based}
+\begin{enumerate}
+  \item Houghes 1995
+  \item Wadler 1999
+\end{enumerate}
+\subsection{Optimization-oriented}
+\begin{enumerate}
+  \item clang-format Dijkstra's 2010
+  \item dartfmt Best-first search 2014
+  \item rfmt 2015
+\end{enumerate}
+\begin{enumerate}
+  \item AST integrity
+  \item Idempotent
+\end{enumerate}
 \section{Framework}
 \subsection{Data structures}
+\begin{enumerate}
+  \item FormatToken.
+  \item Split.
+  \item State.
+  \item Indent.
+\end{enumerate}
 \subsection{Algorithms}
+\begin{enumerate}
+  \item Policy.
+  \item OptimalToken.
+  \item Best first search.
+\end{enumerate}
 \subsection{Tooling}
 \section{scalafmt}
-\subsection{Data structures}
-\subsection{Algorithms}
-\subsection{Tooling}
+\subsection{scala.meta}
+\subsection{Extensions}
+\subsubsection{Optimizations}
+\begin{enumerate}
+  \item dequeueOnNewStatements
+  \item recurseOnBlocks
+  \item escapeInPathologicalCases
+  \item pruneSlowStates
+\end{enumerate}
 \section{Discussion}
-\subsection{Related work}
 \subsection{Future work}
 \subsection{Conclusion}
 \printbibliography{}
