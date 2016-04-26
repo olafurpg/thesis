@@ -7,6 +7,11 @@
     Opinionated, automatic code formatter for Scala
 @slide
   @h3
+    Consistent code style
+  @p
+    @img(src:="img/klang.png")
+@skipSlide
+  @h3
     Let's talk about formatting
   @highlight
     object Pathological {
@@ -46,6 +51,64 @@
                                    Lit(0)))),
                        Defn.Def()))))
     }
+@slide
+  @h3
+    It's tedious
+  @highlight
+    // Columns 80                                                                  |
+    case class Split(modification: Modification,
+                     cost: Int,
+                     ignoreIf: Boolean = false,
+                     indents: Vector[Indent[Length]],
+                     policy: Policy = NoPolicy,
+                     penalty: Boolean = false,
+                     optimalAt: Option[OptimalToken] = None)
+@slide
+  @h3
+    It's tedious
+  @highlight
+    // Columns 80                                                                  |
+    case class Split(modification: Modification,
+                     cost: Int,
+                     ignoreIf: Boolean = false,
+                     indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
+                     policy: Policy = NoPolicy,
+                     penalty: Boolean = false,
+                     optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
+@slide
+  @h3
+    It's tedious
+  @highlight
+    // Columns 80                                                                  |
+    case class Split(
+        modification: Modification,
+        cost: Int,
+        ignoreIf: Boolean = false,
+        indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
+        policy: Policy = NoPolicy,
+        penalty: Boolean = false,
+        optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
+@slide
+  @h3
+    Time sink
+  @p
+    @img(src:="img/time-sink.png")
+@slide
+  @h3
+    Refactoring
+  @ul
+    @li
+      IDE “rename variable”
+    @li
+      Large-Scale Automated Refactoring Using ClangMR
+@skipSlide
+  @h3
+    Line length
+  @blockquote
+    “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
+  @p
+    –Sébastien Doeraene, Scala.js
+
 
 
 

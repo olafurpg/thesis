@@ -66,6 +66,8 @@ object RevealJs {
           |		</script>
     """.stripMargin)
   import com.geirsson.scalatags.Tags._
+  def skipSlide(tags: Text.Modifier*) = span("")
+
   def slide(tags: Text.Modifier*) =
     section(Seq(data("background") := "#202020") ++ tags: _*)
 //    section(tags: _*)
