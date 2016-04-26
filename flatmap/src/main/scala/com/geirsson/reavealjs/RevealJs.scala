@@ -98,8 +98,9 @@ object RevealJs {
 
   def highlight(codeToHighlight: String) = {
     pre(
+        style := "font-size: 0.46em", // fits 80 characters on column in my machine
         code(
-            `class` := "hljs",
+            `class` := "hljs scala",
             contentEdit,
             dataTrim,
             fixBrokenIndent(codeToHighlight)
