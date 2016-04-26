@@ -1,5 +1,6 @@
 package com.geirsson.reavealjs
 
+import scala.util.Try
 import scalatags.Text
 import scalatags.Text.all._
 
@@ -22,9 +23,10 @@ object RevealJs {
           |
           |		<link rel="stylesheet" href="css/reveal.css">
           |		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+          |		<link rel="stylesheet" href="css/custom.css">
           |
           |		<!-- Theme used for syntax highlighting of code -->
-          |		<link rel="stylesheet" href="lib/css/zenburn.css">
+          |		<link rel="stylesheet" href="lib/css/darkula.css">
           |
           |		<!-- Printing and PDF exports -->
           |		<script>
@@ -70,7 +72,10 @@ object RevealJs {
 
   def slide(tags: Text.Modifier*) =
     section(Seq(data("background") := "#202020") ++ tags: _*)
-//    section(tags: _*)
+
+  def markdownSlide(tags: Text.Modifier*) =
+    section(data("markdown"):="",
+            script(Seq(`type` := "text/template") ++ tags: _*))
 
   def render(slides: Text.all.Frag): String =
     html(
@@ -90,11 +95,12 @@ object RevealJs {
   private def fixBrokenIndent(frag: String): String = {
     // Fix broken indentation by scalatex
     val toStrip =
-      " " * frag.trim.lines
-        .drop(1)
-        .withFilter(_.nonEmpty)
-        .map(_.takeWhile(_ == ' ').length)
-        .min
+      " " * Try(
+          frag.trim.lines
+            .drop(1)
+            .withFilter(_.nonEmpty)
+            .map(_.takeWhile(_ == ' ').length)
+            .min).getOrElse(0)
     frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
   }
 
