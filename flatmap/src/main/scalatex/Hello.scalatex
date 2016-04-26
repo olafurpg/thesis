@@ -2,16 +2,13 @@
 
 @slide
   @h1
-    Hello world!
+    scalafmt
   @p
-    Foo
+    Opinionated, automatic code formatter for Scala
 @slide
   @h2
-    Hello world! 2
-  @p
-    Foo
-@slide
-  @h3
-    Hello world! 3
-  @p
-    Foo
+    Code examples
+  @highlight
+    object A {
+      val x = 2
+    }

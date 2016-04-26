@@ -40,33 +40,35 @@ object RevealJs {
           |		<![endif]-->
           |	</head>
     """.stripMargin)
-  def footer = raw(
-    """
-      |		<script src="lib/js/head.min.js"></script>
-      |		<script src="js/reveal.js"></script>
-      |
-      |		<script>
-      |			// More info https://github.com/hakimel/reveal.js#configuration
-      |			Reveal.initialize({
-      |				controls: true,
-      |				progress: true,
-      |				history: true,
-      |				center: true,
-      |				transition: 'slide', // none/fade/slide/convex/concave/zoom
-      |				// More info https://github.com/hakimel/reveal.js#dependencies
-      |				dependencies: [
-      |					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      |					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      |					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      |					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-      |					{ src: 'plugin/zoom-js/zoom.js', async: true },
-      |					{ src: 'plugin/notes/notes.js', async: true }
-      |				]
-      |			});
-      |		</script>
+  def footer =
+    raw("""
+          |		<script src="lib/js/head.min.js"></script>
+          |		<script src="js/reveal.js"></script>
+          |
+          |		<script>
+          |			// More info https://github.com/hakimel/reveal.js#configuration
+          |			Reveal.initialize({
+          |				controls: true,
+          |				progress: true,
+          |				history: true,
+          |				center: true,
+          |				transition: 'slide', // none/fade/slide/convex/concave/zoom
+          |				// More info https://github.com/hakimel/reveal.js#dependencies
+          |				dependencies: [
+          |					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          |					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          |					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          |					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          |					{ src: 'plugin/zoom-js/zoom.js', async: true },
+          |					{ src: 'plugin/notes/notes.js', async: true }
+          |				]
+          |			});
+          |		</script>
     """.stripMargin)
   import com.geirsson.scalatags.Tags._
-  def slide(tags: Text.Modifier*) = section(tags: _*)
+  def slide(tags: Text.Modifier*) =
+    section(Seq(data("background") := "#202020") ++ tags: _*)
+//    section(tags: _*)
 
   def render(slides: Text.all.Frag): String =
     html(
@@ -78,8 +80,30 @@ object RevealJs {
                     `class` := "slides",
                     slides
                 )
-            )
-          , footer
+            ),
+            footer
         )
     ).render
+
+  private def fixBrokenIndent(frag: String): String = {
+    // Fix broken indentation by scalatex
+    val toStrip =
+      " " * frag.trim.lines
+        .drop(1)
+        .withFilter(_.nonEmpty)
+        .map(_.takeWhile(_ == ' ').length)
+        .min
+    frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
+  }
+
+  def highlight(codeToHighlight: String) = {
+    pre(
+        code(
+            `class` := "hljs",
+            contentEdit,
+            dataTrim,
+            fixBrokenIndent(codeToHighlight)
+        )
+    )
+  }
 }
