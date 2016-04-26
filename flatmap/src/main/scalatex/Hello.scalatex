@@ -1,0 +1,17 @@
+@import com.geirsson.reavealjs.RevealJs._
+
+@slide
+  @h1
+    Hello world!
+  @p
+    Foo
+@slide
+  @h2
+    Hello world! 2
+  @p
+    Foo
+@slide
+  @h3
+    Hello world! 3
+  @p
+    Foo
