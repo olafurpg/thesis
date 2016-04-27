@@ -47,24 +47,21 @@
 \include{sections/cover}
 \include{sections/abstract}
 \begin{abstract}
-  Automatic code formatters bring many benefits to software development.
-  When done right, code formatters relieve the developer's attention from manipulating
-  syntactic trivia while helping enforce a consistent coding style in codebases.
-  Still, little research has been made towards the algorithms and tools that make it possible to develop such code formatters.
-
-  This thesis addresses the problem of developing an advanced code formatter for a custom programming language.
-  Our contributions are twofold.
-  First, we present a framework of data structures, algorithms and tooling that allow development of such a code formatter.
-  Secondly, we use this framework to implement \texttt{scalafmt}, a code formatter for the Scala programming language.
-
-  We show that the framework can support rich formatting options such as
-  line wrapping and vertical alignment.
-  In one month, the formatter has been installed over 2.000 times and XXX success metric.
+  Automatic code formatters bring many benefits to software development, yet their are tricky to get right.
+  This thesis addresses the problem of developing a code formatter for the
+  Scala programming language that captures the language's most popular idioms
+  and coding styles.
+  Although our work has been limited to formatting Scala code, we have developed data structures, algorithms and tools
+  that we believe may facilitate the creation of code formatters for a variety of other programming languages.
 \end{abstract}
 \tableofcontents
 \include{sections/introduction}
 \section{Introduction} % (fold)
 \label{sec:Introduction}
+A good code formatter
+  When done right, code formatters relieve the developer's attention from manipulating
+  syntactic trivia while helping enforce a consistent coding style in codebases.
+
 Code formatting brings many benefits to software development.
 
 Code formatting aids readability of code.
@@ -79,7 +76,15 @@ See~\autocite{wright_large-scale_2013}
 Code formatting lowers the barrier to entry for novice programmers.
 Take away the decision on where to insert spaces and newlines.
 
+Code formatters are all or nothing.
+Due to their nature, either you use it for everything or for nothing.
+
 \subsection{Problem statement}
+\begin{itemize}
+  \item Opinionated, can produce nice looking code even from computer generated input.
+  \item Fast, must not run for longer than X per LOC.
+  \item Support popular coding styles of which most important is line length limit.
+\end{itemize}
 \subsection{Contributions}
 The main contributions presented in this thesis are the following:
 \begin{itemize}
