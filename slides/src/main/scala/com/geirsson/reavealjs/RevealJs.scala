@@ -4,43 +4,54 @@ import scala.util.Try
 import scalatags.Text
 import scalatags.Text.all._
 
+case class SlideDeck(title: String,
+                     description: String,
+                     author: String,
+                     theme: String,
+                     slides: Text.all.Frag)
+
+object Themes {
+  val black = "black"
+  val moon = "moon"
+}
+
 object RevealJs {
 
-  def header =
-    raw("""
-          |	<head>
-          |		<meta charset="utf-8">
-          |
-          |		<title>reveal.js – The HTML Presentation Framework</title>
-          |
-          |		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-          |		<meta name="author" content="Hakim El Hattab">
-          |
-          |		<meta name="apple-mobile-web-app-capable" content="yes">
-          |		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-          |
-          |		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-          |
-          |		<link rel="stylesheet" href="css/reveal.css">
-          |		<link rel="stylesheet" href="css/theme/black.css" id="theme">
-          |		<link rel="stylesheet" href="css/custom.css">
-          |
-          |		<!-- Theme used for syntax highlighting of code -->
-          |		<link rel="stylesheet" href="lib/css/darkula.css">
-          |
-          |		<!-- Printing and PDF exports -->
-          |		<script>
-          |			var link = document.createElement( 'link' );
-          |			link.rel = 'stylesheet';
-          |			link.type = 'text/css';
-          |			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-          |			document.getElementsByTagName( 'head' )[0].appendChild( link );
-          |		</script>
-          |
-          |		<!--[if lt IE 9]>
-          |		<script src="lib/js/html5shiv.js"></script>
-          |		<![endif]-->
-          |	</head>
+  def header(deck: SlideDeck) =
+    raw(s"""
+           |	<head>
+           |		<meta charset="utf-8">
+           |
+           |		<title>${deck.title}</title>
+           |
+           |		<meta name="description" content="${deck.description}">
+           |		<meta name="author" content="${deck.author}">
+           |
+           |		<meta name="apple-mobile-web-app-capable" content="yes">
+           |		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+           |
+           |		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+           |
+           |		<link rel="stylesheet" href="css/reveal.css">
+           |		<link rel="stylesheet" href="css/theme/${deck.theme}.css" id="theme">
+           |		<link rel="stylesheet" href="css/custom.css">
+           |
+           |		<!-- Theme used for syntax highlighting of code -->
+           |		<link rel="stylesheet" href="lib/css/darkula.css">
+           |
+           |		<!-- Printing and PDF exports -->
+           |		<script>
+           |			var link = document.createElement( 'link' );
+           |			link.rel = 'stylesheet';
+           |			link.type = 'text/css';
+           |			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+           |			document.getElementsByTagName( 'head' )[0].appendChild( link );
+           |		</script>
+           |
+           |		<!--[if lt IE 9]>
+           |		<script src="lib/js/html5shiv.js"></script>
+           |		<![endif]-->
+           |	</head>
     """.stripMargin)
   def footer =
     raw("""
@@ -77,15 +88,15 @@ object RevealJs {
     section(data("markdown") := "",
             script(Seq(`type` := "text/template") ++ tags: _*))
 
-  def render(slides: Text.all.Frag): String =
+  def render(deck: SlideDeck): String =
     html(
-        header,
+        header(deck),
         body(
             div(
                 `class` := "reveal",
                 div(
                     `class` := "slides",
-                    slides
+                    deck.slides
                 )
             ),
             footer

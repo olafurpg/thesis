@@ -113,6 +113,45 @@
     @img(style:="width: 100%;", src:="img/lets-do-this.jpg")
 @slide
   @h3
+    Where does scalafmt fit?
+  @table
+    @thead
+      @tr
+        @th
+        @th
+          Whitespace cleanup
+        @th
+          Opinionated
+    @tbody
+      @tr
+        @td
+          scalafmt
+        @td
+          ✔
+        @td
+          ✔
+      @tr
+        @td
+          scalariform
+        @td
+          ✔
+        @td
+      @tr
+        @td
+          clang-format
+        @td
+          ✔
+        @td
+          ✔
+      @tr
+        @td
+          gofmt
+        @td
+          ✔
+        @td
+
+@slide
+  @h3
     Best first search
   @highlight
     // 40 columns                           |
