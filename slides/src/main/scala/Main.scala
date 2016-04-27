@@ -24,3 +24,4 @@ object Main extends App {
   Files.write(Paths.get("target", "scala-2.11", "classes", "index.html"),
               scalatexOutput.getBytes)
 }
+

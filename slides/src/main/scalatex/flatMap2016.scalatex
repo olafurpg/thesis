@@ -75,13 +75,6 @@
         IDE “rename variable”
       @li
         Large-Scale Automated Refactoring Using ClangMR
-  @slide
-    @h3
-      Line length
-    @blockquote
-      “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
-    @p
-      –Sébastien Doeraene, Scala.js
 @wrap
   @slide
     @h1
@@ -95,6 +88,13 @@
     @blockquote
       "Has line-length setting."
       - Ólafur Geirsson
+  @slide
+    @h3
+      Line length
+    @blockquote
+      “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
+    @p
+      –Sébastien Doeraene, Scala.js
   @slide
     @table
       @thead
@@ -137,7 +137,7 @@
       Best first search
     @highlight
       // 40 columns                           |
-      object a {
+      object BestFirstSearch {
         function(function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
 
         function(
@@ -159,7 +159,7 @@
       Pop Quiz: is Policy a monoid? :)
     @highlight
       case class Policy(f: PartialFunction[Decision, Decision], expire: Token) {
-        def andThen(other: Policy): Policy = ...
+        def andThen(g: Policy): Policy = ...
       }
 
       object Policy {
@@ -169,14 +169,14 @@
         val singleLine = Policy({
           case Decision(token, splits) =>
             Decision(token, splits.filterNot(_.modification.isNewline))
-        }, ???)
+        }, expire)
 
         // Penalizes newlines with `penalty` until `expire` token.
         def penalizeNewlines(penalty: Int) = Policy({
           case Decision(token, s) =>
             Decision(token,
                      s.map(x => x.withPenalty(if (x.isNewline) penalty else 0)))
-        }, ???)
+        }, expire)
       }
   @slide
     @h3
@@ -187,16 +187,19 @@
       @li
         Parser: String => scala.meta.Tree
     @highlight
-      scala> """object Main extends App {
-                  println("Hello world!")
+      scala> """object Main extends App { world =>
+                  println(s"Hello $world!")
                 }
-             """.parse[Stat].get.show[Structure]
-      res0: String = """
+                """.parse[Stat].get.show[Structure]
+      res9: String = """
       Defn.Object(Nil, Term.Name("Main"),
                   Template(Nil, Seq(Ctor.Ref.Name("App")),
-                           Term.Param(Nil, Name.Anonymous(), None, None),
-                           Some(Seq(Term.Apply(Term.Name("println"),
-                                               Seq(Lit("Hello world!")))))))
+                  Term.Param(Nil, Term.Name("world"), None, None),
+                  Some(Seq(Term.Apply(Term.Name("println"),
+                                      Seq(Term.Interpolate(Term.Name("s"),
+                                                           Seq(Lit("Hello "),
+                                                           Lit("!")),
+                                                           Seq(Term.Name("world")))))))))
       """
   @slide
     @h3
@@ -213,8 +216,8 @@
           def status = column[Int]("status")
 
           libraryDependencies ++= Seq(
-            "org.scala-lang" %  "scala-compiler" % scalaVersion.value,
-            "com.lihaoyi"    %% "sourcecode"     % "0.1.1"
+            "org.scalameta" %  "scalameta"  % "0.1.0-RC4-M10",
+            "com.lihaoyi"   %% "sourcecode" % "0.1.1"
           )
         }
 @wrap
@@ -222,8 +225,6 @@
     @h1
       3. Using scalafmt.
   @slide
-    @h3
-      How can you use scalafmt?
     @ul
       @li
         SBT "com.geirsson" %% "sbt-scalafmt" % "0.2.X"
@@ -232,9 +233,9 @@
       @li
         @code("brew install scalafmt")
       @li
-        Download @code("scalafmt.jar")
+        Download @code("scalafmt.jar") via Github releases.
       @li
-        More info in @a(href:= "http://scalafmt.org", "the docs").
+        See @a(href:= "http://scalafmt.org", "official documentation").
   @slide
     @h3
       Where are we now?
@@ -274,3 +275,8 @@
   @(style := "text-align: left;")
   @h1
     THANK YOU
+  @p
+      - @a(href:="http://scalafmt.org", "Visit documentation.") @br
+      - @a(href:="http://github.com/olafurpg/scalafmt", "Contribute with PRs and issues.") @br
+      - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
+      - @a(href:="http://gitter.im/olafurpg/scalafmt", "Chat on Gitter.")
