@@ -1,0 +1,50 @@
+[0m[[0mdebug[0m] [0m[naha] [0m
+[0m[[0mdebug[0m] [0m[naha] Initial source changes: [0m
+[0m[[0mdebug[0m] [0m[naha] 	removed:Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] 	added: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	modified: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated products: Set(/Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$$anonfun$1$$anonfun$apply$mcI$sp$2$$anonfun$apply$1.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$$anonfun$fixBrokenIndent$1.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/scalatags/Tags.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/Main.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/Main$delayedInit$body.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/scalatex/flatMap2016$.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$$anonfun$1.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$$anonfun$2.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/Main$.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/scalatex/flatMap2016.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/scalatags/Tags$.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$$anonfun$1$$anonfun$apply$mcI$sp$1.class, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/classes/com/geirsson/reavealjs/RevealJs$$anonfun$1$$anonfun$apply$mcI$sp$2.class)[0m
+[0m[[0mdebug[0m] [0m[naha] External API changes: API Changes: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Modified binary dependencies: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Initial directly invalidated sources: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] [0m
+[0m[[0mdebug[0m] [0m[naha] Sources indirectly invalidated by:[0m
+[0m[[0mdebug[0m] [0m[naha] 	product: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] 	binary dep: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	external source: Set()[0m
+[0m[[0mdebug[0m] [0mAll initially invalidated sources: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala, /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala, /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] Recompiling all 0 sources: invalidated sources (4) exceeded 50.0% of all sources[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating /Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating (transitively) by inheritance from /Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Initial set of included nodes: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated by transitive inheritance dependency: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] The /Users/ollie/dev/thesis/flatmap/src/main/scala/Main.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m[naha] 	notify, wait, $asInstanceOf, equals, asInstanceOf, executionStart, scalatexOutput, synchronized, $isInstanceOf, main, notifyAll, isInstanceOf, ==, clone, $init$, Main, toString, args, pp, !=, getClass, ne, eq, delayedInit, ##, finalize, hashCode.[0m
+[0m[[0mdebug[0m] [0m[naha] All member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating (transitively) by inheritance from /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Initial set of included nodes: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated by transitive inheritance dependency: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] The /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/reavealjs/RevealJs.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m[naha] 	notify, wait, $asInstanceOf, equals, asInstanceOf, highlight, synchronized, $isInstanceOf, skipSlide, notifyAll, RevealJs, markdownSlide, isInstanceOf, slide, ==, clone, header, toString, !=, getClass, render, ne, footer, eq, ##, finalize, hashCode.[0m
+[0m[[0mdebug[0m] [0m[naha] All member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating (transitively) by inheritance from /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Initial set of included nodes: Set(/Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated by transitive inheritance dependency: Set(/Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] The /Users/ollie/dev/thesis/flatmap/target/scala-2.11/src_managed/main/scalatex/flatMap2016.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m[naha] 	notify, wait, $asInstanceOf, equals, asInstanceOf, synchronized, $isInstanceOf, flatMap2016, notifyAll, isInstanceOf, apply, ==, clone, toString, !=, getClass, ne, eq, ##, finalize, hashCode.[0m
+[0m[[0mdebug[0m] [0m[naha] All member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidating (transitively) by inheritance from /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala...[0m
+[0m[[0mdebug[0m] [0m[naha] Initial set of included nodes: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated by transitive inheritance dependency: Set(/Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] The /Users/ollie/dev/thesis/flatmap/src/main/scala/com/geirsson/scalatags/Tags.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m[naha] 	notify, contentEdit, wait, $asInstanceOf, equals, asInstanceOf, synchronized, $isInstanceOf, dataTrim, section, notifyAll, isInstanceOf, ==, clone, Tags, toString, !=, getClass, ne, eq, ##, finalize, hashCode.[0m
+[0m[[0mdebug[0m] [0m[naha] All member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0m[naha] New invalidations:[0m
+[0m[[0mdebug[0m] [0m[naha] 	Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Initial set of included nodes: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Previously invalidated, but (transitively) depend on new invalidations:[0m
+[0m[[0mdebug[0m] [0m[naha] 	Set()[0m
+[0m[[0mdebug[0m] [0m[naha] All newly invalidated sources after taking into account (previously) recompiled sources:Set()[0m
