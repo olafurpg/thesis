@@ -6,13 +6,14 @@ import java.nio.file.Paths
 
 import com.geirsson.reavealjs.RevealJs
 import com.geirsson.reavealjs.SlideDeck
+import com.geirsson.reavealjs.Themes
 
 object Decks {
   val flatMap_Oslo = SlideDeck(
       "Opinionated, automatic code formatting with scalafmt",
       "",
       "Ólafur Páll Geirsson",
-      "black",
+      Themes.moon,
       scalatex.flatMap2016())
 }
 

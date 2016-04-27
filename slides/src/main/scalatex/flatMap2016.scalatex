@@ -1,273 +1,276 @@
 @import com.geirsson.reavealjs.RevealJs._
 
 @slide
+  @(style := "text-align: left;")
   @h1
     scalafmt
   @p
     Opinionated, automatic code formatter for Scala
-@slide
-  @h3
-    Consistent code style
   @p
-    @img(src:="img/klang.png")
-@skipSlide
-  @h3
-    Let's talk about formatting
-  @highlight
-    object Pathological {
-      Defn.Object(Nil, Term.Name("State"), Template(Nil, Seq(Ctor.Ref.Name("ScalaFmtLogger")), Term.Param(Nil, Name.Anonymous(), None, None), Some(Seq(Defn.Val(Nil, Seq(Pat.Var.Term(Term.Name("start"))), None, Term.Apply(Term.Name("State"), Seq(Lit(0), Term.Name("identity"), Term.ApplyType(Term.Select(Term.Name("Vector"), Term.Name("empty")), Seq(Type.Name("Split"))), Term.ApplyType(Term.Select(Term.Name("Vector"), Term.Name("empty")), Seq(Type.Name("State"))), Lit(0), Term.ApplyType(Term.Select(Term.Name("Vector"), Term.Name("empty")), Seq(Type.Apply(Type.Name("Indent"), Seq(Type.Name("Num"))))), Lit(0)))), Defn.Def()))))
-    }
-  @highlight
-    // Columns 80                                                                  |
-    object Pathological {
-      Defn.Object(
-          Nil,
-          Term.Name("State"),
-          Template(
-              Nil,
-              Seq(Ctor.Ref.Name("ScalaFmtLogger")),
-              Term.Param(Nil, Name.Anonymous(), None, None),
-              Some(Seq(Defn
-                         .Val(
-                           Nil,
-                           Seq(Pat.Var.Term(Term.Name("start"))),
-                           None,
-                           Term.Apply(
-                               Term.Name("State"),
-                               Seq(Lit(0),
-                                   Term.Name("identity"),
-                                   Term.ApplyType(Term.Select(Term.Name("Vector"),
-                                                              Term.Name("empty")),
-                                                  Seq(Type.Name("Split"))),
-                                   Term.ApplyType(Term.Select(Term.Name("Vector"),
-                                                              Term.Name("empty")),
-                                                  Seq(Type.Name("State"))),
-                                   Lit(0),
-                                   Term.ApplyType(
-                                       Term.Select(Term.Name("Vector"),
-                                                   Term.Name("empty")),
-                                       Seq(Type.Apply(Type.Name("Indent"),
-                                                      Seq(Type.Name("Num"))))),
-                                   Lit(0)))),
-                       Defn.Def()))))
-    }
+    - Ólafur Geirsson, @@olafurpg
 @slide
-  @h3
-    It's tedious
-  @highlight
-    // Columns 80                                                                  |
-    case class Split(modification: Modification,
-                     cost: Int,
-                     ignoreIf: Boolean = false,
-                     indents: Vector[Indent[Length]],
-                     policy: Policy = NoPolicy,
-                     penalty: Boolean = false,
-                     optimalAt: Option[OptimalToken] = None)
-@slide
-  @h3
-    It's tedious
-  @highlight
-    // Columns 80                                                                  |
-    case class Split(modification: Modification,
-                     cost: Int,
-                     ignoreIf: Boolean = false,
-                     indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
-                     policy: Policy = NoPolicy,
-                     penalty: Boolean = false,
-                     optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
-@slide
-  @h3
-    It's tedious
-  @highlight
-    // Columns 80                                                                  |
-    case class Split(
-        modification: Modification,
-        cost: Int,
-        ignoreIf: Boolean = false,
-        indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
-        policy: Policy = NoPolicy,
-        penalty: Boolean = false,
-        optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
-@slide
-  @h3
-    Time sink
-  @p
-    @img(src:="img/time-sink.png")
-@slide
-  @h3
-    Refactoring
-  @ul
+  @ol
     @li
-      IDE “rename variable”
+      Why code formatting?
     @li
-      Large-Scale Automated Refactoring Using ClangMR
-@slide
-  @h3
-    Line length
-  @blockquote
-    “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
-  @p
-    –Sébastien Doeraene, Scala.js
-@slide
-  @p
-    @img(style:="width: 100%;", src:="img/lets-do-this.jpg")
-@slide
-  @h3
-    Where does scalafmt fit?
-  @table
-    @thead
-      @tr
-        @th
-        @th
-          Whitespace cleanup
-        @th
-          Opinionated
-    @tbody
-      @tr
-        @td
-          scalafmt
-        @td
-          ✔
-        @td
-          ✔
-      @tr
-        @td
-          scalariform
-        @td
-          ✔
-        @td
-      @tr
-        @td
-          clang-format
-        @td
-          ✔
-        @td
-          ✔
-      @tr
-        @td
-          gofmt
-        @td
-          ✔
-        @td
-
-@slide
-  @h3
-    Best first search
-  @highlight
-    // 40 columns                           |
-    object a {
-      function(function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
-
-      function(
-          function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
-
-      function(function(function(a, b), function(c, d)),
-               eeeeeeeeeeeeeeeeeeeeeeeee)
-
-      function(
-          function(function(a, b), function(c, d)),
-          eeeeeeeeeeeeeeeeeeeeeeeee)
-
-      function(function(function(a, b),
-                        function(c, d)),
-               eeeeeeeeeeeeeeeeeeeeeeeee)
-    }
-@slide
-  @h3
-    Pop Quiz: is Policy a monoid? :)
-  @highlight
-    case class Policy(f: PartialFunction[Decision, Decision], expire: Token) {
-      def andThen(other: Policy): Policy = ...
-    }
-
-    object Policy {
-      val empty: Policy = ...
-
-      // Disallows newlines until `expire` token.
-      val singleLine = Policy({
-        case Decision(token, splits) =>
-          Decision(token, splits.filterNot(_.modification.isNewline))
-      }, expire)
-
-      // Penalizes newlines with `penalty` until `expire` token.
-      val penalizeNewlines = Policy({
-        case Decision(token, s) =>
-          Decision(token,
-                   s.map(x => x.withPenalty(if (x.isNewline) penalty else 0)))
-      }, expire)
-    }
-
-@slide
-  @h3
-    More important problems, vertical alignment
-  @p
+      Making of scalafmt.
+    @li
+      Using scalafmt.
+@wrap
+  @slide
+    @h1
+      1. WHY?
+  @slide
+    @h3
+      Consistent code style
+    @p
+      @img(src:="img/klang.png")
+  @slide
+    @h3
+      It's tedious
     @highlight
-      object VerticalAlignment {
-        x match {
-          case 1  => 1  -> 2  // first
-          case 11 => 11 -> 22 // second
-        }
+      // Columns 80                                                                  |
+      case class Split(modification: Modification,
+                       cost: Int,
+                       ignoreIf: Boolean = false,
+                       indents: Vector[Indent[Length]],
+                       policy: Policy = NoPolicy,
+                       penalty: Boolean = false,
+                       optimalAt: Option[OptimalToken] = None)
+  @slide
+    @h3
+      It's tedious
+    @highlight
+      // Columns 80                                                                  |
+      case class Split(modification: Modification,
+                       cost: Int,
+                       ignoreIf: Boolean = false,
+                       indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
+                       policy: Policy = NoPolicy,
+                       penalty: Boolean = false,
+                       optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
+  @slide
+    @h3
+      It's tedious
+    @highlight
+      // Columns 80                                                                  |
+      case class Split(
+          modification: Modification,
+          cost: Int,
+          ignoreIf: Boolean = false,
+          indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
+          policy: Policy = NoPolicy,
+          penalty: Boolean = false,
+          optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
+  @slide
+    @h3
+      Time sink
+    @p
+      @img(src:="img/time-sink.png")
+  @slide
+    @h3
+      Refactoring
+    @ul
+      @li
+        IDE “rename variable”
+      @li
+        Large-Scale Automated Refactoring Using ClangMR
+  @slide
+    @h3
+      Line length
+    @blockquote
+      “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
+    @p
+      –Sébastien Doeraene, Scala.js
+@wrap
+  @slide
+    @h1
+      2. Making of scalafmt
+  @slide
+    @p
+      @img(style:="width: 100%;", src:="img/challenge-accepted.jpg")
+  @slide
+    @h3
+      Opinionated?
+    @blockquote
+      "Has line-length setting."
+      - Ólafur Geirsson
+  @slide
+    @table
+      @thead
+        @tr
+          @th
+          @th
+            Whitespace cleanup
+          @th
+            Opinionated
+      @tbody
+        @tr
+          @td
+            scalafmt
+          @td
+            ✔
+          @td
+            ✔
+        @tr
+          @td
+            scalariform
+          @td
+            ✔
+          @td
+        @tr
+          @td
+            clang-format
+          @td
+            ✔
+          @td
+            ✔
+        @tr
+          @td
+            gofmt
+          @td
+            ✔
+          @td
 
-        def name   = column[String]("name")
-        def status = column[Int]("status")
+  @slide
+    @h3
+      Best first search
+    @highlight
+      // 40 columns                           |
+      object a {
+        function(function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
 
-        libraryDependencies ++= Seq(
-          "org.scala-lang" %  "scala-compiler" % scalaVersion.value,
-          "com.lihaoyi"    %% "sourcecode"     % "0.1.1"
-        )
+        function(
+            function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
+
+        function(function(function(a, b), function(c, d)),
+                 eeeeeeeeeeeeeeeeeeeeeeeee)
+
+        function(
+            function(function(a, b), function(c, d)),
+            eeeeeeeeeeeeeeeeeeeeeeeee)
+
+        function(function(function(a, b),
+                          function(c, d)),
+                 eeeeeeeeeeeeeeeeeeeeeeeee)
       }
-@slide
-  @h3
-    How can you use scalafmt?
-  @ul
-    @li
-      SBT "com.geirsson" %% "sbt-scalafmt" % "0.2.X"
-    @li
-      IntelliJ plugin
-    @li
-      @code("brew install scalafmt")
-    @li
-      Download @code("scalafmt.jar")
-    @li
-      More info in @a(href:= "http://scalafmt.org", "the docs").
-@slide
-  @h3
-    Where are we now?
+  @slide
+    @h3
+      Pop Quiz: is Policy a monoid? :)
+    @highlight
+      case class Policy(f: PartialFunction[Decision, Decision], expire: Token) {
+        def andThen(other: Policy): Policy = ...
+      }
 
-  @ul
-    @li
-      Can format almost any Scala code.
-    @li
-      Formatting options:
-      @ul
-        @li
-          --style default,
-        @li
-          --style defaultWithAlign,
-        @li
-          --style scalaJs (experimental)
-        @li
-          --maxColumn 120
-        @li
-          --javaDocs / --scalaDocs
-        @li
-          --continuationIndentCallSite 2
-@slide
-  @h3
-    Roadmap
-  @ul
-    @li
-      Bugs, please report weird formatting output!
-    @li
-      More configuration options.
-    @li
-      Format only diff.
-    @li
-      Docstring formatting.
-    @li
-      Incremental formatting.
-@markdownSlide
-  ### hello
+      object Policy {
+        val empty: Policy = ...
 
-  * one
-  * two
+        // Disallows newlines until `expire` token.
+        val singleLine = Policy({
+          case Decision(token, splits) =>
+            Decision(token, splits.filterNot(_.modification.isNewline))
+        }, ???)
+
+        // Penalizes newlines with `penalty` until `expire` token.
+        def penalizeNewlines(penalty: Int) = Policy({
+          case Decision(token, s) =>
+            Decision(token,
+                     s.map(x => x.withPenalty(if (x.isNewline) penalty else 0)))
+        }, ???)
+      }
+  @slide
+    @h3
+      scala.meta
+    @ul
+      @li
+        Tokenizer: String => scala.meta.Token
+      @li
+        Parser: String => scala.meta.Tree
+    @highlight
+      scala> """object Main extends App {
+                  println("Hello world!")
+                }
+             """.parse[Stat].get.show[Structure]
+      res0: String = """
+      Defn.Object(Nil, Term.Name("Main"),
+                  Template(Nil, Seq(Ctor.Ref.Name("App")),
+                           Term.Param(Nil, Name.Anonymous(), None, None),
+                           Some(Seq(Term.Apply(Term.Name("println"),
+                                               Seq(Lit("Hello world!")))))))
+      """
+  @slide
+    @h3
+      More important problems, vertical alignment
+    @p
+      @highlight
+        object VerticalAlignment {
+          x match {
+            case 1  => 1  -> 2  // first
+            case 11 => 11 -> 22 // second
+          }
+
+          def name   = column[String]("name")
+          def status = column[Int]("status")
+
+          libraryDependencies ++= Seq(
+            "org.scala-lang" %  "scala-compiler" % scalaVersion.value,
+            "com.lihaoyi"    %% "sourcecode"     % "0.1.1"
+          )
+        }
+@wrap
+  @slide
+    @h1
+      3. Using scalafmt.
+  @slide
+    @h3
+      How can you use scalafmt?
+    @ul
+      @li
+        SBT "com.geirsson" %% "sbt-scalafmt" % "0.2.X"
+      @li
+        IntelliJ plugin
+      @li
+        @code("brew install scalafmt")
+      @li
+        Download @code("scalafmt.jar")
+      @li
+        More info in @a(href:= "http://scalafmt.org", "the docs").
+  @slide
+    @h3
+      Where are we now?
+    @ul
+      @li
+        Can format almost any Scala code.
+      @li
+        Formatting options:
+        @ul
+          @li
+            --style default,
+          @li
+            --style defaultWithAlign,
+          @li
+            --style scalaJs (experimental)
+          @li
+            --maxColumn 120
+          @li
+            --javaDocs / --scalaDocs
+          @li
+            --continuationIndentCallSite 2
+  @slide
+    @h3
+      Roadmap
+    @ul
+      @li
+        Bugs, please report weird formatting output!
+      @li
+        More configuration options.
+      @li
+        Format git diff.
+      @li
+        Format docstrings.
+      @li
+        Incremental formatting.
+@slide
+  @(style := "text-align: left;")
+  @h1
+    THANK YOU

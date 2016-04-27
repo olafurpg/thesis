@@ -11,6 +11,15 @@ case class SlideDeck(title: String,
                      slides: Text.all.Frag)
 
 object Themes {
+  val night = "night"
+  val blood = "blood"
+  val serif = "serif"
+  val simple = "simple"
+  val beige = "beige"
+  val sky = "sky"
+  val league = "league"
+  val white = "white"
+  val solarized = "solarized"
   val black = "black"
   val moon = "moon"
 }
@@ -81,8 +90,9 @@ object RevealJs {
   import com.geirsson.scalatags.Tags._
   def skipSlide(tags: Text.Modifier*) = span("")
 
-  def slide(tags: Text.Modifier*) =
-    section(Seq(data("background") := "#202020") ++ tags: _*)
+  def wrap(tags: Text.Modifier*) = section(tags: _*)
+
+  def slide(tags: Text.Modifier*) = section(tags: _*)
 
   def markdownSlide(tags: Text.Modifier*) =
     section(data("markdown") := "",
@@ -93,7 +103,7 @@ object RevealJs {
         header(deck),
         body(
             div(
-                `class` := "reveal",
+                `class` := s"reveal ${deck.theme}",
                 div(
                     `class` := "slides",
                     deck.slides
@@ -115,9 +125,10 @@ object RevealJs {
     frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
   }
 
+
   def highlight(codeToHighlight: String) = {
     pre(
-        style := "font-size: 0.46em", // fits 80 characters on column in my machine
+       style := "font-size: 0.46em", // fits 80 characters on column in my machine
         code(
             `class` := "hljs scala",
             contentEdit,
