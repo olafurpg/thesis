@@ -70,6 +70,7 @@ object RevealJs {
           |		<script>
           |			// More info https://github.com/hakimel/reveal.js#configuration
           |			Reveal.initialize({
+          |				slideNumber: true,
           |				controls: true,
           |				progress: true,
           |				history: true,
@@ -90,13 +91,45 @@ object RevealJs {
   import com.geirsson.scalatags.Tags._
   def skipSlide(tags: Text.Modifier*) = span("")
 
-  def wrap(tags: Text.Modifier*) = section(tags: _*)
+  def wrap(tags: Text.Modifier*) = section(tags:_*)
 
-  def slide(tags: Text.Modifier*) = section(tags: _*)
+  def slide(tags: Text.Modifier*) = section(tags:_*)
+  def embedVideo(file: String) = {
+    require(file.endsWith(".mp4"))
+    video(
+        width := "70%",
+        "controls".emptyAttr,
+        "loop".emptyAttr,
+        source(src := file, `type` := "video/mp4"),
+        "Your browser does not support the video tag."
+    )
+  }
 
   def markdownSlide(tags: Text.Modifier*) =
     section(data("markdown") := "",
-            script(Seq(`type` := "text/template") ++ tags: _*))
+            script(Seq(`type` := "text/template") ++ tags:_*))
+
+  def tabulate(header: Seq[String],
+               rows: Seq[Seq[String]],
+               align: Map[Int, String]) = {
+    table(
+        thead(
+            tr(
+                header.zipWithIndex.map { case (h, _) => th(h) }
+            )
+        ),
+        tbody(
+            rows.map { row =>
+              tr(
+                  row.zipWithIndex.map {
+                    case (d, i) =>
+                      td(textAlign := align.getOrElse(i, "left"), d)
+                  }
+              )
+            }
+        )
+    )
+  }
 
   def render(deck: SlideDeck): String =
     html(
@@ -116,8 +149,7 @@ object RevealJs {
   private def fixBrokenIndent(frag: String): String = {
     // Fix broken indentation by scalatex
     val toStrip =
-      " " * Try(
-          frag.trim.lines
+      " " * Try(frag.trim.lines
             .drop(1)
             .withFilter(_.nonEmpty)
             .map(_.takeWhile(_ == ' ').length)
@@ -125,16 +157,28 @@ object RevealJs {
     frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
   }
 
+  def highlight(codeToHighlight: String) = hl.scala(codeToHighlight)
 
-  def highlight(codeToHighlight: String) = {
-    pre(
-       style := "font-size: 0.46em", // fits 80 characters on column in my machine
+  class hl(lang: String) {
+    def apply(codeToHighlight: String) = {
+      pre(
+        style := "font-size: 0.46em", // fits 80 characters on column in my machine
         code(
-            `class` := "hljs scala",
-            contentEdit,
-            dataTrim,
-            fixBrokenIndent(codeToHighlight)
+          `class` := s"hljs $lang",
+          contentEdit,
+          dataTrim,
+          fixBrokenIndent(codeToHighlight)
         )
-    )
+      )
+    }
   }
+
+  object hl {
+    def scala = new hl("scala")
+    def diff = new hl("diff")
+  }
+
+
+
+
 }

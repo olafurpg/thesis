@@ -8,26 +8,55 @@
     Opinionated, automatic code formatter for Scala
   @p
     - Ólafur Geirsson, @@olafurpg
+@skipSlide
+  @p
+    Let me start with a quick survey, how many in this room use code formatters?
+    How many have tried scalafmt? Okay, good to know.
+    I've been passionate about code formatting for a while now.
+    Almost a year ago I chose to work on a project at Google to increase
+    adoption of clang-format in C++ projects.
+    In the process, I learned a lot both why people like code formatters and why
+    they don't like them.
+    For my master's thesis, I wanted to bring a proper code formatter to the Scala community.
+    I contacted Eugene, the author of Scala macros and scala.meta, in November.
+    I believe we've solved many interesting challenges since then and
+    I'm really excited to share with you where we are today.
 @slide
   @ol
     @li
-      Why code formatting?
+      Why?
     @li
-      Making of scalafmt.
+      Demo.
     @li
-      Using scalafmt.
+      When it fails.
+    @li
+      How it works.
 @wrap
   @slide
     @h1
       1. WHY?
   @slide
     @h3
-      Consistent code style
+      Reason 1: Time sink
+    @p
+      @img(src:="img/time-sink.png")
+  @slide
     @p
       @img(src:="img/klang.png")
   @slide
     @h3
-      It's tedious
+      Reason 2: Refactoring
+    @p
+      @img(style:="width: 100%;", src:="img/clangmr.png")
+    @p
+      @(fontSize := "0.8em")
+      Wright et al., “Large-Scale Automated Refactoring Using ClangMR.”
+  @slide
+    @p
+      @img(style:="width: 100%;", src:="img/refactoring-intellij.png")
+  @slide
+    @h3
+      Reason 3: It's tedious
     @highlight
       // Columns 80                                                                  |
       case class Split(modification: Modification,
@@ -38,8 +67,6 @@
                        penalty: Boolean = false,
                        optimalAt: Option[OptimalToken] = None)
   @slide
-    @h3
-      It's tedious
     @highlight
       // Columns 80                                                                  |
       case class Split(modification: Modification,
@@ -50,8 +77,6 @@
                        penalty: Boolean = false,
                        optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
   @slide
-    @h3
-      It's tedious
     @highlight
       // Columns 80                                                                  |
       case class Split(
@@ -64,166 +89,31 @@
           optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
   @slide
     @h3
-      Time sink
+      Reason 4: Coding styles are hard
     @p
-      @img(src:="img/time-sink.png")
+      @img(style:="width: 100%;", src:="img/coding-style.png")
   @slide
-    @h3
-      Refactoring
-    @ul
-      @li
-        IDE “rename variable”
-      @li
-        Large-Scale Automated Refactoring Using ClangMR
-@wrap
-  @slide
-    @h1
-      2. Making of scalafmt
+    @blockquote
+      "Any style guide written in English is either so brief that it’s ambiguous, or so long that no one reads it." @br
+      @p
+        @(fontSize := "0.6em")
+        -- Bob Nystrom, @a(href:="http://journal.stuffwithstuff.com/2015/09/08/the-hardest-program-ive-ever-written/", "Hardest Program I've Ever Written")
+        , Dart, Google.
   @slide
     @p
       @img(style:="width: 100%;", src:="img/challenge-accepted.jpg")
-  @slide
-    @h3
-      Opinionated?
-    @blockquote
-      "Has line-length setting."
-      - Ólafur Geirsson
-  @slide
-    @h3
-      Line length
-    @blockquote
-      “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
-    @p
-      –Sébastien Doeraene, Scala.js
-  @slide
-    @table
-      @thead
-        @tr
-          @th
-          @th
-            Whitespace cleanup
-          @th
-            Opinionated
-      @tbody
-        @tr
-          @td
-            scalafmt
-          @td
-            ✔
-          @td
-            ✔
-        @tr
-          @td
-            scalariform
-          @td
-            ✔
-          @td
-        @tr
-          @td
-            clang-format
-          @td
-            ✔
-          @td
-            ✔
-        @tr
-          @td
-            gofmt
-          @td
-            ✔
-          @td
-
-  @slide
-    @h3
-      Best first search
-    @highlight
-      // 40 columns                           |
-      object BestFirstSearch {
-        function(function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
-
-        function(
-            function(function(a, b), function(c, d)), eeeeeeeeeeeeeeeeeeeeeeeee)
-
-        function(function(function(a, b), function(c, d)),
-                 eeeeeeeeeeeeeeeeeeeeeeeee)
-
-        function(
-            function(function(a, b), function(c, d)),
-            eeeeeeeeeeeeeeeeeeeeeeeee)
-
-        function(function(function(a, b),
-                          function(c, d)),
-                 eeeeeeeeeeeeeeeeeeeeeeeee)
-      }
-  @slide
-    @h3
-      Pop Quiz: is Policy a monoid? :)
-    @highlight
-      case class Policy(f: PartialFunction[Decision, Decision], expire: Token) {
-        def andThen(g: Policy): Policy = ...
-      }
-
-      object Policy {
-        val empty: Policy = ...
-
-        // Disallows newlines until `expire` token.
-        val singleLine = Policy({
-          case Decision(token, splits) =>
-            Decision(token, splits.filterNot(_.modification.isNewline))
-        }, expire)
-
-        // Penalizes newlines with `penalty` until `expire` token.
-        def penalizeNewlines(penalty: Int) = Policy({
-          case Decision(token, s) =>
-            Decision(token,
-                     s.map(x => x.withPenalty(if (x.isNewline) penalty else 0)))
-        }, expire)
-      }
-  @slide
-    @h3
-      scala.meta
-    @ul
-      @li
-        Tokenizer: String => scala.meta.Token
-      @li
-        Parser: String => scala.meta.Tree
-    @highlight
-      scala> """object Main extends App { world =>
-                  println(s"Hello $world!")
-                }
-                """.parse[Stat].get.show[Structure]
-      res9: String = """
-      Defn.Object(Nil, Term.Name("Main"),
-                  Template(Nil, Seq(Ctor.Ref.Name("App")),
-                  Term.Param(Nil, Term.Name("world"), None, None),
-                  Some(Seq(Term.Apply(Term.Name("println"),
-                                      Seq(Term.Interpolate(Term.Name("s"),
-                                                           Seq(Lit("Hello "),
-                                                           Lit("!")),
-                                                           Seq(Term.Name("world")))))))))
-      """
-  @slide
-    @h3
-      More important problems, vertical alignment
-    @p
-      @highlight
-        object VerticalAlignment {
-          x match {
-            case 1  => 1  -> 2  // first
-            case 11 => 11 -> 22 // second
-          }
-
-          def name   = column[String]("name")
-          def status = column[Int]("status")
-
-          libraryDependencies ++= Seq(
-            "org.scalameta" %  "scalameta"  % "0.1.0-RC4-M10",
-            "com.lihaoyi"   %% "sourcecode" % "0.1.1"
-          )
-        }
 @wrap
   @slide
     @h1
-      3. Using scalafmt.
+      2. Demo
+  @skipSlide
+    @embedVideo("video/demo.mp4")
+  @slide
+    @hl.diff
+       -  protected def SocketOptionLimited[A: FrameFormatter](consumer: TokenBucket.Consumer, name: String)(f: Context => Fu[Option[(Iteratee[A, _], Enumerator[A])]]) =
+       +  protected def SocketOptionLimited[A : FrameFormatter](
+       +      consumer: TokenBucket.Consumer, name: String)(
+       +      f: Context => Fu[Option[(Iteratee[A, _], Enumerator[A])]]) =
   @slide
     @ul
       @li
@@ -257,6 +147,132 @@
             --javaDocs / --scalaDocs
           @li
             --continuationIndentCallSite 2
+@wrap
+  @slide
+    @h1
+      3. Making of scalafmt
+  @skipSlide
+    @h3
+      Opinionated?
+    @blockquote
+      "Has line-length setting." @br
+      - Ólafur Geirsson
+  @skipSlide
+    @h3
+      Line length
+    @blockquote
+      “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
+    @p
+      –Sébastien Doeraene, Scala.js
+  @skipSlide
+    @tabulate(Seq("", "Line length"),
+              Seq(
+                  Seq("scalafmt",     "✔"),
+                  Seq("scalariform",  " "),
+                  Seq("clang-format", "✔"),
+                  Seq("gofmt",        " "),
+                  Seq("dartfmt",      "✔")
+              ),
+              Map(1 -> "center", 2 -> "center"))
+  @slide
+    @h3
+      Best first search
+    @highlight
+      // 50 columns                                    |
+      object BestFirstSearch {
+        DBObject(Some(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+        DBObject(
+            Some(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+        DBObject(Some(Name("Martin", "Odersky"), Language("Scala")),
+                 Address("Lausanne", "Switzerland"))
+
+        DBObject(
+            Some(Name("Martin", "Odersky"), Language("Scala")),
+            Address("Lausanne", "Switzerland"))
+
+        DBObject(Some(Name("Martin", "Odersky"),
+                      Language("Scala")),
+                 Address("Lausanne", "Switzerland"))
+
+      }
+  @skipSlide
+    @h3
+      Pop Quiz: is Policy a monoid? :)
+    @highlight
+      case class Policy(f: PartialFunction[Decision, Decision], expire: Token) {
+        def andThen(g: Policy): Policy = ...
+      }
+
+      object Policy {
+        val empty: Policy = ...
+
+        // Disallows newlines until `expire` token.
+        val singleLine = Policy({
+          case Decision(token, splits) =>
+            Decision(token, splits.filterNot(_.modification.isNewline))
+        }, expire)
+
+        // Penalizes newlines with `penalty` until `expire` token.
+        def penalizeNewlines(penalty: Int) = Policy({
+          case Decision(token, s) =>
+            Decision(token,
+                     s.map(x => x.withPenalty(if (x.isNewline) penalty else 0)))
+        }, expire)
+      }
+  @slide
+    @h3
+      scala.meta
+    @ul
+      @li
+        Tokenizer: String => scala.meta.Token
+      @li
+        Parser: String => scala.meta.Tree
+    @highlight
+      scala> import scala.meta._
+      scala> """object Main extends App { world =>
+                  println(s"Hello $world!")
+                }
+                """.parse[Stat].get.show[Structure]
+      res9: String = """
+      Defn.Object(Nil, Term.Name("Main"),
+                  Template(Nil, Seq(Ctor.Ref.Name("App")),
+                  Term.Param(Nil, Term.Name("world"), None, None),
+                  Some(Seq(Term.Apply(Term.Name("println"),
+                                      Seq(Term.Interpolate(Term.Name("s"),
+                                                           Seq(Lit("Hello "),
+                                                           Lit("!")),
+                                                           Seq(Term.Name("world")))))))))
+      """
+  @slide
+    @h3
+      More important problems, vertical alignment
+    @p
+      @highlight
+        object VerticalAlignment {
+          x match {
+            case 1  => 1  -> 2  // first
+            case 11 => 11 -> 22 // second
+          }
+
+          def name   = column[String]("name")
+          def status = column[Int]("status")
+
+          for {
+            dao  <- olafur   \/> "Can't find olafur"
+            user <- dao.user \/> "Join failed: no user object"
+          }
+
+          libraryDependencies ++= Seq(
+            "org.scalameta" %  "scalameta"  % "0.1.0-RC4-M10",
+            "com.lihaoyi"   %% "sourcecode" % "0.1.1"
+          )
+        }
+@wrap
+  @slide
+    @h1
+      Conclusion
   @slide
     @h3
       Roadmap
@@ -264,19 +280,23 @@
       @li
         Bugs, please report weird formatting output!
       @li
-        More configuration options.
+        More coding styles: spark, typelevel, ...
       @li
-        Format git diff.
+        Coding style detection / better migration experience
+      @li
+        Format @code("git diff").
       @li
         Format docstrings.
       @li
         Incremental formatting.
-@slide
-  @(style := "text-align: left;")
-  @h1
-    THANK YOU
-  @p
-      - @a(href:="http://scalafmt.org", "Visit documentation.") @br
-      - @a(href:="http://github.com/olafurpg/scalafmt", "Contribute with PRs and issues.") @br
-      - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
-      - @a(href:="http://gitter.im/olafurpg/scalafmt", "Chat on Gitter.")
+      @li
+        scala-tidy
+  @slide
+    @(style := "text-align: left;")
+    @h1
+      THANK YOU
+    @p
+        - @a(href:="http://scalafmt.org", "Visit documentation.") @br
+        - @a(href:="http://github.com/olafurpg/scalafmt", "Contribute with PRs and reporting issues.") @br
+        - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
+        - @a(href:="http://gitter.im/olafurpg/scalafmt", "Chat on Gitter.")

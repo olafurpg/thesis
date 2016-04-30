@@ -12,3 +12,7 @@
 {
   color: white;
 }
+
+.reveal .slide-number {
+  font-size: 0.6em;
+}
