@@ -106,14 +106,265 @@
   @slide
     @h1
       2. Demo
-  @skipSlide
-    @embedVideo("video/demo.mp4")
   @slide
-    @hl.diff
+    @h2
+      Case-study 1: typelevel/cats
+    @p
+      @img(src:="img/cats2.png")
+    @comment
+      It’s a Play application that’s open source and uses almost every single feature that Play has. Most of the time it’s based off a snapshot build.
+  @slide
+    @tabulate(Seq("Scala files", "295"),
+              Seq(Seq("Lines of code", "17.493"),
+                  Seq("Time to format", "23s")), Map.empty)
+    @p
+      Command:
+    @hl.scala
+      scalafmt --maxColumn 100 --continuationIndentCallSite 2 --javaDocs --files . -i
+  @slide
+    @hl.scala
+      -  implicit def constSemigroup[A: Semigroup, B]: Semigroup[Const[A, B]] = new Semigroup[Const[A, B]] {
+      -    def combine(x: Const[A, B], y: Const[A, B]): Const[A, B] = x combine y
+      -  }
+      +  implicit def constSemigroup[A : Semigroup, B]: Semigroup[Const[A, B]] =
+      +    new Semigroup[Const[A, B]] {
+      +      def combine(x: Const[A, B], y: Const[A, B]): Const[A, B] = x combine y
+      +    }
+  @slide
+    @hl.scala
+      -      override def product[A, B](fa: FA[S, A], fb: FA[S, B]): FA[S, (A, B)] = ap(fa.map((a: A) => (b: B) => (a, b)))(fb)
+      +      override def product[A, B](fa: FA[S, A], fb: FA[S, B]): FA[S, (A, B)] =
+      +        ap(fa.map((a: A) => (b: B) => (a, b)))(fb)
+  @slide
+    @hl.scala
+      -  implicit def evalArbitrary[A: Arbitrary]: Arbitrary[Eval[A]] =
+      -    Arbitrary(Gen.oneOf(
+      -      getArbitrary[A].map(Eval.now(_)),
+      -      getArbitrary[A].map(Eval.later(_)),
+      -      getArbitrary[A].map(Eval.always(_))))
+      +  implicit def evalArbitrary[A : Arbitrary]: Arbitrary[Eval[A]] =
+      +    Arbitrary(
+      +      Gen.oneOf(getArbitrary[A].map(Eval.now(_)),
+      +                getArbitrary[A].map(Eval.later(_)),
+      +                getArbitrary[A].map(Eval.always(_))))
+  @slide
+    @hl.scala
+      -  def traverse[A: Arbitrary, B: Arbitrary, C: Arbitrary, M: Arbitrary, X[_]: Applicative, Y[_]: Applicative](implicit
+      -    ArbFA: Arbitrary[F[A]],
+      -    ArbXB: Arbitrary[X[B]],
+      -    ArbYB: Arbitrary[Y[B]],
+      -    ArbYC: Arbitrary[Y[C]],
+      -    M: Monoid[M],
+      -    EqFA: Eq[F[A]],
+      -    EqFC: Eq[F[C]],
+      -    EqM: Eq[M],
+      -    EqXYFC: Eq[X[Y[F[C]]]],
+      -    EqXFB: Eq[X[F[B]]],
+      -    EqYFB: Eq[Y[F[B]]]
+      -  ): RuleSet = {
+      +  def traverse[A : Arbitrary,
+      +               B : Arbitrary,
+      +               C : Arbitrary,
+      +               M : Arbitrary,
+      +               X[_]: Applicative,
+      +               Y[_]: Applicative](implicit ArbFA: Arbitrary[F[A]],
+      +                                  ArbXB: Arbitrary[X[B]],
+      +                                  ArbYB: Arbitrary[Y[B]],
+      +                                  ArbYC: Arbitrary[Y[C]],
+      +                                  M: Monoid[M],
+      +                                  EqFA: Eq[F[A]],
+      +                                  EqFC: Eq[F[C]],
+      +                                  EqM: Eq[M],
+      +                                  EqXYFC: Eq[X[Y[F[C]]]],
+      +                                  EqXFB: Eq[X[F[B]]],
+      +                                  EqYFB: Eq[Y[F[B]]]): RuleSet = {
+  @slide
+    @hl.scala
+       trait AllInstances
+       -  extends FunctionInstances
+       -  with    StringInstances
+       -  with    EitherInstances
+       -  with    ListInstances
+       -  with    OptionInstances
+       -  with    SetInstances
+       -  with    StreamInstances
+       -  with    VectorInstances
+       -  with    AnyValInstances
+       -  with    MapInstances
+       -  with    BigIntInstances
+       -  with    BigDecimalInstances
+       -  with    FutureInstances
+       -  with    TupleInstances
+       +    extends FunctionInstances with StringInstances with EitherInstances with ListInstances
+       +    with OptionInstances with SetInstances with StreamInstances with VectorInstances
+       +    with AnyValInstances with MapInstances with BigIntInstances with BigDecimalInstances
+       +    with FutureInstances with TupleInstances
+  @slide
+    @h3
+      Is this terrible?
+    @hl.scala
+      def bimap[EE, AA](fe: E => EE, fa: A => AA): Validated[EE, AA] =
+      -    fold(fe andThen Invalid.apply,
+      -         fa andThen Valid.apply)
+      +    fold(fe andThen Invalid.apply, fa andThen Valid.apply)
+  @slide
+    @h2
+      Case-study 2: lichess.org
+    @p
+      @img(src:="img/lichess.png")
+    @comment
+      It’s a Play application that’s open source and uses almost every single feature that Play has. Most of the time it’s based off a snapshot build.
+  @slide
+    @tabulate(Seq("Scala files", "743"),
+              Seq(Seq("Lines of code", "63.228"),
+                  Seq("Time to format", "51s")), Map.empty)
+    @p
+      Command:
+    @hl.scala
+      scalafmt --maxColumn 100 --continuationIndentCallSite 2 --style defaultWithAlign --files . -i
+  @slide
+    @hl.scala
        -  protected def SocketOptionLimited[A: FrameFormatter](consumer: TokenBucket.Consumer, name: String)(f: Context => Fu[Option[(Iteratee[A, _], Enumerator[A])]]) =
        +  protected def SocketOptionLimited[A : FrameFormatter](
        +      consumer: TokenBucket.Consumer, name: String)(
        +      f: Context => Fu[Option[(Iteratee[A, _], Enumerator[A])]]) =
+  @slide
+    @hl.scala
+      -      WS.url(url).get().map(_.body).mon(_.security.proxy.request.time).flatMap { str =>
+      -        parseFloatOption(str).fold[Fu[Int]](fufail(s"Invalid ratio $str")) { ratio =>
+      -          fuccess((ratio * 100).toInt)
+      -        }
+      -      }.addEffects(
+      -        fail = _ => lila.mon.security.proxy.request.failure(),
+      -        succ = percent => {
+      -          lila.mon.security.proxy.percent(percent max 0)
+      -          lila.mon.security.proxy.request.success()
+      -        })
+      +          WS.url(url)
+      +            .get()
+      +            .map(_.body)
+      +            .mon(_.security.proxy.request.time)
+      +            .flatMap { str =>
+      +              parseFloatOption(str).fold[Fu[Int]](
+      +                  fufail(s"Invalid ratio $str")) { ratio =>
+      +                fuccess((ratio * 100).toInt)
+      +              }
+      +            }
+      +            .addEffects(fail = _ => lila.mon.security.proxy.request.failure(),
+      +                        succ = percent => {
+      +                            lila.mon.security.proxy.percent(percent max 0)
+      +                            lila.mon.security.proxy.request.success()
+      +                        })
+  @slide
+    @hl.scala
+      -      case (((((((((((((nbUsers, ranks), nbPlaying), nbImported), crosstable), ratingChart), nbFollowing), nbFollowers), nbBlockers), nbPosts), isDonor), trophies), insightVisible), playTime) =>
+      +      case (((((((((((((nbUsers, ranks), nbPlaying), nbImported), crosstable),
+      +                    ratingChart),
+      +                   nbFollowing),
+      +                  nbFollowers),
+      +                 nbBlockers),
+      +                nbPosts),
+      +               isDonor),
+      +              trophies),
+      +             insightVisible),
+      +            playTime) =>
+  @slide
+    @hl.scala
+      -        Ok.chunked(Enumerator.outputStream(env.pngExport(game))).withHeaders(
+      -          CONTENT_TYPE -> "image/png",
+      -          CACHE_CONTROL -> "max-age=7200")
+      +        Ok.chunked(Enumerator.outputStream(env.pngExport(game)))
+      +          .withHeaders(CONTENT_TYPE  -> "image/png",
+      +                       CACHE_CONTROL -> "max-age=7200")
+  @slide
+    @hl.scala
+      -  def signupPost = OpenBody { implicit ctx =>
+      -    implicit val req = ctx.body
+      -    Firewall {
+      -      negotiate(
+      -        html = forms.signup.website.bindFromRequest.fold(
+      -          err => forms.anyCaptcha map { captcha =>
+      -            BadRequest(html.auth.signup(err, captcha, env.RecaptchaPublicKey))
+      -          },
+      -          data => env.recaptcha.verify(data.recaptchaResponse, req).flatMap {
+      -            case false => forms.signup.websiteWithCaptcha map {
+      -              case (form, captcha) => BadRequest(html.auth.signup(form fill data, captcha, env.RecaptchaPublicKey))
+      -            }
+      -            case true =>
+      -              lila.mon.user.register.website()
+      -              val email = env.emailAddress.validate(data.email) err s"Invalid email ${data.email}"
+      -              UserRepo.create(data.username, data.password, email.some, ctx.blindMode, none)
+      -                .flatten(s"No user could be created for ${data.username}")
+      -                .map(_ -> email).flatMap {
+      -                  case (user, email) => env.emailConfirm.send(user, email) >> {
+      -                    if (env.emailConfirm.effective) Redirect(routes.Auth.checkYourEmail(user.username)).fuccess
+      -                    else saveAuthAndRedirect(user)
+      +  def signupPost =
+      +    OpenBody { implicit ctx =>
+      +      implicit val req = ctx.body
+      +      Firewall {
+      +        negotiate(
+      +            html = forms.signup.website.bindFromRequest.fold(
+      +                  err =>
+      +                    forms.anyCaptcha map { captcha =>
+      +                    BadRequest(
+      +                        html.auth.signup(err, captcha, env.RecaptchaPublicKey))
+      +                },
+      +                  data =>
+      +                    env.recaptcha
+      +                      .verify(data.recaptchaResponse, req)
+      +                      .flatMap {
+      +                      case false =>
+      +                        forms.signup.websiteWithCaptcha map {
+      +                          case (form, captcha) =>
+      +                            BadRequest(
+      +                                html.auth.signup(form fill data,
+      +                                                 captcha,
+      +                                                 env.RecaptchaPublicKey))
+      +                        }
+      +                      case true =>
+      +                        lila.mon.user.register.website()
+      +                        val email =
+      +                          env.emailAddress.validate(data.email) err s"Invalid email ${data.email}"
+      +                        UserRepo
+      +                          .create(data.username,
+      +                                  data.password,
+      +                                  email.some,
+      +                                  ctx.blindMode,
+      +                                  none)
+      +                          .flatten(
+      +                              s"No user could be created for ${data.username}")
+      +                          .map(_ -> email)
+      +                          .flatMap {
+      +                            case (user, email) =>
+      +                              env.emailConfirm.send(user, email) >> {
+      +                                if (env.emailConfirm.effective)
+      +                                  Redirect(routes.Auth.checkYourEmail(
+      +                                          user.username)).fuccess
+      +                                else saveAuthAndRedirect(user)
+  @slide
+    @h3
+      Bad parts
+    @hl.scala
+      -    Ok(Json.obj(
+      -      "api" -> Json.obj(
+      -        "current" -> api.currentVersion,
+      -        "olds" -> api.oldVersions.map { old =>
+      -          Json.obj(
+      -            "version" -> old.version,
+      -            "deprecatedAt" -> old.deprecatedAt,
+      -            "unsupportedAt" -> old.unsupportedAt)
+      -        })
+      -    )) as JSON
+      +    Ok(
+      +        Json.obj(
+      +            "api"                                    -> Json.obj("current" -> api.currentVersion,
+      +                              "olds"                 -> api.oldVersions.map { old =>
+      +                            Json.obj("version"       -> old.version,
+      +                                     "deprecatedAt"  -> old.deprecatedAt,
+      +                                     "unsupportedAt" -> old.unsupportedAt)
+      +                          })
+      +        )) as JSON
   @slide
     @ul
       @li
@@ -125,7 +376,7 @@
       @li
         Download @code("scalafmt.jar") via Github releases.
       @li
-        See @a(href:= "http://scalafmt.org", "official documentation").
+        See @a(href:= "http://scalafmt.org", "documentation").
   @slide
     @h3
       Where are we now?
@@ -149,78 +400,8 @@
             --continuationIndentCallSite 2
 @wrap
   @slide
-    @h1
-      3. Making of scalafmt
-  @skipSlide
-    @h3
-      Opinionated?
-    @blockquote
-      "Has line-length setting." @br
-      - Ólafur Geirsson
-  @skipSlide
-    @h3
-      Line length
-    @blockquote
-      “when reviewing on GitHub, only 120 characters are visible; when reviewing on a mobile phone, only 80 characters are visible. And we do review on mobile phone quite a lot.”
-    @p
-      –Sébastien Doeraene, Scala.js
-  @skipSlide
-    @tabulate(Seq("", "Line length"),
-              Seq(
-                  Seq("scalafmt",     "✔"),
-                  Seq("scalariform",  " "),
-                  Seq("clang-format", "✔"),
-                  Seq("gofmt",        " "),
-                  Seq("dartfmt",      "✔")
-              ),
-              Map(1 -> "center", 2 -> "center"))
-  @slide
-    @h3
-      Best first search
-    @highlight
-      // 50 columns                                    |
-      object BestFirstSearch {
-        DBObject(Some(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
-
-        DBObject(
-            Some(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
-
-        DBObject(Some(Name("Martin", "Odersky"), Language("Scala")),
-                 Address("Lausanne", "Switzerland"))
-
-        DBObject(
-            Some(Name("Martin", "Odersky"), Language("Scala")),
-            Address("Lausanne", "Switzerland"))
-
-        DBObject(Some(Name("Martin", "Odersky"),
-                      Language("Scala")),
-                 Address("Lausanne", "Switzerland"))
-
-      }
-  @skipSlide
-    @h3
-      Pop Quiz: is Policy a monoid? :)
-    @highlight
-      case class Policy(f: PartialFunction[Decision, Decision], expire: Token) {
-        def andThen(g: Policy): Policy = ...
-      }
-
-      object Policy {
-        val empty: Policy = ...
-
-        // Disallows newlines until `expire` token.
-        val singleLine = Policy({
-          case Decision(token, splits) =>
-            Decision(token, splits.filterNot(_.modification.isNewline))
-        }, expire)
-
-        // Penalizes newlines with `penalty` until `expire` token.
-        def penalizeNewlines(penalty: Int) = Policy({
-          case Decision(token, s) =>
-            Decision(token,
-                     s.map(x => x.withPenalty(if (x.isNewline) penalty else 0)))
-        }, expire)
-      }
+    @h2
+      3. How does scalafmt work?
   @slide
     @h3
       scala.meta
@@ -246,6 +427,61 @@
                                                            Seq(Term.Name("world")))))))))
       """
   @slide
+    @h2
+      Line wrapping
+    @ul
+      @li
+        TeX: optimal line breaking
+      @li
+        clang-format + dartfmt: shortest path
+  @slide
+    @h2
+      Every line break has a penalty
+    @hl.scala
+      // 50 columns                                    |
+      object BestFirstSearch {                         // 1 penalty
+        DBObject(Some(Name("Martin", "Odersky"),       // 5 penalty
+                      Language("Scala")),              // 3 penalty
+                 Address("Lausanne", "Switzerland"))   // 0 penalty
+      }                                                // 0 penalty
+                                                       //----------
+                                                       // 9 total
+  @slide
+    @h2
+      Exceeding column limit is expensive
+    @hl.scala
+      // 40 column                           |
+      object BestFirstSearch {                       // 1    penalty
+        DBObject(Some(Name("Martin", "Odersky"),     // 1005 penalty
+                      Language("Scala")),            // 3    penalty
+                 Address("Lausanne", "Switzerland")) // 1000 penalty
+      }                                              // 0    penalty
+                                                     //-------------
+                                                     // 2009 total
+  @slide
+    @h3
+      Try all the combinations using best-first search
+    @highlight
+      // 50 columns                                    |
+      object BestFirstSearch {
+        DBObject(Some(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+        DBObject(
+            Some(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+        DBObject(Some(Name("Martin", "Odersky"), Language("Scala")),
+                 Address("Lausanne", "Switzerland"))
+
+        DBObject(
+            Some(Name("Martin", "Odersky"), Language("Scala")),
+            Address("Lausanne", "Switzerland"))
+
+        DBObject(Some(Name("Martin", "Odersky"),
+                      Language("Scala")),
+                 Address("Lausanne", "Switzerland"))
+
+      }
+  @slide
     @h3
       More important problems, vertical alignment
     @p
@@ -269,10 +505,32 @@
             "com.lihaoyi"   %% "sourcecode" % "0.1.1"
           )
         }
+  @slide
+    @h3
+      Property 1: AST integrity
+    @blockquote
+      forAll(code => ast(code) == ast(format(code)))
+  @slide
+    @h3
+      Property 2: Idempotency
+    @blockquote
+      forAll(code => format(code) == format(format(code)))
+    @p
+      @(fontSize := "0.6em")
+      See @a(href:="https://github.com/olafurpg/scalafmt/issues/192", "#192").
 @wrap
   @slide
     @h1
-      Conclusion
+      Almost done.
+  @slide
+    @ol
+      @li
+        Code formatting has many cool benefits.
+      @li
+        scalafmt is out there
+      @li
+
+
   @slide
     @h3
       Roadmap
@@ -291,6 +549,8 @@
         Incremental formatting.
       @li
         scala-tidy
+      @li
+        Dynamic style configuration.
   @slide
     @(style := "text-align: left;")
     @h1

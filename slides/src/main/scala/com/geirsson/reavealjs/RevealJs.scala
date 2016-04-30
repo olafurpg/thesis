@@ -173,9 +173,11 @@ object RevealJs {
     }
   }
 
+  def comment(str: String) = span("")
+
   object hl {
-    def scala = new hl("scala")
-    def diff = new hl("diff")
+    val scala = new hl("scala")
+    val diff = new hl("diff")
   }
 
 
