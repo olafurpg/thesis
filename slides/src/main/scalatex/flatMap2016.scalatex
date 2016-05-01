@@ -9,26 +9,24 @@
   @p
     - Ólafur Geirsson, @@olafurpg
 @skipSlide
-  @p
+  @comment
+    Hello everybody, I'm Olaf.
+    I'm from Odersky's lab at EPFL.
     Let me start with a quick survey, how many in this room use code formatters?
-    How many have tried scalafmt? Okay, good to know.
+    How many of you **like** your code formatters? Okay, good to know.
     I've been passionate about code formatting for a while now.
     Almost a year ago I chose to work on a project at Google to increase
     adoption of clang-format in C++ projects.
-    In the process, I learned a lot both why people like code formatters and why
-    they don't like them.
-    For my master's thesis, I wanted to bring a proper code formatter to the Scala community.
+    In the process, I learned a lot why people like and don't like code formatters.
+    For my master's thesis, I wanted to bring a nice code formatter to the Scala community.
     I contacted Eugene, the author of Scala macros and scala.meta, in November.
-    I believe we've solved many interesting challenges since then and
-    I'm really excited to share with you where we are today.
+    I'm really excited to share with you where we are today with the project.
 @slide
   @ol
     @li
       Why?
     @li
       Demo.
-    @li
-      When it fails.
     @li
       How it works.
 @wrap
@@ -51,6 +49,24 @@
     @p
       @(fontSize := "0.8em")
       Wright et al., “Large-Scale Automated Refactoring Using ClangMR.”
+  @slide
+    @p
+      @img(style:="width: 100%;", src:="img/cpp11.png")
+  @slide
+    @h2
+      Scala is no different from C++
+    @hl.scala
+      UserRepo hasEmail me.id flatMap { user =>
+        AccountRepo hasStatement user.id flatMap { statement =>
+          BalanceRepo hasBalance statement.id
+        }
+      }
+
+      for {
+        user <- UserRepo.hasEmail(me.id)
+        statement <- AccountRepo.hasStatement(user.id)
+        balance <- BalanceRepo.hasBalance(statement.id)
+      } yield balance
   @slide
     @p
       @img(style:="width: 100%;", src:="img/refactoring-intellij.png")
@@ -130,7 +146,7 @@
       +    new Semigroup[Const[A, B]] {
       +      def combine(x: Const[A, B], y: Const[A, B]): Const[A, B] = x combine y
       +    }
-  @slide
+  @skipSlide
     @hl.scala
       -      override def product[A, B](fa: FA[S, A], fb: FA[S, B]): FA[S, (A, B)] = ap(fa.map((a: A) => (b: B) => (a, b)))(fb)
       +      override def product[A, B](fa: FA[S, A], fb: FA[S, B]): FA[S, (A, B)] =
@@ -147,6 +163,16 @@
       +      Gen.oneOf(getArbitrary[A].map(Eval.now(_)),
       +                getArbitrary[A].map(Eval.later(_)),
       +                getArbitrary[A].map(Eval.always(_))))
+  @slide
+    @h3
+      --javaDocs vs. --scalaDocs
+    @hl.scala
+      -   /**
+      -     * Lift a function into the context of an Arrow
+      -     */
+      +   /**
+      +    * Lift a function into the context of an Arrow
+      +    */
   @slide
     @hl.scala
       -  def traverse[A: Arbitrary, B: Arbitrary, C: Arbitrary, M: Arbitrary, X[_]: Applicative, Y[_]: Applicative](implicit
@@ -179,6 +205,8 @@
       +                                  EqXFB: Eq[X[F[B]]],
       +                                  EqYFB: Eq[Y[F[B]]]): RuleSet = {
   @slide
+    @h3
+      Not only sunshine
     @hl.scala
        trait AllInstances
        -  extends FunctionInstances
@@ -199,14 +227,6 @@
        +    with OptionInstances with SetInstances with StreamInstances with VectorInstances
        +    with AnyValInstances with MapInstances with BigIntInstances with BigDecimalInstances
        +    with FutureInstances with TupleInstances
-  @slide
-    @h3
-      Is this terrible?
-    @hl.scala
-      def bimap[EE, AA](fe: E => EE, fa: A => AA): Validated[EE, AA] =
-      -    fold(fe andThen Invalid.apply,
-      -         fa andThen Valid.apply)
-      +    fold(fe andThen Invalid.apply, fa andThen Valid.apply)
   @slide
     @h2
       Case-study 2: lichess.org
@@ -366,6 +386,9 @@
       +                          })
       +        )) as JSON
   @slide
+    @h2
+      Summary
+  @slide
     @ul
       @li
         SBT "com.geirsson" %% "sbt-scalafmt" % "0.2.X"
@@ -407,7 +430,7 @@
       scala.meta
     @ul
       @li
-        Tokenizer: String => scala.meta.Token
+        Tokenizer: String => scala.meta.Tokens
       @li
         Parser: String => scala.meta.Tree
     @highlight
@@ -433,7 +456,7 @@
       @li
         TeX: optimal line breaking
       @li
-        clang-format + dartfmt: shortest path
+        clang-format + dartfmt + scalafmt: shortest path
   @slide
     @h2
       Every line break has a penalty
@@ -521,7 +544,7 @@
 @wrap
   @slide
     @h1
-      Almost done.
+      Summary.
   @slide
     @ol
       @li
