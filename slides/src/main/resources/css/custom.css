@@ -13,6 +13,15 @@
   color: white;
 }
 
+.reveal code {
+  font-size: 1.07em;
+}
+
 .reveal .slide-number {
   font-size: 0.6em;
+}
+
+img.noborder {
+  border: none;
+  margin: 0px;
 }

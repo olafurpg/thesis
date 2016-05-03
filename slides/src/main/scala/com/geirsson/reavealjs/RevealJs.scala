@@ -1,14 +1,20 @@
 package com.geirsson.reavealjs
 
 import scala.util.Try
+import scalatags.Escaping
 import scalatags.Text
 import scalatags.Text.all._
 
-case class SlideDeck(title: String,
-                     description: String,
-                     author: String,
-                     theme: String,
-                     slides: Text.all.Frag)
+import java.nio.file.Files
+import java.nio.file.Paths
+
+case class SlideDeck(
+  title: String,
+  description: String,
+  author: String,
+  theme: String,
+  slides: Text.all.Frag
+)
 
 object Themes {
   val night = "night"
@@ -25,6 +31,13 @@ object Themes {
 }
 
 object RevealJs {
+
+  def inlineJs(file: String) = {
+    val contents = new String(Files.readAllBytes(
+      Paths.get("src", "main", "resources", "js", file).toAbsolutePath
+    ))
+    script(raw(contents))
+  }
 
   def header(deck: SlideDeck) =
     raw(s"""
@@ -91,71 +104,77 @@ object RevealJs {
   import com.geirsson.scalatags.Tags._
   def skipSlide(tags: Text.Modifier*) = span("")
 
-  def wrap(tags: Text.Modifier*) = section(tags:_*)
+  def wrap(tags: Text.Modifier*) = section(tags: _*)
 
-  def slide(tags: Text.Modifier*) = section(tags:_*)
+  def slide(tags: Text.Modifier*) = section(tags: _*)
   def embedVideo(file: String) = {
     require(file.endsWith(".mp4"))
     video(
-        width := "70%",
-        "controls".emptyAttr,
-        "loop".emptyAttr,
-        source(src := file, `type` := "video/mp4"),
-        "Your browser does not support the video tag."
+      width := "70%",
+      "controls".emptyAttr,
+      "loop".emptyAttr,
+      source(src := file, `type` := "video/mp4"),
+      "Your browser does not support the video tag."
     )
   }
 
   def markdownSlide(tags: Text.Modifier*) =
-    section(data("markdown") := "",
-            script(Seq(`type` := "text/template") ++ tags:_*))
+    section(
+      data("markdown") := "",
+      script(Seq(`type` := "text/template") ++ tags: _*)
+    )
 
-  def tabulate(header: Seq[String],
-               rows: Seq[Seq[String]],
-               align: Map[Int, String]) = {
+  def tabulate(
+    header: Seq[String],
+    rows: Seq[Seq[String]],
+    align: Map[Int, String]
+  ) = {
     table(
-        thead(
-            tr(
-                header.zipWithIndex.map { case (h, _) => th(h) }
-            )
-        ),
-        tbody(
-            rows.map { row =>
-              tr(
-                  row.zipWithIndex.map {
-                    case (d, i) =>
-                      td(textAlign := align.getOrElse(i, "left"), d)
-                  }
-              )
-            }
+      thead(
+        tr(
+          header.zipWithIndex.map { case (h, _) => th(h) }
         )
+      ),
+      tbody(
+        rows.map { row =>
+          tr(
+            row.zipWithIndex.map {
+              case (d, i) =>
+                td(textAlign := align.getOrElse(i, "left"), d)
+            }
+          )
+        }
+      )
     )
   }
 
   def render(deck: SlideDeck): String =
     html(
-        header(deck),
-        body(
-            div(
-                `class` := s"reveal ${deck.theme}",
-                div(
-                    `class` := "slides",
-                    deck.slides
-                )
-            ),
-            footer
-        )
+      header(deck),
+      body(
+        div(
+          `class` := s"reveal ${deck.theme}",
+          div(
+            `class` := "slides",
+            deck.slides
+          )
+        ),
+        footer
+      )
     ).render
 
   private def fixBrokenIndent(frag: String): String = {
     // Fix broken indentation by scalatex
     val toStrip =
       " " * Try(frag.trim.lines
-            .drop(1)
-            .withFilter(_.nonEmpty)
-            .map(_.takeWhile(_ == ' ').length)
-            .min).getOrElse(0)
+        .drop(1)
+        .withFilter(_.nonEmpty)
+        .map(_.takeWhile(_ == ' ').length)
+        .min).getOrElse(0)
     frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
   }
+
+
 
   def highlight(codeToHighlight: String) = hl.scala(codeToHighlight)
 
@@ -179,8 +198,4 @@ object RevealJs {
     val scala = new hl("scala")
     val diff = new hl("diff")
   }
-
-
-
-
 }
