@@ -28,6 +28,8 @@
     I contacted Eugene, the author of Scala macros and scala.meta, in November.
     I'm really excited to share with you where we are today with the project.
 @slide
+  @h2
+    Agenda
   @ul
     @li
       Why?
@@ -42,7 +44,7 @@
     WHY?
 @slide
   @h3
-    Reason 1: Time sink
+    Reason 1: We have better things to do
   @p
     @img(src:="img/time-sink.png")
 @slide
@@ -52,21 +54,16 @@
   @h3
     Reason 2: Refactoring
   @p
-    @img(style:="width: 100%;", src:="img/clangmr.png")
-  @p
-    @(fontSize := "0.8em")
-    Wright et al., “Large-Scale Automated Refactoring Using ClangMR.”
-@slide
-  @p
-    @img(style:="width: 100%;", src:="img/cpp11.png")
+    @img(style:="width: 100%;", src:="img/refactoring-intellij.png")
 @slide
   @hl.scala
+    // Before
     UserRepo hasEmail me.id flatMap { user =>
       AccountRepo hasStatement user.id flatMap { statement =>
         BalanceRepo hasBalance statement.id
       }
     }
-  @hl.scala
+    // After
     for {
       user <- UserRepo.hasEmail(me.id)
       statement <- AccountRepo.hasStatement(user.id)
@@ -74,11 +71,14 @@
     } yield balance
 @slide
   @p
-    @img(style:="width: 100%;", src:="img/refactoring-intellij.png")
+    @img(style:="width: 100%;", src:="img/clangmr.png")
+  @p
+    @(fontSize := "0.8em")
+    Wright et al., “Large-Scale Automated Refactoring Using ClangMR.”
 @slide
   @h3
-    Reason 3: Attention drain
-  @highlight
+    Reason 3: It's tedious
+  @hl.scala
     // Columns 80                                                                  |
     case class Split(modification: Modification,
                      cost: Int,
@@ -88,7 +88,7 @@
                      penalty: Boolean = false,
                      optimalAt: Option[OptimalToken] = None)
 @slide
-  @highlight
+  @hl.scala
     // Columns 80                                                                  |
     case class Split(modification: Modification,
                      cost: Int,
@@ -98,7 +98,7 @@
                      penalty: Boolean = false,
                      optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
 @slide
-  @highlight
+  @hl.scala
     // Columns 80                                                                  |
     case class Split(
         modification: Modification,
@@ -126,6 +126,8 @@
 @slide
   @h1
     Demo
+  @p
+    @img(src:="img/doingdog.jpg")
 @slide
   @h2
     Case-study 1: typelevel/cats
@@ -134,9 +136,12 @@
   @comment
     It’s a Play application that’s open source and uses almost every single feature that Play has. Most of the time it’s based off a snapshot build.
 @slide
+  @h2
+    olafurpg/cats/pull/1
   @tabulate(Seq("Scala files", "295"),
             Seq(Seq("Lines of code", "17.493"),
                 Seq("Time to format", "23s"),
+                Seq("Diff", "+2,672 −2,372"),
                 Seq("Longest line", "136 chars")),
                 Map.empty)
   @hl.scala
@@ -249,9 +254,12 @@
   @comment
     It’s a Play application that’s open source and uses almost every single feature that Play has. Most of the time it’s based off a snapshot build.
 @slide
+  @h3
+    olafurpg/lila/pull/1
   @tabulate(Seq("Scala files", "743"),
             Seq(Seq("Lines of code", "63.228"),
                 Seq("Time to format", "51s"),
+                Seq("Diff", "+3,870 −3,174"),
                 Seq("Longest line", "147 chars")),
                  Map.empty)
   @hl.scala
@@ -325,18 +333,18 @@
     +          .withHeaders(CONTENT_TYPE  -> "image/png",
     +                       CACHE_CONTROL -> "max-age=7200")
 @slide
-  @h3
-    Bad parts
   @hl.scala
-    +    Ok(
-    +        Json.obj(
-    +            "api"                                    -> Json.obj("current" -> api.currentVersion,
-    +                              "olds"                 -> api.oldVersions.map { old =>
-    +                            Json.obj("version"       -> old.version,
-    +                                     "deprecatedAt"  -> old.deprecatedAt,
-    +                                     "unsupportedAt" -> old.unsupportedAt)
-    +                          })
-    +        )) as JSON
+    +Ok(
+    +    Json.obj(
+    +        "api"                                    -> Json.obj("current" -> api.currentVersion,
+    +                          "olds"                 -> api.oldVersions.map { old =>
+    +                        Json.obj("version"       -> old.version,
+    +                                 "deprecatedAt"  -> old.deprecatedAt,
+    +                                 "unsupportedAt" -> old.unsupportedAt)
+    +                      })
+    +    )) as JSON
+  @p
+    @img(`class`:="fragment", src:="img/wat.jpg", width:="30%")
 @slide
   @h3
     What it should look like
@@ -387,12 +395,12 @@
           --continuationIndentCallSite 2
 @slide
   @h1
-    Scalariform.
+    Scalariform?
 @slide
   @h1
     --maxColumn
 @slide
-  @h2
+  @h1
     How does scalafmt work?
 @slide
   @h3
@@ -401,9 +409,9 @@
     Tokenizer: String => scala.meta.Tokens
   @hl.scala
     scala> import scala.meta._
-    scala> ""object Main extends App { world =>
-               println(s"Hello $world!")
-             }
+    scala> """object Main extends App { world =>
+                println(s"Hello $world!")
+              }
            """.tokenize.get
            res3: Tokens = Tokens(
              BOF (0..0),
@@ -424,7 +432,7 @@
     scala.meta
   @p
     Parser: String => scala.meta.Tree
-  @highlight
+  @hl.scala
     scala> import scala.meta._
     scala> """object Main extends App { world =>
                 println(s"Hello $world!")
@@ -443,7 +451,9 @@
 @slide
   @h2
     TeX: wrapping text
+  @p
     @img(src:="img/tex.png", width:="70%")
+    @img(src:="img/knuth.jpg", width:="15%")
 @slide
   @h2
     Every line break has a penalty
@@ -468,8 +478,29 @@
                                                                    //-------------
                                                                    // 1002 total
 @slide
-  @input(`type`:="range", min:="20", step:="5", max:="150", id:="demo-slider", value:="80")
-  @span(id:="slider-value","80")
+  @h3
+    Try all the combinations using best-first search
+  @hl.scala
+    // 50 columns                                    |
+    object BestFirstSearch {
+      DBObject(User(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+      DBObject(
+          User(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+      DBObject(User(Name("Martin", "Odersky"), Language("Scala")),
+               Address("Lausanne", "Switzerland"))
+
+      DBObject(
+          User(Name("Martin", "Odersky"), Language("Scala")),
+          Address("Lausanne", "Switzerland"))
+
+      DBObject(User(Name("Martin", "Odersky"),
+                    Language("Scala")),
+               Address("Lausanne", "Switzerland"))
+
+    }
+@skipSlide
   @pre(code(id:="demo", contenteditable:="true", `class`:="hljs scala", """object BestFirstSearch {
   DBObject(User(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
 
@@ -477,8 +508,20 @@
 
   checkAll("CofreeZipLazyOption", applicative.laws[CofreeZipLazyOption](implicitly, implicitly, implicitly, CofreeZipLazyOptionEqual))
 
+
+
+
+
+
+
+
+
+
 }"""))
   @inlineJs("demo.js")
+@slide
+  @h3
+    Testing?
 @slide
   @h3
     Property 1: AST preservation
@@ -496,7 +539,7 @@
   @h3
     More important problems, vertical alignment
   @p
-    @highlight
+    @hl.scala
       object VerticalAlignment {
         def name   = column[String]("name")
         def status = column[Int]("status")
@@ -555,13 +598,16 @@
     @li
       @(`class`:="fragment")
       Dynamic style configuration.
+    @li
+      @(`class`:="fragment")
+      ...
 @slide
   @(style := "text-align: left;")
   @h1
     THANK YOU
   @p
-      - @a(href:="http://scalafmt.org", "Visit documentation.") @br
+      - Visit documentation: @a(href:="http://scalafmt.org", "scalafmt.org") @br
+      - See slides: @selfSlides @br
       - @a(href:="http://github.com/olafurpg/scalafmt", "Contribute with PRs and reporting issues.") @br
       - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
       - @a(href:="http://gitter.im/olafurpg/scalafmt", "Chat on Gitter.") @br
-      - These slides: @selfSlides

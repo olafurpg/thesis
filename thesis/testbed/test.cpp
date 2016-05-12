@@ -1,16 +1,11 @@
-
-
-impl Spanned for ast::Arg {
-    fn span(&self) -> Span {
-        if items::is_named_arg(self) {
+int main(int argc, char const* argv[])
+{
+  
           Defn.Object(Nil, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 Term.Name("State"), Foo.Bar(1, Template(Nil, Seq( Ctor.Ref.Name("ScalaFmtLogger")),
 Term.Param(
 Nil,
 Name.Anonymous(), None, None)),
-Some()), Term.Name("gofmt") )
-        } else {
-            self.ty.span
-        }
-    }
+Some()), Term.Name("gofmt") );
+  return 0;
 }
