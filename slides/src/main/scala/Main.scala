@@ -15,11 +15,17 @@ object Decks {
       "Ólafur Páll Geirsson",
       Themes.moon,
       scalatex.flatMap2016())
+  val scala_Italy = SlideDeck(
+    "Opinionated, automatic code formatting with scalafmt",
+    "",
+    "Ólafur Páll Geirsson",
+    Themes.moon,
+    scalatex.scalaItaly())
 }
 
 object Main extends App {
   val pp = new scala.xml.PrettyPrinter(80, 2)
-  val scalatexOutput = RevealJs.render(Decks.flatMap_Oslo)
+  val scalatexOutput = RevealJs.render(Decks.scala_Italy)
   println(scalatexOutput)
   Files.write(Paths.get("target", "scala-2.11", "classes", "index.html"),
               scalatexOutput.getBytes)

@@ -1,5 +1,7 @@
-object indent {
-  foobar(1, action(
-    1, 2, 3), "this is a banana",
-    3, 4)
+object UserRepo {
+  def update(): Unit = {
+    User(1, "Marco", Friends(
+      1, 2, 3), "secret-password",
+      3)
+  }
 }
