@@ -15,10 +15,10 @@
   @hl.scala
     object UserRepo {
       def update(): Unit = {
-        User(1, "Marco", Friends(
+        DB.insert(User(1, "Marco", Friends(
           1, 2, 3
         ), "secret-password",
-          3)
+          3))
       }
     }
 @skipSlide
@@ -146,7 +146,71 @@
     @img(src:="img/doingdog.jpg")
 @slide
   @h2
-    Case-study 1: typelevel/cats
+    Case-study 1: Spark
+  @p
+    @img(width:="20%", src:="img/spark.png")
+ @slide
+  @h3
+    olafurpg/spark/pull/1
+  @tabulate(Seq("Scala files", "2.361"),
+            Seq(Seq("Lines of code", "515.515"),
+                Seq("Time to format", "40.2s"),
+                Seq("Longest line", "158 chars")),
+                 Map.empty)
+  @hl.scala
+    val converters = (0 to x - 1).map(x => s"lazy val converter$x = CatalystTypeConverters.createToScalaConverter(child$x.dataType)").reduce(_ + "\n  " + _)
+    -
+  @p
+    scalafmt command:
+  @hl.scala
+    scalafmt --maxColumn 100 --javaDocs --files . -i
+    //
+@slide
+  @h3
+    Before
+  @hl.scala
+    -  def getJobIdsForGroup(jobGroup: String): Array[Int] = sc.statusTracker.getJobIdsForGroup(jobGroup)
+    -
+  @h3
+    After
+  @hl.scala
+    +  def getJobIdsForGroup(jobGroup: String): Array[Int] =
+    +    sc.statusTracker.getJobIdsForGroup(jobGroup)
+@slide
+  @h3
+    Before
+  @hl.scala
+     -    listenerBus.post(SparkListenerApplicationStart(appName, Some(applicationId),
+     -      startTime, sparkUser, applicationAttemptId, schedulerBackend.getDriverLogUrls))
+  @h3
+    After
+  @hl.scala
+     +    listenerBus.post(
+     +        SparkListenerApplicationStart(appName,
+     +                                      Some(applicationId),
+     +                                      startTime,
+     +                                      sparkUser,
+     +                                      applicationAttemptId,
+     +                                      schedulerBackend.getDriverLogUrls))
+@slide
+  @h3
+    Before
+  @hl.scala
+     -    new JavaPairRDD[K, V](rdd.sampleByKey(
+     -      withReplacement,
+     -      fractions.asScala.mapValues(_.toDouble).toMap, // map to Scala Double; toMap to serialize
+     -      seed))
+  @h3
+    After
+  @hl.scala
+     +    new JavaPairRDD[K, V](
+     +        rdd.sampleByKey(
+     +            withReplacement,
+     +            fractions.asScala.mapValues(_.toDouble).toMap, // map to Scala Double; toMap to serialize
+     +            seed))
+@slide
+  @h2
+    Case-study 2: typelevel/cats
   @p
     @img(src:="img/cats2.png")
   @comment
@@ -156,7 +220,7 @@
     olafurpg/cats/pull/1
   @tabulate(Seq("Scala files", "295"),
             Seq(Seq("Lines of code", "17.493"),
-                Seq("Time to format", "23s"),
+                Seq("Time to format", "4.9s"),
                 Seq("Longest line", "136 chars")),
                 Map.empty)
   @hl.scala
@@ -263,7 +327,7 @@
      +    with OptionInstances with SetInstances with StreamInstances
 @slide
   @h2
-    Case-study 2: lichess.org
+    Case-study 3: lichess.org
   @p
     @img(src:="img/lichess.png")
   @comment
@@ -273,7 +337,7 @@
     olafurpg/lila/pull/1
   @tabulate(Seq("Scala files", "743"),
             Seq(Seq("Lines of code", "63.228"),
-                Seq("Time to format", "51s"),
+                Seq("Time to format", "11.3s"),
                 Seq("Longest line", "147 chars")),
                  Map.empty)
   @hl.scala
