@@ -1,6 +1,6 @@
 @import com.geirsson.reavealjs.RevealJs._
 
-@def selfSlides = a(href:="https://geirsson.com/assets/flatmap/#/", "geirsson.com/assets/flatmap")
+@def selfSlides = a(href:="https://geirsson.com/assets/scala-italy/#/", "geirsson.com/assets/scala-italy")
 
 @slide
   @h1
@@ -555,7 +555,7 @@
     }                                                              // 0    penalty
                                                                    //-------------
                                                                    // 1002 total
-@skipSlide
+@slide
   @h3
     Try all the combinations using best-first search
   @hl.scala
@@ -578,7 +578,7 @@
                Address("Lausanne", "Switzerland"))
 
     }
-@slide
+@skipSlide
   @input(`type`:="range", min:="20", step:="5", max:="150", id:="demo-slider", value:="80")
   @span(id:="slider-value","80")
   @pre(code(id:="demo", contenteditable:="true", `class`:="hljs scala", """object BestFirstSearch {
@@ -616,6 +616,8 @@
     @(fontSize := "0.6em")
     See @a(href:="https://github.com/olafurpg/scalafmt/issues/192", "#192").
 @slide
+  @h3
+    Manual testing...
   @p
     @img(`class`:="noborder", width:="100%", src:="img/diff-testing.png")
 @slide
