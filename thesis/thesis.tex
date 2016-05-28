@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 % \usepackage[document]{ragged2e}
+% \usepackage[a4paper, total={5in, 8in}]{geometry}
 \usepackage[english]{babel}
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{enumerate}
@@ -92,10 +93,15 @@
 \label{sec:Introduction}
 \lstset{style=scala}
 
+The main motivation of this study is to bring a robust, configurable and opinionated code formatter to the Scala community.
+Although there already exist Scala code formatters,
+we consider that they do not capture many popular coding styles which are present in the Scala community.
+
 Code formatters are used by software developers to apply stylistic formatting conventions on their source code.
+Without code formatters, software developers are responsible for manipulating all syntactic trivia in their code.
+Syntactic trivia includes where to put spaces, insert newlines and how far to indent code fragments.
 Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:formatted1}.
 
-\noindent
 \begin{minipage}{.45\textwidth}
 \lstinputlisting[label={lst:unformatted}, caption=Unformatted code]{code/unformatted.scala}
 \end{minipage}
@@ -106,47 +112,30 @@ Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:
 \hfil
 Both snippets represent the same program.
 The only difference lies in their formatting.
-The snippet in listing~\ref{lst:formatted1} is result of running \scalafmt{} on listing~\ref{lst:unformatted}
-with a constrait of fitting maximum 35 characters on each line.
+% The snippet in listing~\ref{lst:formatted1} is result of running \scalafmt{} on listing~\ref{lst:unformatted} with a constrait of fitting maximum 35 characters on each line.
 Listing~\ref{lst:formatted1} is arguably easier to read and understand.
-For example, in listing~\ref{lst:unformatted} it is not exactly clear to whether \texttt{arg7} belongs to \texttt{arg2} or \texttt{arg3}.
-This example is interesting challenges of developing a code formatter for Scala.
+For example, listing~\ref{lst:unformatted} makes it unclear which function call \texttt{arg6} belongs to.
+
+
+Moreover, in collaborative environments without code formatters,
+the responsibility is left to code reviewers to verify that each contributed software patch adheres to the organizations coding style conventions.
+
+
+
+This thesis addresses the problem of automatically converting any Scala program, such as in listing~\ref{lst:unformatted}, to a well formatted program, such as in listing~\ref{lst:formatted1}.
+% This example is interesting challenges of developing a code formatter for Scala.
 % Most importantly, many popular coding styles enforce a column-width limit.
 % such as the Scala.js coding style~\autocite{scalajs}
 
-This thesis presents  design and implementation of \scalafmt.
-We the data structures, algorithms and tools that were used to develop \scalafmt.
+The motivation to use code formatters is manifold.
+Code formatters enforce a consistent coding style in a code base that's touched by multiple developers.
+By delegating mundane formatting tasks to a formatter, software developers are able to invest their attention to 
 
-
-Software developers use code formatters to automatically reformat their source code.
-A code formatter will typically fix common whitespace errors such as indentation, spaces and newline breaks.
-A key feature of code formatters is that they do not change the behavior of the code, only its aesthetics.
-
-
-
-
-
-
-
-
-
-
-Software developers use code formatters to automatically fix white
-A code formatter should not change the behaviour of code.
-Typically, a code formatter only modifies whitespace tokens, or syntactic trivia.
-Syntactic trivia has nothing to do with the behavior of code.
-Code formatters promise to relieve software developers from manually manipulating
-syntactic trivia.
-Instead, developers can focus on writing correct, performant and maintainable code.
-
-Code formatters brings many other benefits to software development.
-They can help enforce a consistent coding style in a codebase that's touched by multiple developers.
-A consistent code style aids readability of code.
-Code formatting also enables automated refactoring tools, see~\autocite{wright_large-scale_2013}.
+Code formatting enables automated refactoring tools, see~\autocite{wright_large-scale_2013}.
 Code formatting also lowers the barrier to entry for novice programmers, who are not aware of the coding style conventions.
 
 Code formatters have existed for a long time.
-In more recent years we've seen many new opimization based code formatters, such as clang-format and dartfmt.
+In more recent years we've seen many new opimization based code formatters, such as clang-format, dartfmt and rfmt.
 Optimization based code formatters define a fit function for a given layout.
 A good layout has low cost while a bad layout has a high cost.
 The formatter runs an algorithm to choose the layout with the lowest code.
@@ -164,7 +153,7 @@ This thesis addresses the problem of developing a code formatter, \scalafmt, for
 This formatter should:
 \begin{itemize}
   \item capture Scala's most common idioms and popular coding styles, most importanly a line length limit.
-  \item be opinionated, it should be able to produce nice looking code even from computer generated input.
+  \item be opinionated, it should be able to produce nice looking code even for the most egregiously formatted input.
   \item be fast, <200ms for 99 percentile of source files, <2s for rest.
 \end{itemize}
 
