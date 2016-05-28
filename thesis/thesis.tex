@@ -35,6 +35,7 @@
 \tolerance=2000
 \emergencystretch=0pt
 \addbibresource{project.bib}
+\newcommand{\scalafmt}{\texttt{scalafmt}}
 
 % Single spacing after dots and colons
 \frenchspacing
@@ -91,9 +92,8 @@
 \label{sec:Introduction}
 \lstset{style=scala}
 
-Code formatters are used by software developers to automatically fix common formatting errors in their source code.
-Code formatters do not alter the behavior of the source code, only its aesthetics.
-Consider the code snippets in listings~\ref{lst:unformatted} and~\ref{lst:formatted1}.
+Code formatters are used by software developers to apply stylistic formatting conventions on their source code.
+Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:formatted1}.
 
 \noindent
 \begin{minipage}{.45\textwidth}
@@ -103,13 +103,19 @@ Consider the code snippets in listings~\ref{lst:unformatted} and~\ref{lst:format
 \begin{minipage}{.45\textwidth}
 \lstinputlisting[label={lst:formatted1}, caption=Formatted code]{code/target/formatted1.scala}
 \end{minipage}
-Both snippets represent the same code but with modified formatting.
-The snippet in listing~\ref{lst:formatted1} is arguably more readable and easier to understand.
-For example, in listing~\ref{lst:unformatted} it is not obvious that \texttt{arg7} is an argument to the \texttt{arg3} function call.
-This thesis addresses how to automatically derive the 
+\hfil
+Both snippets represent the same program.
+The only difference lies in their formatting.
+The snippet in listing~\ref{lst:formatted1} is result of running \scalafmt{} on listing~\ref{lst:unformatted}
+with a constrait of fitting maximum 35 characters on each line.
+Listing~\ref{lst:formatted1} is arguably easier to read and understand.
+For example, in listing~\ref{lst:unformatted} it is not exactly clear to whether \texttt{arg7} belongs to \texttt{arg2} or \texttt{arg3}.
+This example is interesting challenges of developing a code formatter for Scala.
+% Most importantly, many popular coding styles enforce a column-width limit.
+% such as the Scala.js coding style~\autocite{scalajs}
 
-
-
+This thesis presents  design and implementation of \scalafmt.
+We the data structures, algorithms and tools that were used to develop \scalafmt.
 
 
 Software developers use code formatters to automatically reformat their source code.
@@ -154,7 +160,7 @@ Still, today no such framework exists and people who write Scala code each day a
 The goal of this thesis is not to address language agnostic code formatting.
 
 \subsection{Problem statement}
-This thesis addresses the problem of developing a code formatter, \texttt{scalafmt}, for the Scala programming language.
+This thesis addresses the problem of developing a code formatter, \scalafmt, for the Scala programming language.
 This formatter should:
 \begin{itemize}
   \item capture Scala's most common idioms and popular coding styles, most importanly a line length limit.
@@ -167,7 +173,7 @@ The main contributions presented in this thesis are the following:
 \begin{itemize}
     \item We have developed a framework of data structures, algorithms and tooling that help
       developing code formatters. This work is presented in section X.
-    \item We have applied this framework to develop \texttt{scalafmt}, a code
+    \item We have applied this framework to develop \scalafmt, a code
       formatter for the Scala programming language.
 \end{itemize}
 
@@ -258,4 +264,5 @@ Indeed, clang-format has an elaborate parser.
 \printbibliography{}
 
 \end{document}
+
 
