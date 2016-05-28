@@ -1,6 +1,7 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+% \usepackage[document]{ragged2e}
 \usepackage[english]{babel}
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{enumerate}
@@ -29,6 +30,10 @@
 \DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3} } }
 \captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize} }
 
+% \hyphenpenalty=10000
+\pretolerance=10000
+\tolerance=2000
+\emergencystretch=0pt
 \addbibresource{project.bib}
 
 % Single spacing after dots and colons
@@ -54,6 +59,7 @@
   belowskip=3mm,
   breakatwhitespace=false,
   showspaces=false,
+  showlines=true,
   columns=flexible,
   keepspaces=true,
   commentstyle=\color{dkgreen},
@@ -86,12 +92,23 @@
 \lstset{style=scala}
 
 Code formatters are used by software developers to automatically fix common formatting errors in their source code.
-Code formatters should not alter the behavior of the source code, only its aesthetics.
-Take for example this piece of code:
+Code formatters do not alter the behavior of the source code, only its aesthetics.
+Consider the code snippets in listings~\ref{lst:unformatted} and~\ref{lst:formatted1}.
 
+\noindent
+\begin{minipage}{.45\textwidth}
 \lstinputlisting[label={lst:unformatted}, caption=Unformatted code]{code/unformatted.scala}
+\end{minipage}
+\hfil
+\begin{minipage}{.45\textwidth}
+\lstinputlisting[label={lst:formatted1}, caption=Formatted code]{code/target/formatted1.scala}
+\end{minipage}
+Both snippets represent the same code but with modified formatting.
+The snippet in listing~\ref{lst:formatted1} is arguably more readable and easier to understand.
+For example, in listing~\ref{lst:unformatted} it is not obvious that \texttt{arg7} is an argument to the \texttt{arg3} function call.
+This thesis addresses how to automatically derive the 
 
-\lstinputlisting[label={lst:formatted}, caption=Formatted code]{code/target/formatted1.scala}
+
 
 
 
