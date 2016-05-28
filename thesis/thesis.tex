@@ -43,21 +43,77 @@
 
 \begin{document}
 
-\include{sections/settings} \include{sections/cover} \include{sections/abstract}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{scala}{
+  language=Scala,
+  aboveskip=3mm,
+  basicstyle=\scriptsize\ttfamily,
+  belowskip=3mm,
+  breakatwhitespace=false,
+  showspaces=false,
+  columns=flexible,
+  keepspaces=true,
+  commentstyle=\color{dkgreen},
+  keywordstyle=\color{blue},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  stepnumber=1,
+}
+
+
+\include{sections/settings}
+\include{sections/cover}
+\include{sections/abstract}
 \begin{abstract}
- Automatic code formatters bring many benefits to software development, yet they can be tricky to get right.
- This thesis addresses the problem of developing a code formatter for the Scala programming language that captures the language's most popular idioms and coding styles.
- Our work has been limited to formatting Scala code.
- Still, we have developed data structures, algorithms and tools that we believe can applied to develop code formatters for a variety of other programming languages.
+  Automatic code formatters bring many benefits to software development, yet they can be tricky to get right.
+  This thesis addresses the problem of developing a code formatter for the
+  Scala programming language that captures the language's most popular idioms
+  and coding styles.
+  Our work has been limited to formatting Scala code.
+  Still, we have developed data structures, algorithms and tools that we
+  believe can applied to develop code formatters for a variety of other
+  programming languages.
 \end{abstract}
 \tableofcontents
 % \include{sections/introduction}
-\section{Introduction}% (fold)
+\pagebreak
+\section{Introduction} % (fold)
 \label{sec:Introduction}
-Software developers use code formatters to automatically fix white A code formatter should not change the behaviour of code.
+\lstset{style=scala}
+
+Code formatters are used by software developers to automatically fix common formatting errors in their source code.
+Code formatters should not alter the behavior of the source code, only its aesthetics.
+Take for example this piece of code:
+
+\lstinputlisting[label={lst:unformatted}, caption=Unformatted code]{code/unformatted.scala}
+
+\lstinputlisting[label={lst:formatted}, caption=Formatted code]{code/target/formatted1.scala}
+
+
+
+Software developers use code formatters to automatically reformat their source code.
+A code formatter will typically fix common whitespace errors such as indentation, spaces and newline breaks.
+A key feature of code formatters is that they do not change the behavior of the code, only its aesthetics.
+
+
+
+
+
+
+
+
+
+
+Software developers use code formatters to automatically fix white
+A code formatter should not change the behaviour of code.
 Typically, a code formatter only modifies whitespace tokens, or syntactic trivia.
 Syntactic trivia has nothing to do with the behavior of code.
-Code formatters promise to relieve software developers from manually manipulating syntactic trivia.
+Code formatters promise to relieve software developers from manually manipulating
+syntactic trivia.
 Instead, developers can focus on writing correct, performant and maintainable code.
 
 Code formatters brings many other benefits to software development.
@@ -71,7 +127,8 @@ In more recent years we've seen many new opimization based code formatters, such
 Optimization based code formatters define a fit function for a given layout.
 A good layout has low cost while a bad layout has a high cost.
 The formatter runs an algorithm to choose the layout with the lowest code.
-This idea is not new, for example TeX uses a fit function to optimally break lines in text documents.
+This idea is not new, for example TeX uses a fit function to optimally break lines
+in text documents.
 
 Much work has been put into developing language agnostic code formatters or pretty printers.
 Researchers of such work correctly highlights that developing a custom code formatter for each language requires a lot of effort.
@@ -79,122 +136,109 @@ It may be possible that we find a perfect way to develop language independent co
 Still, today no such framework exists and people who write Scala code each day are still choosing to manually format their code.
 The goal of this thesis is not to address language agnostic code formatting.
 
-\subsection{Problem statement} This thesis addresses the problem of developing a code formatter, \texttt{scalafmt}, for the Scala programming language.
+\subsection{Problem statement}
+This thesis addresses the problem of developing a code formatter, \texttt{scalafmt}, for the Scala programming language.
 This formatter should:
 \begin{itemize}
-\item
- capture Scala's most common idioms and popular coding styles, most importanly a line length limit.
-\item
- be opinionated, it should be able to produce nice looking code even from computer generated input.
-\item
- be fast, <200ms for 99 percentile of source files, <2s for rest.
+  \item capture Scala's most common idioms and popular coding styles, most importanly a line length limit.
+  \item be opinionated, it should be able to produce nice looking code even from computer generated input.
+  \item be fast, <200ms for 99 percentile of source files, <2s for rest.
 \end{itemize}
 
-\subsection{Contributions} The main contributions presented in this thesis are the following:
+\subsection{Contributions}
+The main contributions presented in this thesis are the following:
 \begin{itemize}
-\item
- We have developed a framework of data structures, algorithms and tooling that help developing code formatters.
- This work is presented in section X.
-\item
- We have applied this framework to develop \texttt{scalafmt}, a code formatter for the Scala programming language.
+    \item We have developed a framework of data structures, algorithms and tooling that help
+      developing code formatters. This work is presented in section X.
+    \item We have applied this framework to develop \texttt{scalafmt}, a code
+      formatter for the Scala programming language.
 \end{itemize}
 
 \section{Background}
 \subsection{Scala the programming language}
-
-Throughout the paper we assume familiarity with the basics of the Scala Programming Language~\autocite{odersky_scala_2004}.
-\subsubsection{Higher order functions} \subsubsection{Pattern matching} \subsubsection{Metaprogramming with scala.meta}
+Throughout the paper we assume familiarity with the basics of the Scala
+Programming Language~\autocite{odersky_scala_2004}.
+\subsubsection{Pattern matching}
+\subsubsection{Higher order functions}
+\subsubsection{For comprehensions}
+\subsubsection{Dialects}
+\subsubsection{Metaprogramming with scala.meta}
 \begin{itemize}
-\item
- Tree nodes have parent links.
-\item
- Token classes are types.
+  \item Tree nodes have parent links.
+  \item Token classes are types.
 \end{itemize}
-\subsection{Code formatting} \subsubsection{Scalariform}
-\section{Framework}
-\subsection{Data structures} \subsubsection{FormatToken} \subsubsection{Split combinator} \subsubsection{Policy combinator} \subsubsection{OptimalToken combinator} \subsubsection{State} \subsubsection{Indent} \subsection{Algorithms} Pipeline of three stages: pre-processing, line wrapping and post-processing.
-\subsubsection{Pre-processing}
-\begin{itemize}
-\item
- AST vs.
- token stream
-\end{itemize}
+\subsection{Code formatting}
+\subsubsection{gofmt}
+\subsubsection{rustfmt}
+\subsubsection{dartfmt}
+\subsubsection{clang-format}
+\subsubsection{scalariform}
+\section{scalafmt}
+\subsection{Data structures}
+\subsubsection{FormatToken}
+\subsubsection{Split combinator}
+\subsubsection{Policy combinator}
+\subsubsection{OptimalToken combinator}
+\subsubsection{State}
+\subsubsection{Indent}
+\subsection{Algorithms}
+Pipeline of three stages: pre-processing, line wrapping and post-processing.
+\subsubsection{Pre-processing???}
+ \begin{itemize}
+   \item AST vs. token stream
+ \end{itemize}
 rustfmt considers that all eventually converge to a hybrid of the two.
 Indeed, clang-format has an elaborate parser.
-\subsubsection{Layout}
+\subsubsection{BestFirstSearch}
 \begin{itemize}
-\item
- Router
-\item
- Search.
+  \item Router
+  \item Search.
 \end{itemize}
-\subsubsection{Post-processing}
+\subsubsection{FormatWriter}
 \begin{itemize}
-\item
- vertical alignment
-\item
- comment formatting
-\item
- stripMargin alignment
+  \item vertical alignment
+  \item comment formatting
+  \item stripMargin alignment
 \end{itemize}
-\subsection{Tooling} \subsubsection{Heatmaps} \subsubsection{Unit tests} \subsubsection{Property based testing}
-\begin{enumerate}
-\item
- AST integrity
-\item
- Idempotent
-\end{enumerate}
-\section{scalafmt}
-\subsection{Custom optimizations}
-\begin{enumerate}
-\item
- dequeueOnNewStatements
-\item
- recurseOnBlocks
-\item
- escapeInPathologicalCases
-\item
- pruneSlowStates
-\end{enumerate}
+\subsection{Heatmaps}
+\subsection{Configuration}
+\subsubsection{maxColumn}
+\subsubsection{binPacking}
+\subsubsection{vertical alignment}
+\subsection{Optimizations}
+\subsubsection{dequeueOnNewStatements}
+\subsubsection{recurseOnBlocks}
+\subsubsection{escapeInPathologicalCases}
+\subsubsection{escapeInPathologicalCases}
+\subsubsection{pruneSlowStates}
+\subsection{Unit tests}
+\subsection{Property based tests}
+\subsubsection{AST Integrity}
+\subsubsection{Idempotency}
+\subsection{Regressions tests}
 \section{Evaluation}
-\subsection{Performance} \subsection{Output}
-\begin{itemize}
-\item
- gofmt
-\item
- rustfmt
-\item
- dartfmt
-\item
- clang-format
-\item
- scalariform
-\end{itemize}
+\subsection{Micro benchmarks}
+\subsection{Adoption}
 \section{Related work}
 \subsection{Combinator based}
 \begin{enumerate}
-\item
- Houghes 1995
-\item
- Wadler 1999
+  \item Houghes 1995
+  \item Wadler 1999
 \end{enumerate}
 \subsection{Optimization-oriented}
 \begin{enumerate}
-\item
- clang-format Dijkstra's 2010
-\item
- dartfmt Best-first search 2014
-\item
- rfmt 2015
+  \item clang-format Dijkstra's 2010
+  \item dartfmt Best-first search 2014
+  \item rfmt 2015
 \end{enumerate}
 \begin{enumerate}
-\item
- Optimal line breaking
-\item
- Oppen
+  \item Optimal line breaking
+  \item Oppen
 \end{enumerate}
 \section{Discussion}
-\subsection{Future work} \subsection{Conclusion} \printbibliography{}
+\subsection{Future work}
+\subsection{Conclusion}
+\printbibliography{}
 
 \end{document}
 
