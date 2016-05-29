@@ -1,5 +1,6 @@
 all: format setup
 	lwatch
+update: setup format
 setup:
 	mv ~/Downloads/My\ Library.bib project.bib || true
 format:
