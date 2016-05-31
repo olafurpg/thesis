@@ -31,11 +31,14 @@
 \DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3} } }
 \captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize} }
 
-\hyphenpenalty=9999
+\hyphenpenalty=10000
 % \pretolerance=9999
 % \tolerance=9999
 % \emergencystretch=0pt
 \addbibresource{project.bib}
+% \setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1.5}
 \newcommand{\scalafmt}{\texttt{scalafmt}}
 
 % Single spacing after dots and colons
@@ -50,7 +53,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-% \raggedright
+\raggedright
 
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -88,204 +91,8 @@
   which we believe can be of interest to developers of code formatters for other programming languages.
 \end{abstract}
 \tableofcontents
-% \include{sections/introduction}
-\pagebreak
-\section{Introduction} % (fold)
-\label{sec:Introduction}
-\lstset{style=scala}
-The main motivation of this study is to bring scalafmt, a new Scala code formatter, to the Scala community.
-The goal is to capture many popular coding styles so that a wide part of the Scala community can enjoy the benefits that come with automatic code formatting.
-
-Without code formatters, software developers are responsible for manipulating all syntactic trivia in their programs.
-What is syntactic trivia?
-Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:formatted1}.
-
-\begin{minipage}{.45\textwidth}
-\lstinputlisting[label={lst:unformatted}, caption=Unformatted code]{code/unformatted.scala}
-\end{minipage}
-\hfil
-\begin{minipage}{.45\textwidth}
-\lstinputlisting[label={lst:formatted1}, caption=Formatted code]{code/target/formatted1.scala}
-\end{minipage}
-% \hfil
-Both snippets represent the same program.
-The only difference lies in their syntactic trivia, that is where spaces and line breaks are used.
-% The snippet in listing~\ref{lst:formatted1} is result of running \scalafmt{} on listing~\ref{lst:unformatted} with a constrait of fitting maximum 35 characters on each line.
-Although the whitespace does not alter the execution of the program, listing~\ref{lst:formatted1} is arguably easier to read, understand and maintain for the software developer.
-The promise of code formatters is to automatically convert any program that may contain style issues, such as in listing~\ref{lst:unformatted}, into a readable and consistent looking program, such as in listing~\ref{lst:formatted1}.
-Automatic code formatting offers several benefits.
-% Without a code formatters, the software developer is left to come up with the layout she prefers the most.
-% With a code formatter, the choice is 
-% In this example, good code formatting offers great value to the software developer.
-
-Code formatting enables large-scale refactoring.
-Google used ClangFormat\autocite{jasper_clang-format_????}, a code formatter, to migrate legacy C++ code to the modern C++11 standard\autocite{wright_large-scale_2013}.
-ClangFormat was used to ensure that the refactored code adhered to Google's extensive C++ coding style\autocite{_google_????}.
-Similar migrations can be expected in the near future for the Scala community once new dialects, such as Dotty\autocite{rompf_f_2015}, gain popularity.
-
-Code formatting is valuable in collaborative coding environments.
-The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{_scala.js_????-1} contains over 2.600 words.
-Each contributor to the Scala.js project is expected to follow the coding style.
-Each contributed patch is manually verified against the coding style by the project maintainers.
-This adds a burden on both contributors and maintainers.
-Several maintainers of popular Scala libraries have expressed this sentiment.
-ENSIME\autocite{_ensime_????} is a popular Scala interaction mode for text editor.
-Sam Halliday, a maintainer of ENSIME, says ``I don't have time to talk about formatting in code reviews. I want the machine to do it so I can focus on the design.''\autocite{halliday_i_2016-1}.
-Akka\autocite{_akka_????} is another Scala library to build concurrent and distributed applications.
-Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
-With code formatters, software develoeprs can direct their full focus on writing correct, maintainable and fast code.
-
-\subsection{Whitespace style issues}
-Mechanical style issues are source code issues that can be fixed automatically.
-For example, consider listing~\ref{lst:mechanic}.
-\lstinputlisting[label={lst:mechanic}, caption=Style issues]{code/mechanic.scala}
-This code snippet leaves a lot left to be desired.
-Mechanical issues include the redundant spaces around parentheses, unnecessary semicolon after the \texttt{println} and the inconsistent indentation in the body of the if statement.
-Non-mechanical issues may include the fact the program prints an error message to the standard output and exits the process, instead of throwing an exception.
-
-This thesis only addresses the whitespace style issues.
-That is, to automatically fix the spaces and newline characters between the non-whitespace tokens in the original source code.
-We will leave it to the software developer to decide whether the unnecessary semicolon should remain in the source file or if the program should throw an exception.
-% Another example, the Spark style guide\autocite{spark-scala} follows the ``Rule of 30''\autocite{software_refactoring}.
-% The rule of 30 dictates amongst several things that method bodies should not contain more than 30 lines of code.
-% Although it is easy to statically detect a violation of that rule, it is non-trivial to automatically rewrite a method into smaller pieces of code.
-
-
-
-% Code formatters have existed for a long time.
-% In more recent years we've seen many new opimization based code formatters, such as clang-format, dartfmt and rfmt.
-% Optimization based code formatters define a fit function for a given layout.
-% A good layout has low cost while a bad layout has a high cost.
-% The formatter runs an algorithm to choose the layout with the lowest code.
-% This idea is not new, for example TeX uses a fit function to optimally break lines
-% in text documents.
-
-% Much work has been put into developing language agnostic code formatters or pretty printers.
-% Researchers of such work correctly highlights that developing a custom code formatter for each language requires a lot of effort.
-% It may be possible that we find a perfect way to develop language independent code formatters, see~\autocite{mps_article}.
-% Still, today no such framework exists and people who write Scala code each day are still choosing to manually format their code.
-% The goal of this thesis is not to address language agnostic code formatting.
-% \subsection{Non-mechanical style issues}
-% TODO(olafur)
-
-% \subsection{Problem statement}
-% This thesis addresses the problem of developing a code formatter, \scalafmt, for the Scala programming language.
-% This formatter should:
-% \begin{itemize}
-%   \item capture Scala's most common idioms and popular coding styles, most importanly a line length limit.
-%   \item be opinionated, it should be able to produce nice looking code even for the most egregiously formatted input.
-%   \item be fast, <200ms for 99 percentile of source files, <2s for rest.
-% \end{itemize}
-
-\subsection{Contributions}
-The main contribution presented in this thesis are the following:
-\begin{itemize}
-  \item scalafmt, a code formatter for the Scala programming language.
-    At the time of this writing, scalafmt has been available for 3 months, it has been installed over 5.000 times and is already in use by several open source Scala libraries.
-    For details on how to install and use scalafmt, refer to the scalafmt online documentation\autocite{geirsson_scalafmt_????}.
-    % Discussion of scalafmt adoption is presented in section~\ref{sec:adoption}.
-
-  \item algorithms and data structures to implement line wrapping under a maximum column-width limit.
-    This work is presented in section~\ref{sec:algorithms}.
-  \item tools to develop and test code formatters.
-    This work is presented in section~\ref{sec:tooling}.
-\end{itemize}
-The scalafmt formatter itself may only be of direct interest to the Scala community.
-However, much work in this thesis is not specifically tied to Scala and we hope can inspire the design of code formatters for other programming languages.
-
-\section{Background}
-This chapter explains the necessary background to understand Scala and code formatting.
-More specifically, we motivate why Scala presents an interesting challenge for code formatters.
-We go into details on Scala's rich syntax and popular idioms that introduced unique challenges to the design of scalafmt.
-We follow up with a brief history on code formatters for both Scala as well as other programming languages.
-We will see that although code formatters have a long history, the last 5 years have brought a lot of research in optimization based formatters, which scalafmt's design takes inspiration from.
-
-\subsection{Scala the programming language}
-Scala\autocite{odersky_scala_2004} is a general purpose programming language that was first released in 2004.
-Scala combines features from object-oriented and functional programming paradigms, allowing maximum code reuse and extensibility.
-
-Scala code can run on multiple platforms.
-Most commonly, Scala programs compile to bytecode and run on the JVM.
-With the releases of Scala.js\autocite{_scala.js_????-1}, JavaScript has recently become a popular target platform for Scala developers.
-Even more recently, the announcement of Scala Native\autocite{_scala-native/scala-native_????} shows that LLVM and may become yet another viable platform for Scala developers.
-
-Scala is a popular programming language.
-The Scala Center estimates that more than half a million developers are using Scala\autocite{odersky_scala_2016}.
-Large organizations such as Goldman Sachs, Twitter, IBM and Verizon run Scala code in production systems.
-The 2015 Stack Overflow Developer Survey shows that Scala is the 6th most loved technology and 4th best paying technology to work with\autocite{_stack_????}.
-The popularity of Apache Spark\autocite{_apache_????-1}, a cluster computing framework for large-scala data processing, has made Scala a language of choice for many developers and scientists working in big data and machine learning.
-
-Scala is a programming language with rich syntax and many idioms.
-The following chapters discuss in detail several prominent syntactic features and idioms of Scala.
-Most importantly, we highlight coding patterns that encourage developers to write larger statements instead of many small statements.
-In section~\ref{sec:algorithms}, we explain why large statements introduce a challenge to code formatting.
-
-\subsubsection{Higher order functions}
-Higher order functions (HOFs) are a common concept in functional programming languages and mathematics.
-HOFs are functions that can take other functions as arguments and can return functions as return values.
-Languages that provide a convenient syntax to manipulate HOFs are said to make functions first-class citizens.
-
-Functions are first-class citizens in Scala.
-Consider listing~\ref{lst:hof}.
-\lstinputlisting[label={lst:hof}, float, caption=Higher order functions]{code/hof.scala}
-The method \texttt{twice} takes an argument \texttt{f}, which is a function from an integer to an integer.
-The method returns a new function that will apply \texttt{f} twice to an integer argument.
-This small example takes advantage of several syntactic conveniences provided by Scala.
-For example, in line 2 the argument \texttt{\_ + 3} creates a new \texttt{Function[Int, Int]} object.
-The function call \texttt{f(x)} is in fact sugar for the method call \texttt{f.apply(x)} on a \texttt{Function[Int, Int]} instance.
-Listing~\ref{lst:hof_nosugar} shows an equivalent program to listing~\ref{lst:hof} without syntactic sugar.
-\lstinputlisting[label={lst:hof_nosugar}, float, caption=Higher order functions without syntactic sugar]{code/hof-nosugar.scala}
-Observe that what was expressed as a single statement in line 1 of listing~\ref{lst:hof} is expressed with multiple statements in lines 1 and 2 of listing~\ref{lst:hof_nosugar}.
-
-\subsubsection{Immutability}
-Functional programming encourages stateless functions which operate on immutable data structures and objects.
-An immutable object is an object that once initialized, cannot be modified.
-Immutability offers several benefits to software development in areas including concurrency and testing.
-Listing~\ref{lst:immutable} shows an example of manipulating an immutable list.
-\lstinputlisting[label={lst:immutable}, float, caption=Manipulating immutable list]{code/immutable.scala}
-Note that each \texttt{map} and \texttt{filter} operation creates a new copy of the list with the modified contents.
-The original list remains unchanged.
-Listing~\ref{lst:mutable} show the equivalent operation using a mutable list.
-\lstinputlisting[label={lst:mutable}, float, caption=Manipulating mutable list]{code/mutable.scala}
-Observe that what was listing~\ref{lst:immutable} is a single statement while listing~\ref{lst:mutable} is multiple statements.
-
-\subsubsection{SBT build configuration}
-SBT\autocite{_sbt_????} is an interactive build tool used by many Scala projects.
-SBT configuration files are written in \texttt{*.sbt} or \texttt{*.scala} files using Scala.
-Although SBT configuration files use plain Scala, they typically use coding patterns which are different from traditional Scala programs.
-Listing~\ref{lst:sbt} is an example project definition in SBT.
-\lstinputlisting[label={lst:sbt}, float, caption=SBT project definition]{code/sbt.scala}
-Observe that the project is defined as a single statement and makes extensive use of symbolic infix operators.
-Due to the nature of build configurations, argument lists to can becomes unwieldy long and a single project statement can span up to dozens or even hundreds of lines.
-
-% \subsection{Metaprogramming with scala.meta}
-% Scala.meta\autocite{_scala.meta_????} is a robust and portable metaprogramming toolkit for Scala.
-% Scala 2.10 compiler introduced the first metaprogramming API for Scala via compile-time macros and runtime reflection.
-% Library authors could take advantage of this new functionality to implement more advanced features in their libraries.
-% However, the Scala compiler metaprogramming facilities exposed compiler internals to its users.
-
-\subsection{Code formatting}
-\subsubsection{History}
-The science of displaying aesthetically pleasing text predates as early as 1956\autocite{harris_keyboard_1956}.
-The first efforts involved printing natural language text.
-As soon as higher-level programming languages evolved, programmers have researched how to appealingly display code.
-
-Scowen\autocite{scowen_soapprogram_1971} developed SOAP in 1971, a code formatter for ALGOL 60.
-The main motivation for SOAP was to make it ``easier for a programmer to examine and follow a program'' as well as to maintain a consistent coding style.
-SOAP did provide a line length limit.
-However, SOAP would fail execution if the provided line length turned out to be too small.
-With the hardware at the time, SOAP could format 600 lines of code per minute.
-
-Since then, each new 
-
-\subsubsection{gofmt}
-\subsubsection{rustfmt}
-\subsubsection{dartfmt}
-\subsubsection{clang-format}
-\subsubsection{scalariform}
-There already exists a widely used code formatter for Scala called Scalariform\autocite{scalariform}.
-However, Scalariform lacks the ability to enforce a column width limit,
-which we consider necessary to capture many popular Scala coding styles.
+\include{sections/introduction}
+\include{sections/background}
 \section{Algorithms}\label{sec:algorithms}
 \subsection{Data structures}
 \subsubsection{FormatToken}
