@@ -76,15 +76,27 @@ Due to the nature of build configurations, argument lists to can becomes unwield
 % We emphasize formatters that support line length length limits.
 % As future sections discuss, line length limits turn out to be a big challenge to implement.
 
-In this chapter, we look at a variety of code formatters that have been developed.
+Code formatting and pretty printing\footnote{
+  This thesis uses code formatting wherever pretty printing is concerned.
+  In Hughes\autocite{hughes_design_1995} terms, pretty printing is a subset of code formatting where
+  the former is only concerned with presenting data structures while the latter is
+  concerned with the harder problem of formatting existing source code.} has a long tradition.
+In this chapter, we look at a variety of tools and algorithm that have been developed over the last 70 years.
 
 \subsubsection{Natural language}
 The science of displaying aesthetically pleasing text predates as early as 1956\autocite{harris_keyboard_1956}.
-The first efforts involved printing natural language text and finding the right places to insert carriage returns to break long lines.
-As soon as programming languages evolved, software developers began to apply the similar ideas to source code.
+The first efforts involved inserting carriage returns in natural language text.
+Until that time, writers were responsible for manually providing carriage returns in their documents before sending them off for printing.
+The motivation was to ``save operating labor and reduce human error''.
+Once type-setting became more commonplace, the methods for breaking lines of text got more sophisticated.
 
-LaTeX
-
+Knuth and Plass developed a famous line breaking algorithm\autocite{knuth_breaking_1981} for \LaTeX{} in 1981.
+\LaTeX is a popular typesetting program among scientific academic circles and is the program that was used to generate this very document.
+The line breaking problem was the same as in the 60s: how to optimally break a paragraph of text into lines so that the right margin is minimized.
+The primitive approach is to greedily fit as many words on a line as possible.
+However, such an approach can produce embarrassingly bad output in the worst case.
+Knuth's algorithm uses dynamic programming to find an optimal layout with regards to a fit function that penalizes empty space on the right margin of the paragraph.
+This algorithm remains a textbook example of the application of dynamic programming\autocite{dreyfus2002richard}.
 
 \subsubsection{ALGOL 60}
 Scowen\autocite{scowen_soapprogram_1971} developed SOAP in 1971, a code formatter for ALGOL 60.
