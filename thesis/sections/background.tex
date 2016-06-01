@@ -83,7 +83,7 @@ Code formatting and pretty printing\footnote{
   concerned with the harder problem of formatting existing source code.} has a long tradition.
 In this chapter, we look at a variety of tools and algorithm that have been developed over the last 70 years.
 
-\subsubsection{Natural language}
+\subsubsection{Natural language line breaking}
 The science of displaying aesthetically pleasing text predates as early as 1956\autocite{harris_keyboard_1956}.
 The first efforts involved inserting carriage returns in natural language text.
 Until that time, writers were responsible for manually providing carriage returns in their documents before sending them off for printing.
@@ -213,11 +213,16 @@ The dartfmt optimized search is able to eliminate such dead ends and quickly fig
 \subsubsection{gofmt}
 Gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
 Gofmt is noteworthy for its heavy adoption by the Go programming community.
-According to official documentation\autocite{CodeR59:online}, almost all written Go code is formatted with gofmt.
-Moreover, gofmt has successfully been used to automatically migrate Go codebases from legacy versions to new source-incompatible releases.
+Official Go documentation\autocite{CodeR59:online} claims that almost all written Go code is formatted with gofmt.
+Moreover, besides formatting, gofmt is used to automatically migrate Go codebases from legacy versions to new source-incompatible releases.
 However, gofmt supports neither a column limit nor an opinionated setting.
 Line breaks are preserved in the user's input.
-These limitations makes gofmt less relevant for the work presented in this thesis.
+For example, listing~\ref{lst:gofmt} shows a Go program that was adapted from listing~\ref{lst:unformatted} in the introduction.
+\lstinputlisting[label={lst:gofmt}, caption=Gofmt example input/output]{code/target/gofmt.go}
+The output of running gofmt through listing~\ref{lst:gofmt} is identical to the input.
+This un-opinionated behavior may be desirable for many software developers,
+since it gives the programmer flexibility to choose a different layout for each argument list.
+However, this thesis will not focus on such behavior.
 
 % TODO?
 % \subsubsection{rustfmt} 
