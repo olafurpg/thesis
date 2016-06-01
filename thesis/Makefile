@@ -6,6 +6,7 @@ setup:
 format:
 	mkdir -p code/target
 	scalafmt -f code/unformatted.scala --maxColumn 35 > code/target/formatted1.scala
+	clang-format code/terrible.cpp > code/target/unterrible.cpp
 clean:
 	rm -rf code/target
 	clean_tex

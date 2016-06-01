@@ -1,0 +1,1 @@
+int main(int argc,char const*argv[]) { Defn.Object(Nil, "ClangFormat", Term.Name("State"), Foo.Bar( Template(Nil, Seq( Ctor.Ref.Name("ClangLogger")), Term.Param( Nil, Name.Anonymous(), None, None)) ), Term.Name("clang-format") ); }

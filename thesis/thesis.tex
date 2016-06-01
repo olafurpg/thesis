@@ -37,8 +37,7 @@
 % \emergencystretch=0pt
 \addbibresource{project.bib}
 % \setlength{\parindent}{2em}
-\setlength{\parskip}{1em}
-\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\baselinestretch}{1.1}
 \newcommand{\scalafmt}{\texttt{scalafmt}}
 
 % Single spacing after dots and colons
@@ -91,45 +90,11 @@
   which we believe can be of interest to developers of code formatters for other programming languages.
 \end{abstract}
 \tableofcontents
+\setlength{\parskip}{1em}
 \include{sections/introduction}
 \include{sections/background}
-\section{Algorithms}\label{sec:algorithms}
-\subsection{Data structures}
-\subsubsection{FormatToken}
-\subsubsection{Split}
-\subsubsection{Policy}
-\subsubsection{OptimalToken}
-\subsubsection{State}
-\subsubsection{Indent}
-\subsection{BestFirstSearch}
-\subsubsection{Router}
-\begin{itemize}
-  \item Router
-  \item Search.
-\end{itemize}
-\subsection{Optimizations}
-\subsubsection{dequeueOnNewStatements}
-\subsubsection{recurseOnBlocks}
-\subsubsection{escapeInPathologicalCases}
-\subsubsection{escapeInPathologicalCases}
-\subsubsection{pruneSlowStates}
-\subsubsection{FormatWriter}
-\begin{itemize}
-  \item vertical alignment
-  \item comment formatting
-  \item stripMargin alignment
-\end{itemize}
-\section{Tooling}\label{sec:tooling}
-\subsection{Heatmaps}
-\subsection{Configuration}
-\subsubsection{maxColumn}
-\subsubsection{binPacking}
-\subsubsection{vertical alignment}
-\subsection{Unit tests}
-\subsection{Property based tests}
-\subsubsection{AST Integrity}
-\subsubsection{Idempotency}
-\subsection{Regressions tests}
+\include{sections/algorithms}
+\include{sections/tooling}
 \section{Evaluation}
 \subsection{Micro benchmarks}
 \subsection{Adoption}\label{sec:adoption}
@@ -152,6 +117,8 @@
 \section{Discussion}
 \subsection{Future work}
 \subsection{Conclusion}
+
+\pagebreak
 \printbibliography{}
 
 \end{document}

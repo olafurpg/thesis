@@ -11,7 +11,7 @@ Scala combines features from object-oriented and functional programming paradigm
 
 Scala can run on multiple platforms.
 Most commonly, Scala programs compile to bytecode and run on the JVM.
-With the releases of Scala.js\autocite{_scala.js_????-1}, JavaScript has recently become a popular target platform for Scala developers.
+With the releases of Scala.js\autocite{doeraene_scala.js_2015}, JavaScript has recently become a popular target platform for Scala developers.
 Even more recently, the announcement of Scala Native\autocite{_scala-native/scala-native_????} shows that LLVM and may become yet another viable platform for Scala developers.
 
 Scala is a popular programming language.
@@ -112,7 +112,7 @@ Firstly, in his paper he studies how to format comments.
 Secondly, he presents several different formatting layouts which can be configured by the users.
 Both of those concerns are relevant for modern code formatters.
 
-\subsubsection{Language agnostic}
+\subsubsection{Language agnostic}\label{sec:agnostic}
 Derek C. Oppen pioneered the work on language agnostic code formatting in 1980\autocite{oppen_prettyprinting_1980}.
 Oppen presented an algorithm is not tied to particular programming language.
 The algorithms runs in linear time to the size of the input program and is incredibly memory efficient.
@@ -121,12 +121,14 @@ Besides impressive performance results, Oppen claims that a key feature of the a
 The algorithm prints formatted lines as soon as they are input instead of waiting until the entire input stream has been read.
 However, Oppen's algorithm shares a worrying limitation with SOAP: it cannot handle the case when the line length is insufficiently large.
 
-Mark van der Brand presented a library could generate a formatters given context-free grammar\autocite{van_den_brand_generation_1996}.
+Mark van der Brand presented a library could generate a formatter given a context-free grammar\autocite{van_den_brand_generation_1996}.
 Brand correctly identifies that the development of code formatters requires a lot of effort and a generic solution may be possible.
 Beyond the usual motivations for developing code formatters, Brand mentions that formatters ``relieve documentation writers from typesetting programs by hand''.
+The focus on documentation is reflected by the fact that generated formatter could produce both ASCII formatted code as well at \LaTeX{} formatted code.
+Since comments are typically not included a syntax tree, the presented algorithm has an elaborate scheme to infer the location of comments in the produced output.
 Like Oppen's algorithm, this library requires the user to translate code from a particular programming language into the library's constructs.
-The library borrows the concept of a \emph{box} from Knuth\autocite{knuth_breaking_1981}.
- 
+Unlike Oppen's algorithm, Brand does not consider line length limits in his algorithm.
+
 John Hughes extended on Oppen's work on language agnostic formatting in term of programming techniques\autocite{hughes_design_1995}.
 Hughes presented a design of a \emph{pretty-printing} library that leverages the functional programming paradigm.
 Hughes says his library is a pretty-printer and not code formatters since the library does not consider how to format existing source code.
@@ -134,13 +136,85 @@ Instead, the library prints data structures directly from their values.
 Wadler\autocite{wadler_prettier_2003} and Chitil\autocite{swierstra_linear_2009} extend on Hughes's and Oppen's work.
 However, only in term of functional programming techniques instead of formatting or layout algorithms.
 
-
+% More recently, Bagge and Hasu extend on Wadlers work in a language agnostic \emph{pipeline} for formatters\autocite{bagge_pretty_2013}.
+% The main motivation for this work was to increase modularity and composability of format
 
 \subsubsection{clang-format}
+Daniel Jasper triggered a new trend in optimization based coded formatters with the release of \emph{ClangFormat}\autocite{jasper_clang-format_2014} in 2013.
+ClangFormat is a code formatter for C, C++, Java, JavaScript, Objective-C and Protobuf code.
+Figure~\ref{fig:clang_format} shows the architecture of ClangFormat.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{img/clang-format.png}
+  \caption{ClangFormat architecture}
+  \label{fig:clang_format}
+\end{figure}
+The main components are the \emph{structural parser} and the \emph{layouter}.
+
+ClangFormat employs a structural parser to split source code into a sequence of \emph{unwrapped-lines}.
+An unwrapped line is a statement that should fit on a single line if given sufficient line length.
+A key feature of unwrapped lines is that they should not influence other unwrapped lines.
+The parser is lenient and parses even syntactically invalid code.
+The parsed unwrapped lines are passed onto the layouter.
+
+The ClangFormat layouter uses a novel approach to implement line wrapping.
+Each line break is assigned a penalty according to several rules such as nesting and token type.
+At each token, the layouter can choose to continue on the same line or break.
+This forms an acyclic weighted directed graph with the first token of an unwrapped line being the root and all paths ending at the last token of the unwrapped line.
+The layouter employs Dijkstra's\autocite{dijkstra_note_1959} shortest path algorithm to find the layout that has the lowest penalty.
+To guarantee good performance, the layouter uses several domain specific optimizations to cut the search space.
+
+Despite being seemingly language independent, ClangFormat does leverage the language agnostic formatting techniques described section~\ref{sec:agnostic}.
+Support for each language has been added as ad-hoc extensions to the ClangFormat parser and layouter.
+ClangFormat supports a variety of configuration options, include 6 configurations based on published style guides from Google, LLVM and several other large organizations.
+
+A notable feature of ClangFormat is that it's opinionated.
+ClangFormat makes a best effort to format even the most egregiously formatted input.
+Listing~\ref{lst:clang_opinion} shows an offensively formatted C++ code snippet.
+\lstinputlisting[label={lst:clang_opinion}, float, caption=Unformatted C++ code]{code/terrible.cpp}
+Listing~\ref{lst:clang_opinion2} shows the same snippet after being formatted with ClangFormat.
+\lstinputlisting[label={lst:clang_opinion2}, float, caption=ClangFormat formatted C++ code]{code/target/unterrible.cpp}
+ClangFormat is opinionated in the sense that it does not respect the user's line breaking decisions.
+This feature makes it possible to ensure that all code follows the same style guide, regardless of author.
+
 \subsubsection{dartfmt}
+Dartfmt\autocite{nystrom_dart_style_2014} is an opinionated code formatter for the Dart programming language, developed at Google.
+Like ClangFormat, dartfmt has a line length setting and is opinionated.
+Bob Nystrom, the author of dartfmt, discusses the design of dartfmt in an excellent post\autocite{nystrom_hardest_2015} on his blog.
+In his post, Nystrom cites Knuth's work on \LaTeX{} to argue that the design of a code formatters is significantly complicated by a column limit setting.
+The line wrapping algorithm employs a \emph{best-first search}\autocite{pearl_heuristics:_1984},
+a minor variant of the shortest path search in ClangFormat.
+As with ClangFormat, a range of domain-specific optimizations were required to make the search scale for real-world code.
+For example, listing~\ref{lst:dead_end} show a motivating case for the \emph{avoid dead ends} optimization.
+\lstinputlisting[label={lst:dead_end}, float, caption=Avoid dead ends]{code/dead-end.dart}
+Since the call to \texttt{firstCall} already fits on a line, there is no need to explore line breaks inside its argument list.
+A textbook best-first search would explore a space of line breaks inside the \texttt{firstCall} argument list while the dartfmt optimized search is able to quickly eliminate such dead ends and break before the \texttt{"long argument string"} literal.
+
+
 \subsubsection{gofmt}
+Gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
+Gofmt is noteworthy for its heavy adoption by the Go programming community.
+Moreover, gofmt has successfully been used to automatically migrate Go codebases from legacy versions to new source-incompatible releases.
+However, gofmt does support neither a column limit nor an opinionated setting.
+These limitations makes gofmt less interesting for the work presented in this thesis.
+
 \subsubsection{rustfmt}
 \subsubsection{scalariform}
-There already exists a widely used code formatter for Scala called Scalariform\autocite{scalariform}.
-However, Scalariform lacks the ability to enforce a column width limit,
-which we consider necessary to capture many popular Scala coding styles.
+Scalariform\autocite{russell_scalariform_2010} is a widely used code formatter for Scala.
+Scalariform does an excellent job of tidying common formatting errors and it supports a variety of configuration options.
+Scalariform is also impressively fast, it can format large files with over 4.000 lines of code in under 250 milliseconds on a modern laptop.
+
+However, Scalariform lacks two key features: a line length and opinionated setting.
+Firstly, the line length setting is necessary to implement many popular coding styles in the Scala community.
+For example, the Spark\autocite{xin_spark_2015} and Scala.js\autocite{doeraene_scala.js_2015} coding styles have 100 character and 80 character column limits, respectively.
+Second, the lack of an opinionated setting makes it impossible to enforce certain coding styles.
+For example, the Scala.js coding style enforces \emph{bin-packing}, where arguments should be arranged compactly up to the column length limit.
+Listings~\ref{lst:bin_pack} and~\ref{lst:non_bin_pack} shows an example of bin packing enabled and disabled, respectively.
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:bin_pack}, caption=Bin-packing]{code/bin-pack.scala}
+\end{minipage}
+\hfil
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:non_bin_pack}, caption=No bin-packing]{code/non-bin-pack.scala}
+\end{minipage}
+Scalariform has no setting to convert formatted code like in listing~\ref{lst:non_bin_pack} to the code in listing~\ref{lst:bin_pack}.
