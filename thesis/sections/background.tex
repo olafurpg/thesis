@@ -91,7 +91,8 @@ The motivation was to ``save operating labor and reduce human error''.
 Once type-setting became more commonplace, the methods for breaking lines of text got more sophisticated.
 
 Knuth and Plass developed a famous line breaking algorithm\autocite{knuth_breaking_1981} for \LaTeX{} in 1981.
-\LaTeX is a popular typesetting program among scientific academic circles and is the program that was used to generate this very document.
+\LaTeX is a typesetting program that is popular among scientific academic circles.
+\LaTeX is the program that was used to generate this very document.
 The line breaking problem was the same as in the 60s: how to optimally break a paragraph of text into lines so that the right margin is minimized.
 The primitive approach is to greedily fit as many words on a line as possible.
 However, such an approach can produce embarrassingly bad output in the worst case.
@@ -156,6 +157,45 @@ However, their contribution to formatting and layout algorithms are limited.
 % More recently, Bagge and Hasu extend on Wadlers work in a language agnostic \emph{pipeline} for formatters\autocite{bagge_pretty_2013}.
 % The main motivation for this work was to increase modularity and composability of format
 
+\subsubsection{gofmt}
+Gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
+Gofmt was released in the early days of Go in 2009 and is noteworthy for its heavy adoption by the Go programming community.
+Official Go documentation\autocite{CodeR59:online} claims that almost all written Go code is formatted with gofmt.
+Moreover, besides formatting, gofmt is used to automatically migrate Go codebases from legacy versions to new source-incompatible releases.
+However, gofmt supports neither a column limit nor an opinionated setting.
+Line breaks are preserved in the user's input.
+For example, listing~\ref{lst:gofmt} shows a Go program that was adapted from listing~\ref{lst:unformatted} in the introduction.
+\lstinputlisting[label={lst:gofmt}, caption=Gofmt example input/output]{code/target/gofmt.go}
+The output of running gofmt through listing~\ref{lst:gofmt} is identical to the input.
+This un-opinionated behavior may be desirable for many software developers,
+since it gives the programmer flexibility to choose a different layout for each argument list.
+However, this thesis will not focus on such behavior.
+
+\subsubsection{Scalariform}
+Scalariform\autocite{russell_scalariform_2010} was released in 2010 and is a widely used code formatter for Scala.
+Scalariform does an excellent job of tidying common formatting errors and it supports a variety of configuration options.
+Scalariform is also impressively fast, it can format large files with over 4.000 lines of code in under 250 milliseconds on a modern laptop.
+However, Scalariform shares the same limitations with gofmt: it lacks a a line length and opinionated setting.
+
+Firstly, the line length setting is necessary to implement many popular coding styles in the Scala community.
+For example, the Spark\autocite{xin_spark_2015} and Scala.js\autocite{doeraene_scala.js_2015} coding styles have 100 character and 80 character column limits, respectively.
+As we have learned from other code formatters, adding a line length setting is non-trivial and would require a significant redesign of Scalariform.
+
+Secondly, the lack of an opinionated setting makes it impossible to enforce certain coding styles.
+For example, the Scala.js coding style enforces \emph{bin-packing}, where arguments should be arranged compactly up to the column length limit.
+Listings~\ref{lst:bin_pack} and~\ref{lst:non_bin_pack} shows an example of bin packing enabled and disabled, respectively.
+
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:bin_pack}, caption=Bin-packing]{code/bin-pack.scala}
+\end{minipage}
+\hfil
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:non_bin_pack}, caption=No bin-packing]{code/non-bin-pack.scala}
+\end{minipage}
+
+Since Scalariform preserves the line breaking decisions from the input,
+Scalariform has no setting to convert formatted code like in listing~\ref{lst:non_bin_pack} to the code in listing~\ref{lst:bin_pack}.
+
 \subsubsection{clang-format}
 Daniel Jasper triggered a new trend in optimization based coded formatters with the release of \emph{ClangFormat}\autocite{jasper_clang-format_2014} in 2013.
 ClangFormat was developed at Google and is a code formatter for C, C++, Java, JavaScript, Objective-C and Protobuf code.
@@ -195,7 +235,8 @@ ClangFormat is opinionated in the sense that it does not respect the user's line
 This feature makes it possible to ensure that all code follows the same style guide, regardless of author.
 
 \subsubsection{dartfmt}
-Dartfmt\autocite{nystrom_dart_style_2014} code formatter for the Dart programming language, developed at Google.
+Dartfmt\autocite{nystrom_dart_style_2014} was released in 2014 and follows the optimization based trend initiated by ClangFormat.
+Darftfmt is a code formatter for the Dart programming language, developed at Google.
 Like ClangFormat, dartfmt has a line length setting and is opinionated.
 Bob Nystrom, the author of dartfmt, discusses the design of dartfmt in an excellent post\autocite{nystrom_hardest_2015} on his blog.
 In his post, Nystrom argues that the design of a code formatters is significantly complicated by a column limit setting.
@@ -209,45 +250,15 @@ A plain best-first search would explore a variety of different formatting layout
 However, the call to \texttt{firstCall} already fits on a line and there is no need to explore line breaks inside its argument list.
 The dartfmt optimized search is able to eliminate such dead ends and quickly figure out to break before the \texttt{"long argument string"} literal.
 
+\subsubsection{rfmt}
+The most recent addition to the optimization based formatting trend is rfmt\autocite{yelland_new_2016}.
+Rfmt is a code formatter for the programming language and statistical programming environment \emph{R}.
+Rfmt is released in 2016 -- after the work on this thesis started -- and like its optimization based precursors is also developed at Google.
+In his excellent technical report\autocite{yelland_new_2016}, Yelland briefly summarizes the history presented in this section.
+Rmft
 
-\subsubsection{gofmt}
-Gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
-Gofmt is noteworthy for its heavy adoption by the Go programming community.
-Official Go documentation\autocite{CodeR59:online} claims that almost all written Go code is formatted with gofmt.
-Moreover, besides formatting, gofmt is used to automatically migrate Go codebases from legacy versions to new source-incompatible releases.
-However, gofmt supports neither a column limit nor an opinionated setting.
-Line breaks are preserved in the user's input.
-For example, listing~\ref{lst:gofmt} shows a Go program that was adapted from listing~\ref{lst:unformatted} in the introduction.
-\lstinputlisting[label={lst:gofmt}, caption=Gofmt example input/output]{code/target/gofmt.go}
-The output of running gofmt through listing~\ref{lst:gofmt} is identical to the input.
-This un-opinionated behavior may be desirable for many software developers,
-since it gives the programmer flexibility to choose a different layout for each argument list.
-However, this thesis will not focus on such behavior.
+
 
 % TODO?
 % \subsubsection{rustfmt} 
 
-\subsubsection{scalariform}
-Scalariform\autocite{russell_scalariform_2010} is a widely used code formatter for Scala.
-Scalariform does an excellent job of tidying common formatting errors and it supports a variety of configuration options.
-Scalariform is also impressively fast, it can format large files with over 4.000 lines of code in under 250 milliseconds on a modern laptop.
-However, like other code formatters such as gofmt, Scalariform lacks two key features: a line length and opinionated setting.
-
-Firstly, the line length setting is necessary to implement many popular coding styles in the Scala community.
-For example, the Spark\autocite{xin_spark_2015} and Scala.js\autocite{doeraene_scala.js_2015} coding styles have 100 character and 80 character column limits, respectively.
-As we have learned from other code formatters, adding a line length setting is non-trivial and would require a significant redesign of Scalariform.
-
-Secondly, the lack of an opinionated setting makes it impossible to enforce certain coding styles.
-For example, the Scala.js coding style enforces \emph{bin-packing}, where arguments should be arranged compactly up to the column length limit.
-Listings~\ref{lst:bin_pack} and~\ref{lst:non_bin_pack} shows an example of bin packing enabled and disabled, respectively.
-
-\begin{minipage}{.45\textwidth}
-  \lstinputlisting[label={lst:bin_pack}, caption=Bin-packing]{code/bin-pack.scala}
-\end{minipage}
-\hfil
-\begin{minipage}{.45\textwidth}
-  \lstinputlisting[label={lst:non_bin_pack}, caption=No bin-packing]{code/non-bin-pack.scala}
-\end{minipage}
-
-Since Scalariform preserves the line breaking decisions from the input,
-Scalariform has no setting to convert formatted code like in listing~\ref{lst:non_bin_pack} to the code in listing~\ref{lst:bin_pack}.
