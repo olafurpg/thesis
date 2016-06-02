@@ -3,7 +3,8 @@ This chapter explains the necessary background to understand Scala and code form
 More specifically, we motivate why Scala presents an interesting challenge for code formatters.
 We go into details on Scala's rich syntax and popular idioms that introduced unique challenges to the design of scalafmt.
 We follow up with a brief history on code formatters for both Scala as well as other programming languages.
-We will see that although code formatters have a long history, the last 5 years have brought a lot of research in optimization based formatters, which scalafmt's design takes inspiration from.
+We will see that although code formatters have a long history, a new tradition of optimization based formatters started only recently in 2013.
+% Scalafmt follows this new tradition.
 
 \subsection{Scala the programming language}
 Scala\autocite{odersky_scala_2004} is a general purpose programming language that was first released in 2004.
@@ -147,15 +148,11 @@ Since comments are typically not included a syntax tree, the presented algorithm
 Like Oppen's algorithm, this library requires the user to plug in a preprocessor to integrate a particular programming language into the Brand's library.
 Unlike Oppen's algorithm, Brand does not consider line length limits in his algorithm.
 
-John Hughes extended on Oppen's work on language agnostic formatting in term of programming techniques\autocite{hughes_design_1995}.
-Hughes presented a design of a \emph{pretty-printing} library that leverages the functional programming paradigm.
-Hughes says his library is a pretty-printer and not code formatters since the library does not consider how to format existing source code.
-Instead, the library prints data structures directly from their values.
-Wadler\autocite{wadler_prettier_2003} and Chitil\autocite{swierstra_linear_2009} extend on Hughes's and Oppen's work in term of performance and functional programming techniques.
-However, their contribution to formatting and layout algorithms are limited.
-
-% More recently, Bagge and Hasu extend on Wadlers work in a language agnostic \emph{pipeline} for formatters\autocite{bagge_pretty_2013}.
-% The main motivation for this work was to increase modularity and composability of format
+John Hughes extended on Oppen's work on language agnostic formatting in term of functional programming techniques\autocite{hughes_design_1995}.
+Hughes presented a design of a \emph{pretty-printing} library that leverages combinators with algebraic properties to express formatting layouts.
+Hughes claims that such a formal approach was invaluable when designing the pretty-printing algebra.
+Wadler\autocite{wadler_prettier_2003} and Chitil\autocite{swierstra_linear_2009} extend on Hughes's and Oppen's work in term of performance and programming techniques.
+However, this branch of work has been limited to printing data structures and not how to format format existing source code.
 
 \subsubsection{gofmt}
 Gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
@@ -251,13 +248,65 @@ However, the call to \texttt{firstCall} already fits on a line and there is no n
 The dartfmt optimized search is able to eliminate such dead ends and quickly figure out to break before the \texttt{"long argument string"} literal.
 
 \subsubsection{rfmt}
-The most recent addition to the optimization based formatting trend is rfmt\autocite{yelland_new_2016}.
-Rfmt is a code formatter for the programming language and statistical programming environment \emph{R}.
-Rfmt is released in 2016 -- after the work on this thesis started -- and like its optimization based precursors is also developed at Google.
-In his excellent technical report\autocite{yelland_new_2016}, Yelland briefly summarizes the history presented in this section.
-Rmft
+\newcommand{\rfmt}{\texttt{rfmt}}
+The most recent addition to the optimization based formatting trend is \rfmt\autocite{yelland_new_2016}.
+\rfmt{} is a code formatter for the programming language and statistical programming environment \emph{R}.
+The formatter was released in 2016 -- after the background work on this thesis started -- and like its optimization based forerunners is also developed at Google.
+\rfmt{} makes an interesting contribution in that it combines the algebraic combinator approach from Hughes\autocite{hughes_design_1995} and the optimization based approach from \LaTeX{} and ClangFormat.
+
+The algebraic combinator approach makes it easy to express a variety of formatting layouts.
+\rfmt{} uses 6 layout combinators, or \emph{blocks} as they are called in the report, to express all formatting rules for the R programming language.
+The blocks are the following:
+\begin{itemize}
+  \item $TextBlock(txt)$: unbroken string literal.
+  \item $LineBlock(b_1, b_2, \ldots, b_n)$: horizontal combination of blocks.
+  \item $StackBlock(b_1, b_2, \ldots, b_n)$: vertical combination of blocks.
+  \item $ChoiceBlock(b_1, b_2, \ldots, b_n)$: selection of a best block.
+  \item $IndentBlock(n, l)$: indent block $b$ by $n$ spaces.
+  \item $WrapBlock(b_1, b_2, \ldots, b_n)$:
+    Fit as many blocks on each line as possible, breaking only when the column limit is exceeded.
+    % Similar to \emph{bin-packing} in other code formatters such as ClangFormat.
+\end{itemize}
+As we will see, these relatively few combinators allow an impressive amount of flexibility.
+Listings~\ref{lst:rfmt1} and~\ref{lst:rfmt2} shows two different layouts to format an argument list.
+
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:rfmt1}, caption=Line block]{code/line.scala}
+\end{minipage}
+\hfil
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:rfmt2}, caption=Stack block]{code/stack.scala}
+\end{minipage}
+
+Listing\ref{lst:rfmt-example} shows how we can express the choice between the two layouts in the combinator algebra above.
+\lstinputlisting[numbers=none, label={lst:rfmt-example}, float,
+                 caption=Formatting layout for argument lists]{code/rfmt-example.scala}
 
 
+In this case, we prefer the line block from listing~\ref{lst:rfmt1} since it requires fewer lines.
+However, our preference changes if the function name is longer as is shown in listings~\ref{lst:rfmt3} and~\ref{lst:rfmt4}.
+
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:rfmt3}, caption=Line block]{code/line1.scala}
+\end{minipage}
+\hfil
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[label={lst:rfmt4}, caption=Stack block]{code/stack1.scala}
+\end{minipage}
+
+Here, we clearly prefer the stack block in listing\ref{lst:rfmt4}.
+The blocks are responsible for expressing the formatting layouts.
+We calculate \emph{layout functions} to choose an optimal layout.
+
+To find an optimal layout, \rfmt{} employs a smart dynamic programming trick.
+Firstly, a na\"{\i}ve approach would be to enumerate all possible combinations of layouts and choose the one 
+
+
+To efficiently calculate an optimal layout for a given block.
+\rfmt{} makes
+The layout function is used to efficiently find an formatting layout.
+The
+Optimizations.
 
 % TODO?
 % \subsubsection{rustfmt} 
