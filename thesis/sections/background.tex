@@ -248,14 +248,16 @@ However, the call to \texttt{firstCall} already fits on a line and there is no n
 The dartfmt optimized search is able to eliminate such dead ends and quickly figure out to break before the \texttt{"long argument string"} literal.
 
 \subsubsection{rfmt}
+\newcommand{\naive}{na\"{\i}ve}
 \newcommand{\rfmt}{\texttt{rfmt}}
-The most recent addition to the optimization based formatting trend is \rfmt\autocite{yelland_new_2016}.
-\rfmt{} is a code formatter for the programming language and statistical programming environment \emph{R}.
-The formatter was released in 2016 -- after the background work on this thesis started -- and like its optimization based forerunners is also developed at Google.
+The most recent addition to the optimization based formatting trend is \rfmt\autocite{yelland_new_2016},
+a code formatter for the statistical programming environment \emph{R}.
+The formatter was released in 2016 -- after the background work on this thesis started -- and like its forerunners is also developed at Google.
 \rfmt{} makes an interesting contribution in that it combines the algebraic combinator approach from Hughes\autocite{hughes_design_1995} and the optimization based approach from \LaTeX{} and ClangFormat.
 
 The algebraic combinator approach makes it easy to express a variety of formatting layouts.
-\rfmt{} uses 6 layout combinators, or \emph{blocks} as they are called in the report, to express all formatting rules for the R programming language.
+\rfmt{} uses 6 layout combinators or \emph{blocks} as they are called in the report.
+% , to express all formatting rules for the R programming language.
 The blocks are the following:
 \begin{itemize}
   \item $TextBlock(txt)$: unbroken string literal.
@@ -267,7 +269,7 @@ The blocks are the following:
     Fit as many blocks on each line as possible, breaking only when the column limit is exceeded.
     % Similar to \emph{bin-packing} in other code formatters such as ClangFormat.
 \end{itemize}
-As we will see, these relatively few combinators allow an impressive amount of flexibility.
+We'll take an example to show how these relatively few combinators allow an impressive amount of flexibility.
 Listings~\ref{lst:rfmt1} and~\ref{lst:rfmt2} shows two different layouts to format an argument list.
 
 \begin{minipage}{.45\textwidth}
@@ -277,11 +279,6 @@ Listings~\ref{lst:rfmt1} and~\ref{lst:rfmt2} shows two different layouts to form
 \begin{minipage}{.45\textwidth}
   \lstinputlisting[label={lst:rfmt2}, caption=Stack block]{code/stack.scala}
 \end{minipage}
-
-Listing\ref{lst:rfmt-example} shows how we can express the choice between the two layouts in the combinator algebra above.
-\lstinputlisting[numbers=none, label={lst:rfmt-example}, float,
-                 caption=Formatting layout for argument lists]{code/rfmt-example.scala}
-
 
 In this case, we prefer the line block from listing~\ref{lst:rfmt1} since it requires fewer lines.
 However, our preference changes if the function name is longer as is shown in listings~\ref{lst:rfmt3} and~\ref{lst:rfmt4}.
@@ -294,19 +291,24 @@ However, our preference changes if the function name is longer as is shown in li
   \lstinputlisting[label={lst:rfmt4}, caption=Stack block]{code/stack1.scala}
 \end{minipage}
 
-Here, we clearly prefer the stack block in listing\ref{lst:rfmt4}.
-The blocks are responsible for expressing the formatting layouts.
-We calculate \emph{layout functions} to choose an optimal layout.
+Here, we clearly prefer the stack block in listing~\ref{lst:rfmt4}.
+Listing~\ref{lst:rfmt-example} shows how we use all 6 blocks in the \rfmt{} combinator algebra to express the choice between these formatting layouts.
+\lstinputlisting[numbers=none, label={lst:rfmt-example}, float,
+                 caption=Formatting layout for argument lists]{code/rfmt-example.scala}
+The variable $f$ denotes the function name and $a_1, ... a_m$ denote the argument list.
+Observe that listing~\ref{lst:rfmt-example} does not express how to find the optimal layout.
 
 To find an optimal layout, \rfmt{} employs a smart dynamic programming trick.
-Firstly, a na\"{\i}ve approach would be to enumerate all possible combinations of layouts and choose the one 
-
-
-To efficiently calculate an optimal layout for a given block.
-\rfmt{} makes
-The layout function is used to efficiently find an formatting layout.
-The
-Optimizations.
+First, consider the \naive{} approach of enumerating all possible combinations.
+This leads to exponential growth which becomes intractable even for small inputs.
+Dynamic programming comes to the rescue by allowing us to reuse partial solutions.
+Instead of re-calculating the layout cost at each (starting column, block) pair, we store the result in an associative array keyed by the starting column.
+However, it turns out that this can still be inefficient in terms of memory and speed\footnote{
+  In fact, ClangFormat started with a similar approach, as explained in this\autocite{clang84:online} video recording, but then switched to Dijkstra's shortest path algorithms (which in itself is another form of dynamic programming).
+}.
+To overcome this limitation, Yelland -- the \rfmt{} author -- presents an indexing scheme that makes it possible to extrapolate the layout cost even for missing keys.
+We refer to the original paper\autocite{yelland_new_2016} for details.
+This novel approach enables \rfmt{} to format even the most pathologically nested code in near instant time.
 
 % TODO?
 % \subsubsection{rustfmt} 
