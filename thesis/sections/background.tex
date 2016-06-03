@@ -78,24 +78,29 @@ Several key features of scala.meta have made it an invaluable companion in the d
 Most notably among these features are dialect agnostic syntax trees, syntax tree serialization, input fidelity and algebraically typed tokens.
 
 Scala.meta provides facilities to tokenize and parse a variety of different Scala dialects.
-One such dialect is SBT configuration files, as discussed in section~\ref{sec:sbt}.
-SBT adds custom support for top-level statements in \texttt{*.sbt}, which would otherwise result in a parse error using the Scala compiler parser.
+One such dialect is SBT configuration files, discussed in section~\ref{sec:sbt}.
+SBT adds custom support for top-level statements in \texttt{*.sbt} files, which would otherwise result in a parse error using the Scala compiler parser.
 To add insult to injury, top-level statements must be separated by a blank line if you use an SBT version lower than 0.13.6; a restriction that was lifted in SBT 0.13.7.
 Listing~\ref{lst:dialect} show how to scala.meta makes it trivial to accommodate this zoo of nuances.
 \lstinputlisting[label={lst:dialect}, float, caption=Parsing different Scala dialects with scala.meta]{code/dialect.scala}
-After parsing, the tree
+The result after parsing is a dialect agnostic scala.meta tree structure.
 
-Tree node types in scala.meta preserve absolute fidelity of the original source file.
-This means that we can obtain all syntactic details such as whitespace positions and comments from any tree node type.
-This feature cannot be taken for granted as obvious as it may seem.
+The structure of scala.meta trees can be serialized to strip off all syntactic details.
+Listing~\ref{lst:structure} shows how to serialize the tree structure of a simple hello world application.
+\lstinputlisting[label={lst:structure}, float, caption=Serializing scala.meta trees]{code/structure.scala}
+For example, observe that the comment has been stripped away.
+As we discuss in section~\ref{sec:tooling}, this feature was instrumental in testing scalafmt.
 
-In scalafmt, this feature was instrumental 
+Tree node types in scala.meta preserve absolute fidelity with the original source file.
+This means we can obtain all syntactic details from a tree node such as whether a for comprehension uses parentheses or curly braces as delimiters, whitespace positions and comments.
+The Scala compiler is infamous for desugaring for-comprehensions into \texttt{map/withFilter/flatMap} applications during the parse phase.
+This made it impossible to implement metaprogramming tasks such as code formatting.
+Input source fidelity in scala.meta has been essential to implement scalafmt because we need to preserve some syntactic details like where for-comprehension and blank lines are used.
 
 Tokens in scala.meta are strongly typed.
-Traditional object-oriented libraries treat tokens as a single type with multiple methods such as \texttt{isComma} which returns true if a token instance is a comma or not.
+Traditional object-oriented libraries treat tokens as a single type with multiple methods such as \texttt{isComma/isFor} which returns true if a token instance is a comma or a \texttt{for} keyword.
 However, scala.meta leverages algebraic data types in Scala to represent each different kind of token as a separate type.
-This enables perform powerful pattern matching on token types.
-This feature was useful in the design of the \emph{Router} described in section~\ref{sec:router}.
+This feature plays nicely with the pattern matching capabilities of Scala and enabled design pattern for the \emph{Router} described in section~\ref{sec:router}.
 
 
 % \subsection{Metaprogramming with scala.meta}
