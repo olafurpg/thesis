@@ -17,35 +17,12 @@ The LineWrapper uses a \emph{Router} to construct a weighted directed graph and 
 Finally, the LineWrapper feeds a sequence of \emph{Split} data types into the \emph{FormatWriter}, which constructs a new reformatted source file.
 In the next sections, we explain these data types and abstractions in detail.
 
-\subsection{scala.meta}
-Scala.meta\autocite{scala57:online} is a metaprogramming toolkit for Scala.
-Many features of scala.meta have made it invaluable in the development of scalafmt.
-Most importantly, scala.meta is dialect agnostic, trees preserve all syntactic details in the original file
-
-
-
-Scala.meta provides facilities to tokenize and parse a variety of different dialects of Scala, including Scala 2.11, sbt configuration files and Dotty.
-Figure~\ref{fig:scalameta} shows how scala.meta parses a simple hello world application in Scala.
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{img/architechture.pdf}
-  \caption{Scalafmt architecture}
-  \label{fig:architecture}
-\end{figure}
-
-A key feature of scala.meta tree node types is that they preserve absolute fidelity of the original source file.
-Any syntactic details such as whitespace and comments is attached to each relevant tree node.
-Another key feature of scala.meta trees is that tree nodes contain a parent link.
-This makes it possible to traverse the 
-
-
-
 \subsection{Data structures}
 \subsubsection{FormatToken}
 \subsubsection{Split}
 \subsubsection{Indent}
 \subsection{LineWrapper}
-\subsubsection{Router}
+\subsubsection{Router}\label{sec:router}
 \subsubsection{Policy}
 \subsubsection{OptimalToken}
 \subsubsection{State}

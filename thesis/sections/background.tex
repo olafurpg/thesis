@@ -59,7 +59,7 @@ Listing~\ref{lst:mutable} show the equivalent operation using a mutable list.
 \lstinputlisting[label={lst:mutable}, float, caption=Manipulating mutable list]{code/mutable.scala}
 Observe that listing~\ref{lst:immutable} is a single statement while listing~\ref{lst:mutable} contains multiple statements.
 
-\subsubsection{SBT build configuration}
+\subsubsection{SBT build configuration}\label{sec:sbt}
 SBT\autocite{_sbt_????} is an interactive build tool used by many Scala projects.
 SBT configuration files are written in \texttt{*.sbt} or \texttt{*.scala} files using Scala syntax and semantics.
 Although SBT configuration files use plain Scala, they typically use coding patterns which are different from traditional Scala programs.
@@ -67,6 +67,36 @@ Listing~\ref{lst:sbt} is an example project definition in SBT.
 \lstinputlisting[label={lst:sbt}, float, caption=SBT project definition]{code/sbt.scala}
 Observe that the project is defined as a single statement and makes extensive use of symbolic infix operators.
 Due to the nature of build configurations, argument lists to can becomes unwieldy long and a single project statement can span over dozens or even hundreds of lines of code.
+
+
+\subsection{scala.meta}
+Scala.meta\autocite{scala57:online} is a metaprogramming toolkit for Scala.
+Before scala.meta, the state-of-the-art metaprogramming facilities relied on the Scala compiler internals.
+This had several severe limitations such as too-eager desugaring resulting in loss of syntactic details from the original source code.
+Scala.meta was designed to overcome these limitations and offer a more robust platform to develop metaprogramming tools for Scala.
+Several key features of scala.meta have made it an invaluable companion in the development of scalafmt.
+Most notably among these features are dialect agnostic syntax trees, syntax tree serialization, input fidelity and algebraically typed tokens.
+
+Scala.meta provides facilities to tokenize and parse a variety of different Scala dialects.
+One such dialect is SBT configuration files, as discussed in section~\ref{sec:sbt}.
+SBT adds custom support for top-level statements in \texttt{*.sbt}, which would otherwise result in a parse error using the Scala compiler parser.
+To add insult to injury, top-level statements must be separated by a blank line if you use an SBT version lower than 0.13.6; a restriction that was lifted in SBT 0.13.7.
+Listing~\ref{lst:dialect} show how to scala.meta makes it trivial to accommodate this zoo of nuances.
+\lstinputlisting[label={lst:dialect}, float, caption=Parsing different Scala dialects with scala.meta]{code/dialect.scala}
+After parsing, the tree
+
+Tree node types in scala.meta preserve absolute fidelity of the original source file.
+This means that we can obtain all syntactic details such as whitespace positions and comments from any tree node type.
+This feature cannot be taken for granted as obvious as it may seem.
+
+In scalafmt, this feature was instrumental 
+
+Tokens in scala.meta are strongly typed.
+Traditional object-oriented libraries treat tokens as a single type with multiple methods such as \texttt{isComma} which returns true if a token instance is a comma or not.
+However, scala.meta leverages algebraic data types in Scala to represent each different kind of token as a separate type.
+This enables perform powerful pattern matching on token types.
+This feature was useful in the design of the \emph{Router} described in section~\ref{sec:router}.
+
 
 % \subsection{Metaprogramming with scala.meta}
 % Scala.meta\autocite{_scala.meta_????} is a robust and portable metaprogramming toolkit for Scala.
