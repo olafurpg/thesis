@@ -33,34 +33,31 @@ ClangFormat was used to ensure that the refactored code adhered to Google's exte
 Similar migrations can be expected in the near future for the Scala community once new dialects, such as Dotty\autocite{rompf_f_2015}, gain popularity.
 
 Code formatting is valuable in collaborative coding environments.
-The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} contains over 2.600 words.
-Each contributor to the Scala.js project is expected to follow the coding style.
+The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} -- which each Scala.js contributor is expected to know by heart -- is written at a whooping 2.600 words.
 Each contributed patch is manually verified against the coding style by the project maintainers.
 This adds a burden on both contributors and maintainers.
-Several maintainers of popular Scala libraries have expressed this sentiment.
+Several prominent Scala community member have raised this issue.
 ENSIME\autocite{_ensime_????} is a popular Scala interaction mode for text editor.
 Sam Halliday, a maintainer of ENSIME, says ``I don't have time to talk about formatting in code reviews. I want the machine to do it so I can focus on the design.''\autocite{halliday_i_2016-1}.
-Akka\autocite{_akka_????} is another Scala library to build concurrent and distributed applications.
+Akka\autocite{_akka_????} is Scala library to build concurrent and distributed applications.
 Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
-With code formatters, software develoeprs can direct their full focus on writing correct, maintainable and fast code.
+With code formatters, software developers are not burdened by whitespace trivia and can instead direct their full attention on writing correct, maintainable and fast code.
 
-\subsection{Whitespace style issues}
-Mechanical style issues are source code issues that can be fixed automatically.
-For example, consider listing~\ref{lst:mechanic}.
-\lstinputlisting[label={lst:mechanic}, caption=Style issues]{code/mechanic.scala}
-This code snippet leaves a lot left to be desired.
-Mechanical issues include the redundant spaces around parentheses, unnecessary semicolon after the \texttt{println} and the inconsistent indentation in the body of the if statement.
-Non-mechanical issues may include the fact the program prints an error message to the standard output and exits the process, instead of throwing an exception.
-
-This thesis only addresses the whitespace style issues.
-That is, to automatically fix the spaces and newline characters between the non-whitespace tokens in the original source code.
-We will leave it to the software developer to decide whether the unnecessary semicolon should remain in the source file or if the program should throw an exception.
-% Another example, the Spark style guide\autocite{spark-scala} follows the ``Rule of 30''\autocite{software_refactoring}.
-% The rule of 30 dictates amongst several things that method bodies should not contain more than 30 lines of code.
-% Although it is easy to statically detect a violation of that rule, it is non-trivial to automatically rewrite a method into smaller pieces of code.
-
-
-
+% \subsection{Whitespace style issues}
+% Mechanical style issues are source code issues that can be fixed automatically.
+% For example, consider listing~\ref{lst:mechanic}.
+% \lstinputlisting[label={lst:mechanic}, caption=Style issues]{code/mechanic.scala}
+% This code snippet leaves a lot left to be desired.
+% Mechanical issues include the redundant spaces around parentheses, unnecessary semicolon after the \texttt{println} and the inconsistent indentation in the body of the if statement.
+% Non-mechanical issues may include the fact the program prints an error message to the standard output and exits the process, instead of throwing an exception.
+%
+% This thesis only addresses the whitespace style issues.
+% That is, to automatically fix the spaces and newline characters between the non-whitespace tokens in the original source code.
+% We will leave it to the software developer to decide whether the unnecessary semicolon should remain in the source file or if the program should throw an exception.
+% % Another example, the Spark style guide\autocite{spark-scala} follows the ``Rule of 30''\autocite{software_refactoring}.
+% % The rule of 30 dictates amongst several things that method bodies should not contain more than 30 lines of code.
+% % Although it is easy to statically detect a violation of that rule, it is non-trivial to automatically rewrite a method into smaller pieces of code.
+%
 % Code formatters have existed for a long time.
 % In more recent years we've seen many new opimization based code formatters, such as clang-format, dartfmt and rfmt.
 % Optimization based code formatters define a fit function for a given layout.
@@ -90,7 +87,7 @@ We will leave it to the software developer to decide whether the unnecessary sem
 The main contribution presented in this thesis are the following:
 \begin{itemize}
   \item scalafmt, a code formatter for the Scala programming language.
-    At the time of this writing, scalafmt has been available for 3 months, it has been installed over 5.000 times and is already in use by several open source Scala libraries.
+    At the time of this writing, scalafmt has been available for 3 months, it has been installed over 5.000 times and has already been adopted by several open source Scala libraries.
     For details on how to install and use scalafmt, refer to the scalafmt online documentation\autocite{geirsson_scalafmt_????}.
     % Discussion of scalafmt adoption is presented in section~\ref{sec:adoption}.
 
@@ -100,5 +97,5 @@ The main contribution presented in this thesis are the following:
     This work is presented in section~\ref{sec:tooling}.
 \end{itemize}
 The scalafmt formatter itself may only be of direct interest to the Scala community.
-However, much work in this thesis is not specifically tied to Scala and we hope can inspire the design of code formatters for other programming languages.
+However, we hope the design of scalafmt can be inspiration to code formatter developers working with other programming languages.
 
