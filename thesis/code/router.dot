@@ -1,25 +1,37 @@
 digraph Router {
-  splits=false
   graph [fontname = "Inconsolata"];
-  node [fontname = "Inconsolata"];
+  node [shape=box, fontname = "Inconsolata"];
   edge [fontname = "Inconsolata"];
   rankdir="LR";
   y1 [label="y"];
   y2 [label="y"];
   p1 [label="+"];
   p2 [label="+"];
-  r1 [shape=box, label="val x = y + z"];
-  r2 [shape=box, label="val x =\l  y + z"];
-  r3 [shape=box, label="val x = y +\lz"];
-  r4 [shape=box, label="val x =\l  y +\l z"];
-  val -> x [label="Space"];
-  x -> "=" [label="Space"];
-  "=" -> y1 [label="Space(cost=0)"];
-  "=" -> y2 [labeldistance=9.5, labelangle=90, label="\nNewline(cost=1)"];
-  y1 -> p1 [label="Space"];
-  y2 -> p2 [label="Space"];
-  p1 -> r1 [label="Space(cost=0)"];
-  p1 -> r2 [label="\n\nNewline(cost=1)"];
-  p2 -> r3 [label="Space(cost=0)"];
-  p2 -> r4 [label="\n\nNewline(cost=1)"];
+  z1 [label="z"];
+  z2 [label="z"];
+  z3 [label="z"];
+  z4 [label="z"];
+  r1 [label="val x = y + z"];
+  r2 [label="val x = y + \l  z"];
+  r3 [label="val x =\ly + z"];
+  r4 [label="val x =\l  y +\lz"];
+  a [label="="];
+  val -> x;
+  x -> a;
+  a -> y1 [label="Space(cost=0)"];
+  a -> y2 [label="Newline(cost=1)"];
+  y1 -> p1;
+  y2 -> p2;
+  p1 -> z1 [label="Space(cost=0)"];
+  p1 -> z2 [label="Newline(cost=2)"];
+  p2 -> z3 [label="Space(cost=0)"];
+  p2 -> z4 [label="Newline(cost=2)"];
+  {
+    edge [dir=none];
+
+    z1 -> r1 [label="total cost 0"];
+    z2 -> r2 [label="total cost 2"];
+    z3 -> r3 [label="total cost 1"];
+    z4 -> r4 [label="total cost 3"];
+  }
 }

@@ -23,23 +23,30 @@ Scalafmt leverages a few carefully designed data structure to allow an implement
 \subsubsection{FormatToken}
 A \emph{FormatToken} is a pair of two non-whitespace tokens.
 Listing~\ref{lst:format_token} shows the definition of the FormatToken data type.
-\lstinputlisting[label={lst:format_token}, float, caption=FormatToken definition]{code/format_token.scala}
+\lstinputlisting[label={lst:format_token}, caption=FormatToken definition]{code/format_token.scala}
 As shown in the architecture overview in figure~\ref{fig:architecture}, each token except the beginning and end of file tokens appear twice in the sequence of FormatTokens: once as the \texttt{left} member and once as the \texttt{right} member.
 In a nutshell, the job of the LineWrapper is to convert each FormatToken into a \emph{Split}
 
+\subsubsection{Decision}\label{sec:decision}
+A Decision is a pair of a FormatToken and a sequence of Splits.
+Listing~\ref{lst:decision} shows the Definition of decision.
+\lstinputlisting[label={lst:decision}, caption=Decision definition]{code/decision.scala}
+The \emph{splits} member represents the possible splits that we can take at \emph{formatToken}.
+
 \subsubsection{Policy}\label{sec:policy}
 A \emph{Policy} is an enforced formatting layout over a region.
-Listing~\ref{lst:policy} shows the definition of Policy and \emph{Decision}.
-\lstinputlisting[label={lst:policy}, float, caption=Policy definition]{code/policy.scala}
-A Decision is a wrapper around a FormatToken and a choice of available Splits for that FormatToken.
-A Policy is simply a partial function that should be applied to future Decisions up until the \emph{expire} token.
+Listing~\ref{lst:policy} shows the definition of Policy.
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:policy}, caption=Policy definition]{code/policy.scala}
+\end{minipage}
+A Policy is a partial function that should be applied to future Decisions up until the \emph{expire} token.
 Policies easily compose using the Scala standard library \texttt{orElse} and \texttt{andThen} methods on PartialFunction\footnote{
   Careful eyes will observe that Policy is in fact a monoid with the empty partial function as identity and function composition as associative operator.}.
 This enables a high-level way to express arbitrary formatting layouts over a region of code.
 
 \subsubsection{Indent}\label{sec:indent}
 An \emph{Indent} describes indentation over a region of code.
-\lstinputlisting[label={lst:indent}, float, caption=Indent definition]{code/indent.scala}
+\lstinputlisting[label={lst:indent}, caption=Indent definition]{code/indent.scala}
 Listing~\ref{lst:indent} shows the definition of Indent along with the algebraic data type \emph{Length}.
 Length can either be \texttt{Num(n)} where $n$ represents an explicit number of spaces to indent by or \texttt{StateColumn} which is a placeholder the number of spaces required to vertically align by the current column.
 Indent is type parameterized by Length so that, at some point, we can replace StateColumn placeholders with Nums to obtain a concrete number.
@@ -52,7 +59,9 @@ The StateColumn placeholder is required to allow memoization of Splits, which is
 A \emph{Split} represents a (possibly empty) whitespace character to be inserted between two non-whitespace tokens.
 Listing~\ref{lst:split} shows the rather intricate definition of the Split data type\footnote{
   For clarity reasons, a few less important members have been removed from the actual Split definition.}.
-\lstinputlisting[label={lst:split}, float, caption=Split definition]{code/split.scala}
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:split}, caption=Split definition]{code/split.scala}
+\end{minipage}
 The Split data type went through several generations of design before reaching its current structure.
 Each member serves an important role.
 The most important member of the Split type is the \emph{modification}.
@@ -65,17 +74,33 @@ The \emph{policy} and \emph{indents} members are explained in sections~\ref{sec:
 
 \subsection{LineWrapper}
 The LineWrapper is responsible for turning FormatTokens into Splits.
-To accomplish this, the LineWrapper employs a best-first search and a \emph{Router}.
+To accomplish this, the LineWrapper employs a \emph{Router} and abest-first search.
+
 \subsubsection{Router}\label{sec:router}
-The Router constructs a weighted directed graph that represents all possible formatting layouts for the input source code.
-Figure~\ref{fig:router} shows a simplified graph for the code example \texttt{val x = y + z}.
+The Router's role is to produce a Decision given a FormatToken.
+
+There can be a lot of 
+How do we go about implementing a Router?
+
+By producing Decisions, the Router constructs a weighted directed graph that represents all possible formatting layouts for an input source code.
+Figure~\ref{fig:router} shows a simplified graph for the input \texttt{val x = y + z}.
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{target/router.pdf}
   \caption{Weighted directed graph}
   \label{fig:router}
 \end{figure}
+Figure is simplified for clarity reason.
+For example, the actual scalafmt implementation adds policies and indentations after the assignment operator.
+In a nutshell, a router is a function from FormatToken to Decision.
+
+
+
 \subsubsection{BestFirstSearch}
+Observe that graph in listing~\ref{fig:router} grows exponentially at every FormatToken where we have more than one Split options.
+If we implement the best first search \naive{}ly
+This must be handled intelligently by the best-first search.
+
 \subsection{Optimizations}
 \subsubsection{OptimalToken}\label{sec:optimal}
 \subsubsection{dequeueOnNewStatements}
