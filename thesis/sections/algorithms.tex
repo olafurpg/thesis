@@ -69,7 +69,7 @@ A modification must be one of \texttt{NoSplit}, \texttt{Space} and \texttt{Newli
 The \emph{cost} member represents the penalty for choosing this split.
 The \emph{optimalToken} member enables an optimization explained in section~\ref{sec:optimal}.
 The \emph{indents} member contains the indentation layers that this splits adds.
-The \emph{line} member allows a powerful debugging technique explained in section~\ref{sec:line}.
+The \emph{line} member allows a powerful debugging technique explained in section~\ref{sec:router}.
 The \emph{policy} and \emph{indents} members are explained in sections~\ref{sec:policy} and~\ref{sec:indent}, respectively.
 
 \subsection{LineWrapper}
@@ -78,27 +78,68 @@ To accomplish this, the LineWrapper employs a \emph{Router} and abest-first sear
 
 \subsubsection{Router}\label{sec:router}
 The Router's role is to produce a Decision given a FormatToken.
-
-There can be a lot of 
-How do we go about implementing a Router?
-
-By producing Decisions, the Router constructs a weighted directed graph that represents all possible formatting layouts for an input source code.
-Figure~\ref{fig:router} shows a simplified graph for the input \texttt{val x = y + z}.
+Figure~\ref{fig:router} shows all possible formatting layout for the small input \texttt{val x = y + z}.
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{target/router.pdf}
-  \caption{Weighted directed graph}
+  \caption{Example graph produced by Router}
   \label{fig:router}
 \end{figure}
-Figure is simplified for clarity reason.
-For example, the actual scalafmt implementation adds policies and indentations after the assignment operator.
-In a nutshell, a router is a function from FormatToken to Decision.
+The Router must in this case figure out the correct combination of modifications and costs to associate with each FormatToken.
+This is no easy task since a FormatToken can be any pair of two tokens.
+How do we go about implementing a Router?
+
+The Router is implemented as one single large pattern match on a FormatToken.
+Listing~\ref{lst:match} shows how to pattern match on a FormatToken.
+\lstinputlisting[label={lst:match}, caption=Pattern matching on FormatToken]{code/match.scala}
+The pattern \texttt{\_: `=`} matches a scala.meta token of type \texttt{`=`}.
+The underscore \texttt{\_} ignores the underlying value.
+Keyword is a super-class of all scala.meta keyword token types.
+Now this pattern match quickly grows unwieldy long.
+How does this solution scale?
+Also, once the match grows bigger how can we know from which case each Split origins?
+It turns out that Scala's pattern matching and scala.meta's algebraically typed tokens are able to help us.
+
+The Scala compiler can statically detect unreachable code.
+If we add a case that is already covered higher up in the pattern match, the Scala compiler issues a warning.
+For example, listing~\ref{lst:exhaustive} shows an example where the compiler issues a warning.
+\lstinputlisting[label={lst:exhaustive}, caption=Unreachable code]{code/exhaustive.scala}
+Here, we accidentally match on a FormatToken with an \texttt{else} keyword on the right which will never match because we have a broader match on a Keyword higher up.
+In this small example, the bug may seem obvious but once the Router grows bigger such issues the compiler becomes an invaluable companion.
+However, this still leaves us with the second question of finding the origin of each Split.
+Scala macros and implicits come to the rescue.
+
+The origin line number of Split is automatically attached with each Split.
+Remember in listing~\ref{lst:split} that the Split case class had an implicit member of type \texttt{sourcecode.Line}.
+Sourcecode\autocite{lihao91:online} is a Scala library to extract source code metadata from your programs.
+The library leverages Scala macros and implicits to unobtrusively surface useful information such as line number of the origin call site.
+Listing~\ref{lst:sourcecode} shows the instantiation of a Split.
+\lstinputlisting[label={lst:sourcecode}, caption=Extracting line number from call site]{code/sourcecode.scala}
+Since there is a missing implicit \texttt{sourcecode.Line}, the Scala compiler's implicit search will invoke an implicit macro that extracts the call site line number to instantiate a \texttt{sourcecode.Line} instance.
+The scalafmt router implementation contains 88 cases and spans over 1.000 lines of code.
+The ability to trace the origin of each Split has been indispensable in the development of the Router.
+Once the Router can produce Decisions, we can run a best-first search to choose the optimal splits.
+
+\subsubsection{Best-first search}
+The Decisions from the Router produce a directed weighted graph, as demonstrated in figure~\ref{fig:router}.
+To find the optimal formatting layout, our challenge is to find the cheapest path from the root node to a final node.
+The best-first\autocite{pearl_heuristics:_1984} algorithm is an excellent fit for the task.
+
+Best-first search is a graph search algorithm to efficiently traverse a directed weighted graph.
+The objective for scalafmt is to choose
+Algorithm~\ref{alg:bfsv1} show how a basic best-first search algorithm can be applied to finding an optimal formatting layout in scalafmt.
+\begin{algorithm}
+\caption{Scalafmt best-first search, v1}\label{alg:bfsv1}
+  \lstinputlisting{code/bfsv1.scala}
+\end{algorithm}
 
 
+The Router constructs a weighted directed graph that represents all possible formatting layouts for an input source code.
+For clarity reasons, the figure excludes trivial splits, policies and indents.
 
-\subsubsection{BestFirstSearch}
 Observe that graph in listing~\ref{fig:router} grows exponentially at every FormatToken where we have more than one Split options.
 If we implement the best first search \naive{}ly
+Like with ClangFormat and dartfmt, a few domain-specific optimisations.
 This must be handled intelligently by the best-first search.
 
 \subsection{Optimizations}
