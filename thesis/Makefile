@@ -10,5 +10,5 @@ format:
 	gofmt code/gofmt.go > target/gofmt.go
 	dot -Tpdf code/router.dot -o target/router.pdf || true
 clean:
-	rm -rf code/target
+	rm -rf target
 	clean_tex

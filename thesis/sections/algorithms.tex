@@ -68,6 +68,13 @@ The LineWrapper is responsible for turning FormatTokens into Splits.
 To accomplish this, the LineWrapper employs a best-first search and a \emph{Router}.
 \subsubsection{Router}\label{sec:router}
 The Router constructs a weighted directed graph that represents all possible formatting layouts for the input source code.
+Figure~\ref{fig:router} shows a simplified graph for the code example \texttt{val x = y + z}.
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{target/router.pdf}
+  \caption{Weighted directed graph}
+  \label{fig:router}
+\end{figure}
 \subsubsection{BestFirstSearch}
 \subsection{Optimizations}
 \subsubsection{OptimalToken}\label{sec:optimal}

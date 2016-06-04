@@ -1,8 +1,25 @@
 digraph Router {
-  val -> x;
-  x -> "=";
-  "=" -> y;
-  "=" -> y;
-  y -> "+";
-  y -> "+";
+  splits=false
+  graph [fontname = "Inconsolata"];
+  node [fontname = "Inconsolata"];
+  edge [fontname = "Inconsolata"];
+  rankdir="LR";
+  y1 [label="y"];
+  y2 [label="y"];
+  p1 [label="+"];
+  p2 [label="+"];
+  r1 [shape=box, label="val x = y + z"];
+  r2 [shape=box, label="val x =\l  y + z"];
+  r3 [shape=box, label="val x = y +\lz"];
+  r4 [shape=box, label="val x =\l  y +\l z"];
+  val -> x [label="Space"];
+  x -> "=" [label="Space"];
+  "=" -> y1 [label="Space(cost=0)"];
+  "=" -> y2 [labeldistance=9.5, labelangle=90, label="\nNewline(cost=1)"];
+  y1 -> p1 [label="Space"];
+  y2 -> p2 [label="Space"];
+  p1 -> r1 [label="Space(cost=0)"];
+  p1 -> r2 [label="\n\nNewline(cost=1)"];
+  p2 -> r3 [label="Space(cost=0)"];
+  p2 -> r4 [label="\n\nNewline(cost=1)"];
 }
