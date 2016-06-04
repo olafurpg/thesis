@@ -1,7 +1,6 @@
-case class Split(
-    modification: Modification,
-    cost: Int,
-    policy: Policy = NoPolicy,
-    optimalAt: Option[OptimalToken] = None
-    indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]])(
+case class Split(modification: Modification,
+                 cost: Int,
+                 policy: Policy,
+                 optimalAt: Option[OptimalToken],
+                 indents: Vector[Indent[Length]])(
     implicit val line: sourcecode.Line)
