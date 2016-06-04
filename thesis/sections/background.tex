@@ -199,7 +199,7 @@ Besides formatting, \gofmt{} is used to automatically migrate Go codebases from 
 However, \gofmt{} supports neither a column limit nor an opinionated setting.
 Line breaks are preserved in the user's input.
 For example, listing~\ref{lst:gofmt} shows a Go program that uses the same layout as the ``unformatted'' code (listing~\ref{lst:unformatted}) in the introduction.
-\lstinputlisting[label={lst:gofmt}, caption=Gofmt example input/output]{code/target/gofmt.go}
+\lstinputlisting[label={lst:gofmt}, caption=Gofmt example input/output]{target/gofmt.go}
 The output of running \gofmt{} through listing~\ref{lst:gofmt} is identical to the input.
 This un-opinionated behavior may be considered desirable by many software developers.
 However, this thesis is only concerned with opinionated code formatting.
@@ -265,7 +265,7 @@ ClangFormat produces well-formatted output for even the most egregiously formatt
 Listing~\ref{lst:clang_opinion} shows an offensively formatted C++ code snippet.
 \lstinputlisting[label={lst:clang_opinion}, float, caption=Unformatted C++ code]{code/terrible.cpp}
 Listing~\ref{lst:clang_opinion2} shows the same snippet after being formatted with ClangFormat.
-\lstinputlisting[label={lst:clang_opinion2}, float, caption=ClangFormat formatted C++ code]{code/target/unterrible.cpp}
+\lstinputlisting[label={lst:clang_opinion2}, float, caption=ClangFormat formatted C++ code]{target/unterrible.cpp}
 ClangFormat is opinionated in the sense that it does not respect the user's line breaking decisions.
 This feature makes it possible to ensure that all code follows the same style guide, regardless of author.
 

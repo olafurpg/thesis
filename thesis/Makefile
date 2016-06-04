@@ -8,7 +8,7 @@ format:
 	scalafmt -f code/unformatted.scala --maxColumn 35 > target/formatted1.scala
 	clang-format code/terrible.cpp > target/unterrible.cpp
 	gofmt code/gofmt.go > target/gofmt.go
-	dot code/gofmt.go > target/gofmt.go
+	dot -Tpdf code/router.dot -o target/router.pdf || true
 clean:
 	rm -rf code/target
 	clean_tex
