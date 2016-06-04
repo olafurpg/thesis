@@ -72,9 +72,24 @@ The \emph{indents} member contains the indentation layers that this splits adds.
 The \emph{line} member allows a powerful debugging technique explained in section~\ref{sec:router}.
 The \emph{policy} and \emph{indents} members are explained in sections~\ref{sec:policy} and~\ref{sec:indent}, respectively.
 
+\subsubsection{State}
+A \emph{State} is a partial formatting solution during by the best-first search.
+Listing~\ref{lst:state} shows the definition of the State class and companion object.
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:state}, caption=State definition]{code/state.scala}
+\end{minipage}
+Observe the similarity of State and Split.
+A State contains various summaries calculated from the \texttt{splits} member.
+The summaries are necessary for performance reasons in the best-first search.
+Observe that the indents are type parameterized by \texttt{Num}, meaning they only contain concrete indentations and no \texttt{StateColumn} indents.
+The \texttt{indentation} member is the sum of all currently active indents and \texttt{column} represents how many characters have been consumed since the last newline.
+The State class extends the \texttt{Ordered} trait to allow for efficient polling from a priority queue.
+The \texttt{compare} method orders States firstly by their \texttt{totalCost} member, secondly by \texttt{splits.length} -- how many FormatTokens have been formatted -- and finally breaking ties by the \texttt{indentation}.
+The method \texttt{nextState} recalculates new summaries as efficiently as possible since the method is on a hot path in the best-first search.
+
 \subsection{LineWrapper}
 The LineWrapper is responsible for turning FormatTokens into Splits.
-To accomplish this, the LineWrapper employs a \emph{Router} and abest-first search.
+To accomplish this, the LineWrapper employs a \emph{Router} and a best-first search.
 
 \subsubsection{Router}\label{sec:router}
 The Router's role is to produce a Decision given a FormatToken.
@@ -130,6 +145,8 @@ The objective for scalafmt is to choose
 Algorithm~\ref{alg:bfsv1} show how a basic best-first search algorithm can be applied to finding an optimal formatting layout in scalafmt.
 \begin{algorithm}
 \caption{Scalafmt best-first search, v1}\label{alg:bfsv1}
+  \KwIn{\texttt{formatTokens: List[FormatTokens]}, \texttt{router: Router}}
+  \KwOut{List of Splits which represent an optimal formatting layout.}
   \lstinputlisting{code/bfsv1.scala}
 \end{algorithm}
 
