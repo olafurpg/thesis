@@ -42,8 +42,8 @@ Listing~\ref{lst:policy} shows the definition of Policy.
 A Policy is a partial function that should be applied to future Decisions up until the \emph{expire} token.
 Policies easily compose using the Scala standard library \texttt{orElse} and \texttt{andThen} methods on PartialFunction\footnote{
   Careful eyes will observe that Policy is in fact a monoid with the empty partial function as identity and function composition as associative operator.}.
-The \texttt{isProhibitive} member annotates whether this policy can possibly eliminate Splits from future Decisions.
-This is necessary for an optimization explained in section~\ref{sec:dequeue}.
+% The \texttt{isProhibitive} member annotates whether this policy can possibly eliminate Splits from future Decisions.
+% This is necessary for an optimization explained in section~\ref{sec:dequeue}.
 Policies enable a high-level way to express arbitrary formatting layouts over a region of code.
 
 \subsubsection{Indent}\label{sec:indent}
@@ -170,8 +170,8 @@ Instead, like with ClangFormat and dartfmt, we must apply several domain specifi
 In the following section, we discuss the optimizations that have shown to work well for scalafmt.
 
 \subsection{Optimizations}
-This section explains the most critical domain-specific optimizations that were required to get acceptable performance for scalafmt.
-We will see that some optimizations are quite ad-hoc and require a lot of adaptation to work correctly.
+This section explains the most important domain-specific optimizations that were required to get acceptable performance for scalafmt.
+We will see that some optimizations are quite ad-hoc and require some creative workarounds.
 
 \subsubsection{dequeueOnNewStatements}\label{sec:dequeue}
 Once the search reaches the beginning of a new statement, empty the priority queue.
@@ -228,9 +228,18 @@ Algorithm~\ref{alg:recurse} shows a rough sketch of how \texttt{recurseOnBlocks}
 We change the signature to accept a starting State and token where we stop the search.
 Observe that we guard against infinite recursion by not making a recursive call on \texttt{start.formatToken}.
 With \texttt{recurseOnBlocks} and \texttt{dequeueOnNewStatements}, we have solved most problems caused by independent statements affecting the formatting layouts of each other.
-Next, we look at more technique to prevent the search queue from growing out of bounds.
+Next, we leverage recursion again to help the search queue stay small.
 
 \subsubsection{OptimalToken}\label{sec:optimal}
+An OptimalToken is a hint to the best-first search that indicates if one search branch can reach to a particular token at cost 0, the best-first search can eliminate competing branches.
+By eliminating competing branches, we drastically minimize the search space.
+How is this implemented?
+
+Remember that a Split has an \texttt{optimalToken} member.
+Listing~\ref{lst:optimalToken} shows the definition of OptimalToken.
+\lstinputlisting[label={lst:optimalToken}, caption=OptimalToken definition]{code/optimalToken.scala}
+
+A split can specify an \texttt{OptimalToken} at which if
 \subsubsection{pruneSlowStates}
 \subsubsection{escapeInPathologicalCases}
 \subsection{FormatWriter}
