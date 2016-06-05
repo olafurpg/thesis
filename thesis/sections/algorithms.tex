@@ -209,7 +209,26 @@ In section~\ref{sec:tooling}, we discuss techniques we used to be confident that
 In the following section (\ref{sec:recurseOnBlocks}) we explain the \texttt{recurseOnBlocks} optimization, which allows us to reenable \texttt{dequeueOnNewStatements} for selected regions inside parentheses.
 
 \subsubsection{recurseOnBlocks}~\label{sec:recurseOnBlocks}
+If the \texttt{dequeueOnNewStatements} optimization is disabled and we start a new block delimited by curly braces, recursively run the best-first search inside the block.
+The intuition here is that by recursively running the best-first search, we keep the priority queue small at each layer of recursion.
+This allows us to run aggressive optimizations such as \texttt{dequeueOnNewStatements}.
 
+The \texttt{recurseOnBlocks} optimization enables scalafmt to handle idiomatic Scala code where large bodies of higher order functions and blocks are passed around as arguments.
+Remember from section~\ref{sec:scala} that  Scala makes it syntactically convenient to in higher order functions as arguments to other functions.
+Listing~\ref{lst:recurse} shows an example where this happens and we trigger the \texttt{recurseOnBlocks} optimization.
+\lstinputlisting[label={lst:recurse}, caption=recurseOnBlocks example]{code/recurse.scala}
+The \texttt{dequeueOnNewStatements} optimization is disabled inside argument list.
+Because the higher order function can have an arbitrary number of statements the priority queue grows out bounds.
+To implement the \texttt{recurseOnBlocks} optimization, we add an extension to algorithm~\ref{alg:bfsv1}.
+Algorithm~\ref{alg:recurse} shows a rough sketch of how \texttt{recurseOnBlocks} is implemented.
+\begin{algorithm}
+\caption{recurseOnBlocks optimization}\label{alg:recurse}
+  \lstinputlisting{code/recurse-alg.scala}
+\end{algorithm}
+We change the signature to accept a starting State and token where we stop the search.
+Observe that we guard against infinite recursion by not making a recursive call on \texttt{start.formatToken}.
+With \texttt{recurseOnBlocks} and \texttt{dequeueOnNewStatements}, we have solved most problems caused by independent statements affecting the formatting layouts of each other.
+Next, we look at more technique to prevent the search queue from growing out of bounds.
 
 \subsubsection{OptimalToken}\label{sec:optimal}
 \subsubsection{pruneSlowStates}
