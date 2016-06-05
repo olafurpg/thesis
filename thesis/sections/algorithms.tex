@@ -42,7 +42,9 @@ Listing~\ref{lst:policy} shows the definition of Policy.
 A Policy is a partial function that should be applied to future Decisions up until the \emph{expire} token.
 Policies easily compose using the Scala standard library \texttt{orElse} and \texttt{andThen} methods on PartialFunction\footnote{
   Careful eyes will observe that Policy is in fact a monoid with the empty partial function as identity and function composition as associative operator.}.
-This enables a high-level way to express arbitrary formatting layouts over a region of code.
+The \texttt{isProhibitive} member annotates whether this policy can possibly eliminate Splits from future Decisions.
+This is necessary for an optimization explained in section~\ref{sec:dequeue}.
+Policies enable a high-level way to express arbitrary formatting layouts over a region of code.
 
 \subsubsection{Indent}\label{sec:indent}
 An \emph{Indent} describes indentation over a region of code.
@@ -147,32 +149,72 @@ The best-first\autocite{pearl_heuristics:_1984} algorithm is an excellent fit fo
 Best-first search is a graph search algorithm to efficiently traverse a directed weighted graph.
 The objective is reach the final token and once we reach there, we terminate the search because we're guaranteed no other solution is better.
 Algorithm~\ref{alg:bfsv1} shows a first attempt\footnote{
-  Unfortunately, we make heave use of mutation since graph search algorithms typically don't lend themselves well too functional programming principles.
+  Unfortunately, we make heave use of mutation since graph search algorithms typically don't lend themselves well to functional programming principles.
 } to adapt a best-first search algorithm to the data structures and terminologies introduced so far.
 \begin{algorithm}
 \caption{Scalafmt best-first search, first approach}\label{alg:bfsv1}
   \lstinputlisting{code/bfsv1.scala}
 \end{algorithm}
-In the best case we always choose the cheapest splits and the algorithm runs in linear time.
-Excellent, does that mean we're done?
+In the best case, the search always chooses the cheapest splits and the algorithm runs in linear time.
+Observe that the router is responsible for providing well-behaved splits so that we never hit on the error condition after the while loop.
+Excellent, does that mean the search is complete?
 Absolutely not, this implementation contains several serious performance issues.
 
 Algorithm~\ref{alg:bfsv1} is exponential in the worst case.
 For example, listing~\ref{lst:exponential} shows a tiny input that triggers the search to explore over 8 million states.
 \lstinputlisting[label={lst:exponential}, caption=Exponential running time]{code/exponential.scala}
-Even if we could visit 1 state per microsecond --- reality is closer to 10 states/microsecond ---  the search will take at least 1 second to complete.
-This is unacceptable to format 2 lines of code.
+Even if we could visit 1 state per microsecond --- reality is closer to 10 states/microsecond ---  the search will take almost 1 second to complete.
+This is unacceptable performance to format only 2 lines of code.
 Of course, we could special-case long comments, but that would only provide us a temporary solution.
-Instead, we must apply several domain specific optimizations like with ClangFormat and dartfmt.
+Instead, like with ClangFormat and dartfmt, we must apply several domain specific optimizations.
 In the following section, we discuss the optimizations that have shown to work well for scalafmt.
 
 \subsection{Optimizations}
+This section explains the most critical domain-specific optimizations that were required to get acceptable performance for scalafmt.
+We will see that some optimizations are quite ad-hoc and require a lot of adaptation to work correctly.
+
+\subsubsection{dequeueOnNewStatements}\label{sec:dequeue}
+Once the search reaches the beginning of a new statement, empty the priority queue.
+Observe that the formatting layout for each statement is independent from the formatting layout of the previous statement.
+Consider listing~\ref{lst:dequeue}.
+\lstinputlisting[label={lst:dequeue}, caption=Two independent statements]{code/dequeue.scala}
+Both statements exceed the column limit, which means that the search must back-track to some extent.
+However, once the search reaches \texttt{statement2} we have already found an optimal formatting layout for \texttt{statement1}.
+When we start backtracking in \texttt{statement2}, there is no need to explore alternative formatting layouts for \texttt{statement1}.
+Instead, we can safely empty the search queue once we reach the \texttt{statement2} token.
+
+The \texttt{dequeueOnNewStatements} optimization is implemented by extending algorithm~\ref{alg:bfsv1} with an if statement.
+Algorithm~\ref{alg:dequeue} shows a rough sketch of how this is done.
+\begin{algorithm}
+\caption{dequeueOnNewStatements optimization}\label{alg:dequeue}
+  \lstinputlisting{code/dequeue-alg.scala}
+\end{algorithm}
+With an empty queue, we ensure the search backtracks only as far back as is needed.
+The \texttt{statementStarts} variable contains all tokens that begin a new statement.
+To collect those tokens, we traverse the syntax tree of the input source file and select the first tokens of each statement of a block, each case in a partial function, enumerator in a for comprehension and so forth.
+The actual implementation is quite elaborate and is left out of this thesis for clarity reasons.
+Unfortunately, our optimization has one small problem.
+
+Algorithm~\ref{alg:dequeue} may dequeue too eagerly inside nested scopes, leading the search to hit the error condition.
+Listing~\ref{lst:noopt} shows an example where this happens.
+\lstinputlisting[label={lst:noopt}, caption=Overeager dequeueOnNewStatements]{code/noopt.scala}
+Remember that each case of a partial function starts a new statement.
+The \texttt{dequeueOnNewStatements} optimization will dequeue the queue on the first state that reaches the \texttt{case} token.
+In this example, the first state to reach the \texttt{case} token will have a strict Policy that disallows newlines up until the closing parenthesis.
+However, we must insert a newline after the comment.
+This causes the search to terminate too early and reach the error condition.
+By inspecting where this problem occurred, we came up with a simple rule to identify regions where the \texttt{dequeueOnNewStatements} optimization should be disabled.
+The simple rule is to never run \texttt{dequeueOnNewStatements} inside a pair of parentheses.
+In section~\ref{sec:tooling}, we discuss techniques we used to be confident that this rule indeed works as intended.
+In the following section (\ref{sec:recurseOnBlocks}) we explain the \texttt{recurseOnBlocks} optimization, which allows us to reenable \texttt{dequeueOnNewStatements} for selected regions inside parentheses.
+
+\subsubsection{recurseOnBlocks}~\label{sec:recurseOnBlocks}
+
+
 \subsubsection{OptimalToken}\label{sec:optimal}
-\subsubsection{dequeueOnNewStatements}
-\subsubsection{recurseOnBlocks}
-\subsubsection{escapeInPathologicalCases}
 \subsubsection{pruneSlowStates}
-\subsubsection{FormatWriter}
+\subsubsection{escapeInPathologicalCases}
+\subsection{FormatWriter}
 \begin{itemize}
   \item vertical alignment
   \item comment formatting

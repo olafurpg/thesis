@@ -1,5 +1,6 @@
 /** @returns Splits that produce and optimal formatting layout */
-def bestFirstSearch(formatTokens: FormatTokens, router: Router): List[Split] = {
+def bestFirstSearch(formatTokens: List[FormatTokens],
+                    router: Router): List[Split] = {
   val lastFormatToken = formatTokens.last
   val Q = mutable.PriorityQueue(State.init(formatTokens.head))
   while (Q.nonEmpty) {
