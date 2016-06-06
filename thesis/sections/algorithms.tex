@@ -152,8 +152,8 @@ Algorithm~\ref{alg:bfsv1} shows a first attempt\footnote{
   Unfortunately, we make heave use of mutation since graph search algorithms typically don't lend themselves well to functional programming principles.
 } to adapt a best-first search algorithm to the data structures and terminologies introduced so far.
 \begin{algorithm}
-\caption{Scalafmt best-first search, first approach}\label{alg:bfsv1}
-  \lstinputlisting{code/bfsv1.scala}
+  \caption{Scalafmt best-first search, first approach}\label{alg:bfsv1}
+  \lstinputlisting[nolol]{code/bfsv1.scala}
 \end{algorithm}
 In the best case, the search always chooses the cheapest splits and the algorithm runs in linear time.
 Observe that the router is responsible for providing well-behaved splits so that we never hit on the error condition after the while loop.
@@ -187,7 +187,7 @@ The \texttt{dequeueOnNewStatements} optimization is implemented by extending alg
 Algorithm~\ref{alg:dequeue} shows a rough sketch of how this is done.
 \begin{algorithm}
 \caption{dequeueOnNewStatements optimization}\label{alg:dequeue}
-  \lstinputlisting{code/dequeue-alg.scala}
+  \lstinputlisting[nolol]{code/dequeue-alg.scala}
 \end{algorithm}
 With an empty queue, we ensure the search backtracks only as far back as is needed.
 The \texttt{statementStarts} variable contains all tokens that begin a new statement.
@@ -224,7 +224,7 @@ To implement the \texttt{recurseOnBlocks} optimization, we add an extension to a
 Algorithm~\ref{alg:recurse} shows a rough sketch of how \texttt{recurseOnBlocks} is implemented.
 \begin{algorithm}
 \caption{recurseOnBlocks optimization}\label{alg:recurse}
-  \lstinputlisting{code/recurse-alg.scala}
+  \lstinputlisting[nolol]{code/recurse-alg.scala}
 \end{algorithm}
 We change the signature to accept a starting State and token where we stop the search.
 Observe that we guard against infinite recursion by not making a recursive call on \texttt{start.formatToken}.
@@ -255,7 +255,7 @@ To implement the \texttt{OptimalToken} optimization, we add an extension to algo
 Algorithm~\ref{alg:optimal} sketches how the extension works.
 \begin{algorithm}
   \caption{OptimalToken optimization}\label{alg:optimal}
-  \lstinputlisting{code/optimalToken-alg.scala}
+  \lstinputlisting[nolol]{code/optimalToken-alg.scala}
 \end{algorithm}
 The \texttt{bestFirstSearch} method has a new \texttt{maxCost} parameter, which is the highest cost that a new splits can have.
 Next, if a Split has defined an \texttt{OptimalToken} we make an attempt to format up to that token.
@@ -265,10 +265,69 @@ A straightforward extension to this algorithm would be to add a \texttt{maxCost}
 However, this has not been necessary for scalafmt.
 
 \subsubsection{pruneSlowStates}
+The pruneSlowStates is a optimization that eliminates states that progress slowly.
+A state progresses slowly if it visits a token after other equally or less expensive states.
+The insight is that if two equally expensive states visit the same token, the first state to visits that token typically produces a better formatting layout.
+
+By eliminating slow states, we obtain a better formatting output in addition to minimizing the search space.
+Listing~\ref{lst:slow} shows two equally expensive formatting solutions where one solution is fast and other is slow.
+\lstinputlisting[label={lst:slow}, caption=Slow states]{code/slow.scala}
+Of course, the line break after \texttt{g +} could be more expensive than the line break after \texttt{c +}.
+Instead, the Router is free to assign an identical cost to both line breaks and let \texttt{pruneSlowStates} take care of eliminating the slow state.
+
+The \texttt{pruneSlowStates} is implemented as a extension to algorithm~\ref{alg:optimal}.
+Algorithm~\ref{alg:slow} shows a rough sketch of how the extension works.
+\begin{algorithm}[H]
+  \caption{pruneSlowStates optimization}\label{alg:slow}
+  \lstinputlisting[nolol]{code/slow-alg.scala}
+\end{algorithm}
+Observe that this algorithm is transparent to the Router.
+No special annotations are required from Splits.
+
 \subsubsection{escapeInPathologicalCases}
+Alas, despite our best efforts to keep the search space small, some inputs can still trigger exponential running times.
+The \texttt{escapeInPathologicalCases} optimization is our last resort to handle such pathological inputs.
+How do we detect that the search has encountered such a challenging input?
+
+We detect the search space is growing out of bounds by tallying the number of visits per token.
+If we visit the same token $N$ times, we can estimate the current branching factor to be around $log_2(N)$.
+In scalafmt, we tune $N$ to be 256 so that the best-first search can split into two or more paths for up to 8 tokens.
+When a token has been visited more than 256 times, we trigger the \texttt{escapeInPathologicalCases} optimization.
+In the following paragraphs section, we present two alternative fallback strategies: \emph{leave unformatted} and \emph{best-effort}.
+
+The simplest and most obvious fallback strategy is to leave the pathologically nested code unformatted.
+This can be implemented by backtracing to the first token of the current statement and then reproduce the formatting input up to the last token of said statement.
+This method is guaranteed to run linearly to the size of the input.
+The responsibility is left to the software developer to a manually format her code, removing all the benefits of code formatting.
+However, in some cases the software developer may prefer to get a decent yet suboptimal formatting output.
+
+The best-effort fallback strategy applies heuristics to give a decent but suboptimal formatting output.
+When a token is visited for the 256th time, we select two candidate states from the search queue and eliminate all other states.
+The first state is the fastest state --- the state that has reached furthest into the token stream --- that is not bound a prohibitive single line policy.
+Single line policies are policies that eliminate newline Splits.
+The second state is the current state --- the slow state that visited the token for the 256th time.
+The intuition is that the fast state has good formatting output so far but for is stuck on a challenging token for some reason.
+The slow may paid a hefty penalty early causing it to move slowly but maybe the early penalty will yield a better output in the end.
+Algorithm~\ref{alg:best-effort} shows an example of the best-effort strategy can be implemented as an extension to algorithm~\ref{alg:bfsv1}.
+\begin{algorithm}
+  \caption{best-effort fallback strategy}\label{alg:best-effort}
+  \lstinputlisting[nolol]{code/best-effort.scala}
+\end{algorithm}
+The \texttt{isSafe} method on State returns true if the state contains prohibitive policies, derived from annotated metadata in Splits from the Router.
+Observe that this algorithm will reapply the best-effort fallback until the search reaches the final token.
+In scalafmt, we bound the number of this can happen with a final fallback to the unformatted strategy.
+
+The unformatted and best-effort fallback strategies offer different trade-offs.
+The unformatted strategy works well in a scenario where a software developer is available to manually fix formatting errors.
+The best-effort strategy works well on computer generated code where just a modicum of formatting still greatly aid the legibility of the code.
+Unfortunately, as we discuss in section~\ref{sec:testing}, we struggled to guarantee idempotency using the best-effort strategy.
+This limitation renders the best-effort strategy useless in environments where code formatters are used to enforce a consistent coding style across a codebase.
+
+
 \subsection{FormatWriter}
 \begin{itemize}
   \item vertical alignment
   \item comment formatting
   \item stripMargin alignment
 \end{itemize}
+
