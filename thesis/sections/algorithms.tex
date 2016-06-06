@@ -325,9 +325,31 @@ This limitation renders the best-effort strategy useless in environments where c
 
 
 \subsection{FormatWriter}
-\begin{itemize}
-  \item vertical alignment
-  \item comment formatting
-  \item stripMargin alignment
-\end{itemize}
+Recall from figure~\ref{fig:architecture}, the FormatWriter receives splits from the best-first search and produces a final output presented to the user.
+In addition to reifying Splits, the FormatWriter runs three post-processing steps: \emph{docstring formatting}, \emph{vertical alignment} and \emph{stripMargin alignment}.
+
+\subsubsection{Docstring formatting}\label{sec:docstring}
+Docstrings are used by software developers to document a specific part of code.
+Like in Java, docstrings in Scala start with the \texttt{/**} pragma and end with \texttt{*/}.
+However, unlike in Java, the Scala community is split on whether new lines inside docstrings should align by the first or the second asterisk.
+The official Scala Style Guide\autocite{Scala80:online} dictates that new lines should align by the second asterisk while the Java tradition is to align by the first asterisk.
+The Scala.js\autocite{doeraene_scala.js_2015} and Spark\autocite{xin_spark_2015} style guides follow the Java conventions.
+To accommodate all needs, scalafmt allows the user to choose either style.
+To enforce that the asterisks are aligned according to the user's preferences,
+the FormatWriter rewrites docstring tokens using simple regular expressions.
+
+\subsubsection{stripMargin alignment}
+The Scala standard library adds a \texttt{stripMargin} extension method on strings.
+The method helps Scala developers write multiline interpolated and regular strings literals.
+Listing~\ref{lst:stripMargin} shows an example usage of the \texttt{stripMargin} method.
+\lstinputlisting[label={lst:stripMargin}, caption=stripMargin example]{code/stripMargin.scala}
+After calling the method, the indentation and \texttt{|} character on line 3 are conveniently stripped away.
+However, the hard-fought indentation can easily be lost when the string is moved up or down a scope during refactoring.
+Scalafmt can automatically fix the issue.
+In the FormatWriter, scalafmt rewrites string literals to automatically align the \texttt{|} characters with the opening triple quotes \texttt{"""}.
+This setting is disabled by default since scalafmt has only syntactic information and cannot determine if the \texttt{stripMargin} invocation calls the standard library method or a user-defined method.
+
+
+
+\subsubsection{Vertical alignment}
 
