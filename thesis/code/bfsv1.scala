@@ -6,9 +6,9 @@ def bestFirstSearch(formatTokens: List[FormatTokens]): List[Split] = {
     if (currentState.formatToken == formatTokens.last) {
       return currentState.splits // reached the final state.
     } else {
-      val decisions = Router.getSplits(currentState.formatToken)
-      decisions.foreach { decision =>
-        Q += State.nextState(currentState, decision)
+      val splits = Router.getSplits(currentState.formatToken)
+      splits.foreach { split =>
+        Q += State.nextState(currentState, split)
       }
     }
   }

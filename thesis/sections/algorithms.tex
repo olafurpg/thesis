@@ -218,7 +218,8 @@ Remember from section~\ref{sec:scala} that  Scala makes it syntactically conveni
 Listing~\ref{lst:recurse} shows an example where this happens and we trigger the \texttt{recurseOnBlocks} optimization.
 \lstinputlisting[label={lst:recurse}, caption=recurseOnBlocks example]{code/recurse.scala}
 The \texttt{dequeueOnNewStatements} optimization is disabled inside argument list.
-Because the higher order function can have an arbitrary number of statements the priority queue grows out bounds.
+The priority queue grows out bounds because the higher order function can have an arbitrary number of statements.
+
 To implement the \texttt{recurseOnBlocks} optimization, we add an extension to algorithm~\ref{alg:bfsv1}.
 Algorithm~\ref{alg:recurse} shows a rough sketch of how \texttt{recurseOnBlocks} is implemented.
 \begin{algorithm}
@@ -231,15 +232,38 @@ With \texttt{recurseOnBlocks} and \texttt{dequeueOnNewStatements}, we have solve
 Next, we leverage recursion again to help the search queue stay small.
 
 \subsubsection{OptimalToken}\label{sec:optimal}
-An OptimalToken is a hint to the best-first search that indicates if one search branch can reach to a particular token at cost 0, the best-first search can eliminate competing branches.
-By eliminating competing branches, we drastically minimize the search space.
-How is this implemented?
-
-Remember that a Split has an \texttt{optimalToken} member.
+An OptimalToken is a hint from a Split to the best-first search that enables the search to early eliminate competing Splits.
+Recall from listing~\ref{lst:split} that a Split has an \texttt{optimalToken} member.
 Listing~\ref{lst:optimalToken} shows the definition of OptimalToken.
-\lstinputlisting[label={lst:optimalToken}, caption=OptimalToken definition]{code/optimalToken.scala}
+\lstinputlisting[label={lst:optimalToken}, float, caption=OptimalToken definition]{code/optimalToken.scala}
+When the best-first search encounters a Split with a defined OptimalToken,
+the best-first search makes an attempt to reach that token with a budget of 0 cost.
+If successful, the search can eliminate the competing Splits.
+If unsuccessful and the \texttt{killOnFail} member is true, the best-first search eliminates the Split.
+Otherwise, the best-first search continues as usual.
 
-A split can specify an \texttt{OptimalToken} at which if
+By eliminating competing branches, we drastically minimize the search space.
+Listing~\ref{lst:optimal} shows an example where the OptimalToken can be applied.
+\lstinputlisting[label={lst:optimal}, float, caption=OptimalToken example]{code/optimal.scala}
+Scalafmt supports 4 different ways to format call-site function applications.
+This means that there will be $4^N$ number of open branches when the search reaches \texttt{UserObject} $N$.
+To overcome this issue, we define an OptimalToken at the closing parenthesis.
+The best-first search successfully fits the argument list of each \texttt{UserObject} on a single line, and eliminates the 3 other competing branches.
+This makes the search run in linear time as opposed to exponential.
+
+To implement the \texttt{OptimalToken} optimization, we add an extension to algorithm~\ref{alg:recurse}.
+Algorithm~\ref{alg:optimal} sketches how the extension works.
+\begin{algorithm}
+  \caption{OptimalToken optimization}\label{alg:optimal}
+  \lstinputlisting{code/optimalToken-alg.scala}
+\end{algorithm}
+The \texttt{bestFirstSearch} method has a new \texttt{maxCost} parameter, which is the highest cost that a new splits can have.
+Next, if a Split has defined an \texttt{OptimalToken} we make an attempt to format up to that token.
+If successful, we update \texttt{optimalFound} variable to eliminate other Splits from being added to the queue.
+If unsuccessful and \texttt{killOnFail} is true, we eliminate the Split that defined the OptimalToken.
+A straightforward extension to this algorithm would be to add a \texttt{maxCost} member to the \texttt{OptimalToken} definition from listing~\ref{lst:optimalToken}.
+However, this has not been necessary for scalafmt.
+
 \subsubsection{pruneSlowStates}
 \subsubsection{escapeInPathologicalCases}
 \subsection{FormatWriter}
