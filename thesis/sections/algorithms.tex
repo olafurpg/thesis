@@ -359,10 +359,19 @@ The lack of vertical alignment in the initial release of scalafmt was a hindranc
 Configurable vertical alignment was added to the 0.2 release.
 
 Vertical alignment is implemented in the FormatWriter as an extension to the reification of Splits.
-Instead of reifying a Space into the literal \texttt{" "} for a particular \texttt{formatToken},
-the FormatWriter builds up a \texttt{tokenAligns: Map[FormatToken, Int]} and reifies the split into the literal \texttt{" " * (1 + tokenAlign(formatToken))}.
-Listing~\ref{alg:align} shows a rough sketch of how the \texttt{tokenAligns} map is constructed.
+Instead of reifying a Space into a single space literal,
+the FormatWriter builds a \texttt{tokenAligns: Map[Split, Int]} which specifies the number of additional spaces to add for each Space.
+Listing~\ref{alg:align} shows a simplification of how the actual algorithm\footnote{
+  The actual implementation is 130 lines of code including helper methods, see
+\href{https://git.io/voIG4}{https://git.io/voIG4}}
+constructs the \texttt{tokenAligns} map.
 \begin{algorithm}
-  \caption{Vertical alignment}\label{alg:align}
+  \caption{Vertical alignment, simplified algorithm}\label{alg:align}
   \lstinputlisting[nolol]{code/align-alg.scala}
 \end{algorithm}
+In a nutshell, the algorithm builds blocks of lines that can be vertical aligned.
+Blocks are separated by blank lines or mismatching candidates in subsequent lines.
+As demonstrated in listing~\ref{lst:align}, key features of this algorithm include that users can configure arbitrary symbols to align by and lines can contain multiple vertically aligned columns.
+This algorithm has two main limitations.
+Firstly, all lines in a block must have an equal number of matching columns.
+Secondly, the algorithm can't infer vertical alignment forcing the user to explicitly configure which tokens should align.
