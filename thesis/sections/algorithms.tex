@@ -325,7 +325,7 @@ This limitation renders the best-effort strategy useless in environments where c
 
 
 \subsection{FormatWriter}
-Recall from figure~\ref{fig:architecture}, the FormatWriter receives splits from the best-first search and produces a final output presented to the user.
+Recall from figure~\ref{fig:architecture}, the FormatWriter receives splits from the best-first search and produces the final output presented to the user.
 In addition to reifying Splits, the FormatWriter runs three post-processing steps: \emph{docstring formatting}, \emph{vertical alignment} and \emph{stripMargin alignment}.
 
 \subsubsection{Docstring formatting}\label{sec:docstring}
@@ -333,21 +333,36 @@ Docstrings are used by software developers to document a specific part of code.
 Like in Java, docstrings in Scala start with the \texttt{/**} pragma and end with \texttt{*/}.
 However, unlike in Java, the Scala community is split on whether new lines inside docstrings should align by the first or the second asterisk.
 The official Scala Style Guide\autocite{Scala80:online} dictates that new lines should align by the second asterisk while the Java tradition is to align by the first asterisk.
-The Scala.js\autocite{doeraene_scala.js_2015} and Spark\autocite{xin_spark_2015} style guides follow the Java conventions.
+The Scala.js\autocite{doeraene_scala.js_2015} and Spark\autocite{xin_spark_2015} style guides follow the Java convention.
 To accommodate all needs, scalafmt allows the user to choose either style.
 To enforce that the asterisks are aligned according to the user's preferences,
-the FormatWriter rewrites docstring tokens using simple regular expressions.
+the FormatWriter rewrites docstring tokens.
+This is implemented with simple regular expressions.
 
 \subsubsection{stripMargin alignment}
 The Scala standard library adds a \texttt{stripMargin} extension method on strings.
-The method helps Scala developers write multiline interpolated and regular strings literals.
+The method helps Scala developers write multiline interpolated and regular string literals.
 Listing~\ref{lst:stripMargin} shows an example usage of the \texttt{stripMargin} method.
 \lstinputlisting[label={lst:stripMargin}, caption=stripMargin example]{code/stripMargin.scala}
-After calling the method, the indentation and \texttt{|} character on line 3 are conveniently stripped away.
-However, the hard-fought indentation can easily be lost when the string is moved up or down a scope during refactoring.
-Scalafmt can automatically fix the issue.
+After calling the method, the indentation and \texttt{|} character on line 3 are conveniently removed.
+However, the hard-fought indentation on the pipe can easily be lost when the string is moved up or down a scope during refactoring.
+Scalafmt can automatically fix this issue.
 In the FormatWriter, scalafmt rewrites string literals to automatically align the \texttt{|} characters with the opening triple quotes \texttt{"""}.
-This setting is disabled by default since scalafmt has only syntactic information and cannot determine if the \texttt{stripMargin} invocation calls the standard library method or a user-defined method.
+This setting is disabled by default since scalafmt requires semantic information to confidently determine if the \texttt{stripMargin} invocation calls the standard library method or a user-defined method.
 
 \subsubsection{Vertical alignment}
+It turns out that vertical alignment is incredibly popular in the Scala programming community.
+When lines are vertically aligned when similar operators from a sequence of lines align together.
+Listing~\ref{lst:align} shows an example of vertical alignment.
+\lstinputlisting[label={lst:align}, caption=Vertical alignment example]{code/align.scala}
+The lack of vertical alignment in the initial release of scalafmt was a hindrance for user-adoption.
+Configurable vertical alignment was added to the 0.2 release.
 
+Vertical alignment is implemented in the FormatWriter as an extension to the reification of Splits.
+Instead of reifying a Space into the literal \texttt{" "} for a particular \texttt{formatToken},
+the FormatWriter builds up a \texttt{tokenAligns: Map[FormatToken, Int]} and reifies the split into the literal \texttt{" " * (1 + tokenAlign(formatToken))}.
+Listing~\ref{alg:align} shows a rough sketch of how the \texttt{tokenAligns} map is constructed.
+\begin{algorithm}
+  \caption{Vertical alignment}\label{alg:align}
+  \lstinputlisting[nolol]{code/align-alg.scala}
+\end{algorithm}
