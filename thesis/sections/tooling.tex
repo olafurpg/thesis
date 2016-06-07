@@ -41,19 +41,49 @@ To produce diff heatmaps, we first persist to a database the statistics report n
 Then, we generate the diff heatmap by fetching two reports and calculating the difference in visits per token.
 If the difference is negative for a particular token --- meaning we visited said token fewer times --- the background is highlighted green, otherwise red.
 
+\subsection{Property based testing}~\label{sec:testing}
+Property based tests verify that software implements a high-level specification.
+Unlike example based tests, the input is not manually curated by the software developer.
+Instead, the input is automatically generated.
+Property based tests played a vital role in development of scalafmt and gave us confidence that the algorithms in section~\ref{sec:algorithms} behave well in the real world.
+We collected a sample of 1.2 million lines of code from open source Scala projects available online.
+The sample was compressed into a 23mb zip file\footnote{See \url{https://github.com/olafurpg/scalafmt/releases/download/v0.1.4/repos.tar.gz}}.
+Our test suite would download the sample and test again three properties: \emph{can-format}, \emph{AST integrity} and \emph{idempotency}.
 
+\subsubsection{Can-format}
+The can-format property simply says that if the Scala compiler's parser is able to parse the source input file, then scalafmt should be able to format the source file.
+Although this may seem like a trivial property, it was by far the most effective property at finding bugs in scalafmt.
+Most commonly, comments in the most unexpected placed would cause the best-first search to not reach the last token in the input.
+An overly strict Policy was usually the culprit of such bugs, which was easy to fix.
 
+\subsubsection{AST integrity}
+The AST integrity property says that the abstract syntax tree of the formatted source file should be identical to the abstract syntax tree of the original input.
+Recall from section~\ref{sec:scalameta} that scala.meta trees can be serialized into strings.
+We leverage this feature to test AST integrity.
+Algorithm~\ref{alg:ast} shows the code needed to test AST integrity.
+\begin{algorithm}
+  \caption{AST integrity property}\label{alg:ast}
+  \lstinputlisting[nolol]{code/ast.scala}
+\end{algorithm}
+This property catched several critical bugs.
+For example, in one case, scalafmt inserted a newline after the keyword \texttt{return}, breaking the semantics of the original source code.
+Moreover, this property highlighted the danger of enabling the \texttt{stripMargin} alignment.
+Since the \texttt{stripMargin} modified the contents of regular and interpolated string literals,
+the AST of the formatted output changed.
+Finally, by adhereing to AST integrity, we limit the scope of what scalafmt can do.
+For example, if scalafmt would sort imports it would change the AST.
+In Scala, imports can be relative and, hence, sorting them alphabetically can alter semantics.
 
-
-
-\subsection{Traceability}\label{sec:line}
-\subsection{Configuration}
-\subsubsection{maxColumn}
-\subsubsection{binPacking}
-\subsubsection{vertical alignment}
-\subsection{Testing}~\label{sec:testing}
-\subsection{Unit tests}
-\subsection{Property based tests}
-\subsubsection{AST Integrity}
 \subsubsection{Idempotency}
-\subsection{Regressions tests}
+The idempotency property says that if the output of formatting a source file twice should be identical to the output of formatting it once.
+This property is critical for scalafmt to be used as part of any continuous integration setup.
+It is not at all obvious that all the presented algorithms in section~\ref{sec:algorithms} fulfil the idempotency property.
+Our experience reveals that it is in fact very easy to accidentally introduce non-idempotent formatting rules in the Router.
+We did not test for idempotency until the 0.2.3 release, after users had reported non-idempotent issues.
+Still, even after we started testing against idempotency in our comprehensive test-suite, we continued to receive issues with non-idempotent formatting.
+It turns out that 1.2 million lines of code is probably not big enough of a sample to catch all property bugs.
+
+% \subsection{Configuration}
+% \subsubsection{maxColumn}
+% \subsubsection{binPacking}
+% \subsubsection{vertical alignment}
