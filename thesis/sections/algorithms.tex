@@ -1,7 +1,7 @@
 \section{Algorithms}\label{sec:algorithms}
 This chapter describes how scalafmt formats Scala code.
 We will see that scalafmt's design is inspired by ClangFormat and dartfmt.
-However, we believe our design makes a valuable contribution in that it leverages functional programming principles to maximise code reuse and extensibility.
+However, we believe our design makes a valuable contribution in that it leverages functional programming principles to maximise code reuse and extensibility (TODO, really???).
 
 \subsection{Design}
 Figure~\ref{fig:architecture} shows a broad architectural overview of scalafmt.
@@ -31,7 +31,7 @@ In a nutshell, the job of the LineWrapper is to convert each FormatToken into a 
 A Decision is a pair of a FormatToken and a sequence of Splits.
 Listing~\ref{lst:decision} shows the Definition of decision.
 \lstinputlisting[label={lst:decision}, caption=Decision definition]{code/decision.scala}
-The \emph{splits} member represents the possible splits that we can take at \emph{formatToken}.
+The \emph{splits} member represents the possible splits that the LineWrapper can choose for \emph{formatToken}.
 
 \subsubsection{Policy}\label{sec:policy}
 A \emph{Policy} is an enforced formatting layout over a region.
@@ -41,7 +41,7 @@ Listing~\ref{lst:policy} shows the definition of Policy.
 \end{minipage}
 A Policy is a partial function that should be applied to future Decisions up until the \emph{expire} token.
 Policies easily compose using the Scala standard library \texttt{orElse} and \texttt{andThen} methods on PartialFunction\footnote{
-  Careful eyes will observe that Policy is in fact a monoid with the empty partial function as identity and function composition as associative operator.}.
+  Fun fact. Careful eyes will observe that Policy is in fact a monoid with the empty partial function as identity and function composition as associative operator.}.
 % The \texttt{isProhibitive} member annotates whether this policy can possibly eliminate Splits from future Decisions.
 % This is necessary for an optimization explained in section~\ref{sec:dequeue}.
 Policies enable a high-level way to express arbitrary formatting layouts over a region of code.
@@ -50,7 +50,7 @@ Policies enable a high-level way to express arbitrary formatting layouts over a 
 An \emph{Indent} describes indentation over a region of code.
 \lstinputlisting[label={lst:indent}, caption=Indent definition]{code/indent.scala}
 Listing~\ref{lst:indent} shows the definition of Indent along with the algebraic data type \emph{Length}.
-Length can either be \texttt{Num(n)} where $n$ represents an explicit number of spaces to indent by or \texttt{StateColumn} which is a placeholder the number of spaces required to vertically align by the current column.
+Length can either be \texttt{Num(n)} where $n$ represents an explicit number of spaces to indent by or \texttt{StateColumn} which is a placeholder for the number of spaces required to vertically align by the current column.
 Indent is type parameterized by Length so that, at some point, we can replace StateColumn placeholders with Nums to obtain a concrete number.
 For example, given a scala.meta tree \texttt{expr}, the definition \texttt{Indent(Num(2), expr.tokens.last, inclusive=true)}
 increases the indentation level by 2 spaces up to and including the last token of \texttt{expr}.
@@ -70,18 +70,17 @@ The most important member of the Split type is the \emph{modification}.
 A modification must be one of \texttt{NoSplit}, \texttt{Space} and \texttt{Newline}.
 The \emph{cost} member represents the penalty for choosing this split.
 The \emph{optimalToken} member enables an optimization explained in section~\ref{sec:optimal}.
-The \emph{indents} member contains the indentation layers that this splits adds.
 The \emph{line} member allows a powerful debugging technique explained in section~\ref{sec:router}.
 The \emph{policy} and \emph{indents} members are explained in sections~\ref{sec:policy} and~\ref{sec:indent}, respectively.
 
 \subsubsection{State}
-A \emph{State} is a partial formatting solution during by the best-first search.
+A \emph{State} is a partial formatting solution during the best-first search.
 Listing~\ref{lst:state} shows the definition of the State class and companion object.
 \begin{minipage}{\linewidth}
   \lstinputlisting[label={lst:state}, caption=State definition]{code/state.scala}
 \end{minipage}
 Observe the similarity of State and Split.
-A State contains various summaries calculated from the \texttt{splits} member.
+A State contains various summaries calculated from the \texttt{splits} vector.
 The summaries are necessary for performance reasons in the best-first search.
 Observe that the indents are type parameterized by \texttt{Num}, meaning they only contain concrete indentations and no \texttt{StateColumn} indents.
 The \texttt{indentation} member is the sum of all currently active indents and \texttt{column} represents how many characters have been consumed since the last newline.
@@ -90,10 +89,9 @@ The \texttt{compare} method orders States firstly by their \texttt{totalCost} me
 The method \texttt{nextState} calculates a penalty for characters that overflow the column limit and prepares
 The method is implemented as efficiently as possible since the method is on a hot path in the best-first search.
 
-, new summaries to instantiate a new State.
 \subsection{LineWrapper}
 The LineWrapper is responsible for turning FormatTokens into Splits.
-To accomplish this, the LineWrapper employs a \emph{Router} and a best-first search.
+To accomplish this, the LineWrapper employs a \emph{Router} and a \emph{best-first search}.
 
 \subsubsection{Router}\label{sec:router}
 The Router's role is to produce a Decision given a FormatToken.
@@ -104,12 +102,12 @@ Figure~\ref{fig:router} shows all possible formatting layout for the small input
   \caption{Example graph produced by Router}
   \label{fig:router}
 \end{figure}
-In this figure, the Router is the planner that chooses which nodes open up multiple branches (\texttt{=} and \texttt{+}) and which nodes have one exit edge only.
+In this figure, the Router is the planner that has chosen to open up multiple branches at \texttt{=} and \texttt{+} and only one branch for the remaining tokens.
 This is no easy task since a FormatToken can be any pair of two tokens.
 How do we go about implementing a Router?
 
 The Router is implemented as one large pattern match on a FormatToken.
-Listing~\ref{lst:match} shows how to pattern match on a FormatToken.
+Listing~\ref{lst:match} shows how we can pattern match on a FormatToken and produce Splits.
 \lstinputlisting[label={lst:match}, caption=Pattern matching on FormatToken]{code/match.scala}
 The pattern \texttt{\_: `=`} matches a scala.meta token of type \texttt{`=`}.
 The underscore \texttt{\_} ignores the underlying value.
@@ -122,7 +120,9 @@ It turns out that Scala's pattern matching and scala.meta's algebraically typed 
 The Scala compiler can statically detect unreachable code.
 If we add a case that is already covered higher up in the pattern match, the Scala compiler issues a warning.
 For example, listing~\ref{lst:exhaustive} shows an example where the compiler issues a warning.
-\lstinputlisting[label={lst:exhaustive}, caption=Unreachable code]{code/exhaustive.scala}
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:exhaustive}, caption=Unreachable code]{code/exhaustive.scala}
+\end{minipage}
 Here, we accidentally match on a FormatToken with an \texttt{else} keyword on the right which will never match because we have a broader match on a Keyword higher up.
 In this small example, the bug may seem obvious but once the Router grows bigger the compiler becomes unmissable.
 However, this still leaves us with the second question of finding the origin of each Split.
