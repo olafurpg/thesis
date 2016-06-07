@@ -9,16 +9,25 @@ Instead, we will focus on \emph{performance benchmarks} and \emph{user adoption}
 In this chapter, we describe our test methodology, key metrics and the performance results.
 
 \subsubsection{Test methodology}
-We use JMH\autocite{OpenJ38:online} to benchmark scalafmt.
-JMH stands for the Java Microbenchmark Harness and can be used to build, run and analyze benchmarks written in languages targeting the JVM.
+We use OpenJDK Java Microbenchmark Harness (JMH)\autocite{OpenJ38:online} to benchmark scalafmt.
+JMH can be used to build, run and analyze benchmarks written in languages targeting the JVM, including Scala.
 The sbt-jmh\autocite{ktoso84:online} plugin makes it easy to integrate JMH with a Scala project.
 Our hardware is a Macbook Pro (Retina, 15-inch, Mid 2014) with a 2.5 GHz Intel Core i7 processor and 16 GB 1600 MHz DDR3 memory.
 The operating system is OS X El Capitan 10.11.5.
-We run the benchmarks on the JVM version 8, update 91, and Scala 2.11.7.
+We run the benchmarks from the scalafmt commit id \href{https://github.com/olafurpg/scalafmt/tree/aff5e794dae4787b08243f8abb87a3ca4d907e40}{aff5e794} compiled against Scala 2.11.7, running on
+on JVM version 8, update 91.
 
 \subsubsection{Performance metrics}
-We benchmark against several parameters: lines of code,s
+We are concerned with the time it takes to format a typical source file.
+However, source files come in different shapes and sizes.
+To accommodate select a small sample of files from popular open source libraries.
+The files will vary in sizes from small (<200 LOC), medium (~1.0000 LOC) and large (>4.000 LOC).
+We measure the performance metric \texttt{ms/file}, how many milliseconds are required to format a source file.
+
 \subsubsection{Results}
+TODO.
 
 \subsection{Adoption}\label{sec:adoption}
+TODO
+
 

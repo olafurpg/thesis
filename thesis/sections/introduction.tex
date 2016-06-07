@@ -36,25 +36,25 @@ Code formatting is valuable in collaborative coding environments.
 The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} --- which each Scala.js contributor is expected to know by heart --- is defined at a whooping 2.600 word count.
 Each contributed patch is manually verified against the coding style by the project maintainers.
 This adds a burden on both contributors and maintainers.
-Several prominent Scala community member have raised this issue.
+Several prominent Scala community members have raised this issue.
 ENSIME\autocite{_ensime_????} is a popular Scala interaction mode for text editors such as Vim and Emacs.
 Sam Halliday, an ENSIME maintainer, says ``I don't have time to talk about formatting in code reviews. I want the machine to do it so I can focus on the design.''\autocite{halliday_i_2016-1}.
 Akka\autocite{_akka_????} is a popular concurrent and distributed programming library for Scala with over 300 contributors.
 Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
-With code formatters, software developers are not burdened by syntactic trivia and can instead direct their full attention on writing correct, maintainable and fast code.
+With code formatters, software developers are not burdened by syntactic trivia and can instead direct their full attention to writing correct, maintainable and fast code.
 
 \subsection{Contributions}
 The main contribution presented in this thesis are the following:
 \begin{itemize}
   \item scalafmt, a code formatter for the Scala programming language.
-    At the time of this writing, scalafmt has been installed over 6.000 times in a period of 3 months, adopted by several open source libraries and adopted a vibrant community of external contributors.
+    At the time of this writing, scalafmt has been installed over 6.000 times in a period of 3 months, adopted by several open source libraries and attracted a vibrant community of external contributors.
     For details on how to install and use scalafmt, refer to the scalafmt online documentation\autocite{geirsson_scalafmt_2016}.
 
-  \item algorithms and data structures to implement line wrapping under a maximum column-width limit.
+  \item algorithms and data structures to implement line wrapping with a maximum column-width limit --- the most challenging part of code formatting.
     This work is presented in section~\ref{sec:algorithms}.
   \item tools to develop and test code formatters.
     This work is presented in section~\ref{sec:tooling}.
 \end{itemize}
 The scalafmt formatter itself may only be of direct interest to the Scala community.
-However, we hope the design of scalafmt can be inspiration to code formatter developers working with other programming languages.
+However, we hope that our experience from developing scalafmt --- presented in this thesis --- can be help to code formatter developers working with other programming languages.
 
