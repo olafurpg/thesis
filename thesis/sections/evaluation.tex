@@ -1,0 +1,24 @@
+\section{Evaluation}
+Code formatting is inherently a subjective topic.
+This introduces a challenge when evaluating a code formatter.
+In this chapter, we will present measurements that we believe show the success of scalafmt.
+We do not measure how well software developers perceive scalafmt formatted code.
+Instead, we will focus on \emph{performance benchmarks} and \emph{user adoption}.
+
+\subsection{Performance benchmarks}
+In this chapter, we describe our test methodology, key metrics and the performance results.
+
+\subsubsection{Test methodology}
+We use JMH\autocite{OpenJ38:online} to benchmark scalafmt.
+JMH stands for the Java Microbenchmark Harness and can be used to build, run and analyze benchmarks written in languages targeting the JVM.
+The sbt-jmh\autocite{ktoso84:online} plugin makes it easy to integrate JMH with a Scala project.
+Our hardware is a Macbook Pro (Retina, 15-inch, Mid 2014) with a 2.5 GHz Intel Core i7 processor and 16 GB 1600 MHz DDR3 memory.
+The operating system is OS X El Capitan 10.11.5.
+We run the benchmarks on the JVM version 8, update 91, and Scala 2.11.7.
+
+\subsubsection{Performance metrics}
+We benchmark against several parameters: lines of code,s
+\subsubsection{Results}
+
+\subsection{Adoption}\label{sec:adoption}
+
