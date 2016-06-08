@@ -3,6 +3,8 @@ all: format setup
 update: setup format
 setup:
 	mv ~/Downloads/My\ Library.bib project.bib || true
+plot:
+	gnuplot plots/file_sizes.gp
 format:
 	mkdir -p target
 	scalafmt -f code/unformatted.scala --maxColumn 35 > target/formatted1.scala

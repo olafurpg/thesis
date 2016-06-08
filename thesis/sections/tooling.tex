@@ -54,7 +54,7 @@ Our test suite would download the sample and test again three properties: \emph{
 The can-format property simply says that if the Scala compiler's parser is able to parse the source input file, then scalafmt should be able to format the source file.
 Although this may seem like a trivial property, it was by far the most effective property at finding bugs in scalafmt.
 Most commonly, comments in the most unexpected placed would cause the best-first search to not reach the last token in the input.
-An overly strict Policy was usually the culprit of such bugs, which was easy to fix.
+An overly strict Policy was usually the culprit of such bugs, which was easy to fix thanks to our tracing techniques described in section~\ref{sec:router}.
 
 \subsubsection{AST integrity}
 The AST integrity property says that the abstract syntax tree of the formatted source file should be identical to the abstract syntax tree of the original input.
@@ -70,18 +70,21 @@ For example, in one case, scalafmt inserted a newline after the keyword \texttt{
 Moreover, this property highlighted the danger of enabling the \texttt{stripMargin} alignment.
 Since the \texttt{stripMargin} modified the contents of regular and interpolated string literals,
 the AST of the formatted output changed.
-Finally, by adhereing to AST integrity, we limit the scope of what scalafmt can do.
-For example, if scalafmt would sort imports it would change the AST.
-In Scala, imports can be relative and, hence, sorting them alphabetically can alter semantics.
+A sign that \texttt{stripMargin} should be disabled by default.
+Finally, by adhereing to AST integrity, we confine the scope of what scalafmt can do.
+This makes it easy for us to reject feature requests such as sorting imports.
+Such refactoring can be left to a separate tool, in our humble opinion.
+% For example, if scalafmt would sort imports it would change the AST.
+% In Scala, imports can be relative and, hence, sorting them alphabetically can alter semantics.
 
 \subsubsection{Idempotency}
 The idempotency property says that if the output of formatting a source file twice should be identical to the output of formatting it once.
 This property is critical for scalafmt to be used as part of any continuous integration setup.
-It is not at all obvious that all the presented algorithms in section~\ref{sec:algorithms} fulfil the idempotency property.
+It is not at all obvious that the algorithms in section~\ref{sec:algorithms} fulfill the idempotency property.
 Our experience reveals that it is in fact very easy to accidentally introduce non-idempotent formatting rules in the Router.
-We did not test for idempotency until the 0.2.3 release, after users had reported non-idempotent issues.
-Still, even after we started testing against idempotency in our comprehensive test-suite, we continued to receive issues with non-idempotent formatting.
-It turns out that 1.2 million lines of code is probably not big enough of a sample to catch all property bugs.
+We did not test for idempotency until the 0.2.3 release, after users reported non-idempotent formatting behavior in scalafmt.
+Yet, even after we started testing against idempotency in our comprehensive test-suite, we continued to receive issues with non-idempotent formatting.
+It turns out that 1.2 million lines of code is not a large enough sample to catch all property bugs.
 
 % \subsection{Configuration}
 % \subsubsection{maxColumn}
