@@ -1,4 +1,4 @@
-           ,Total time,Mean,Q2  ,Q3  ,90th,95th,99th,Max 
-Scalafmt   ,99626     ,70  ,22  ,64  ,156 ,263 ,744 ,7791
-Scalariform,23277     ,13  ,4   ,12  ,29  ,48  ,122 ,935 
-Ratio      ,4.28      ,5.46,5.20,5.15,5.34,5.47,6.10,8.34
+           ,Total time, ± Error,Unit
+Scalafmt   ,99.63     , ± 3.75 ,s/op
+Scalariform,23.28     , ± 0.69 ,s/op
+hline,Ratio,4.28,,

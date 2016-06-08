@@ -1,2 +1,16 @@
-Total time,Max,Min,Mean,Q2,Q3,90th,95th,99th
-93044,8873,0,72,21,64,165,269,795
+Benchmark             ,    Score,    Error, Units
+ExtraLarge.scalafmt   , 1423.140,± 103.360, ms/op
+ExtraLarge.scalariform,  219.820,±  14.450, ms/op
+hline,Ratio           ,  6.50   ,,
+,,,
+Large.scalafmt        ,  452.690,± 103.308, ms/op
+Large.scalariform     ,   39.324,±   3.395, ms/op
+hline,Ratio           ,  11.51  ,,
+,,,
+Medium.scalafmt       ,   79.616,±   2.013, ms/op
+Medium.scalariform    ,   15.934,±   0.441, ms/op
+hline,Ratio           ,  5.00   ,,
+,,,
+Small.scalafmt        ,    6.968,±   0.104, ms/op
+Small.scalariform     ,    1.176,±   0.025, ms/op
+hline,Ratio           ,  5.93   ,,
