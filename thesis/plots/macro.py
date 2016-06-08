@@ -3,7 +3,9 @@ import csv, sys
 rows = list(csv.reader(sys.stdin))
 
 def get_row(row):
-    if row[0] == "hline":
+    if all(not c for c in row):
+        return "  "
+    elif row[0] == "hline":
         return "\\hline\n" +  "  " + " & ".join(row[1:])
     else:
         return "  " + " & ".join(row)
