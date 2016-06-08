@@ -1,4 +1,4 @@
-           ,Total time, ± Error,Unit
-Scalafmt   ,99.63     , ± 3.75 ,s/op
-Scalariform,23.28     , ± 0.69 ,s/op
+           ,Total time,   Error , Unit
+Scalafmt   ,99.636    , ± 3.758 , s/op
+Scalariform,23.287    , ± 0.695 , s/op
 hline,Ratio,4.28,,

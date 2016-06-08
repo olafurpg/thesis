@@ -8,8 +8,15 @@ Instead, we will focus on \emph{performance benchmarks} and \emph{user adoption}
 \subsection{Performance benchmarks}
 In this chapter, we describe our test methodology, key metrics and the performance results.
 
-\subsubsection{Test methodology}
-We run micro benchmarks to get insight into how scalafmt performs in an interactive software developer workflow where scalafmt runs on file save.
+\subsubsection{Hardware}
+The benchmarks are run on a Macbook Pro (Retina, 15-inch, Mid 2014) laptop with a quad-core 2.5 GHz Intel Core i7 processor, 256 KB L2 cache per core and 6 MB shared L3 cache.
+The laptop has 16 GB 1600 MHz DDR3 memory.
+The operating system is OS X El Capitan 10.11.5.
+We run the benchmarks from the scalafmt commit id \href{https://github.com/olafurpg/scalafmt/tree/aff5e794dae4787b08243f8abb87a3ca4d907e40}{aff5e794} compiled against Scala 2.11.7, running on JVM version 8, update 91.
+
+\subsubsection{Micro benchmark}
+We run micro benchmarks to get insight into how scalafmt performs in an interactive software developer workflow.
+For example, it is common to format a file on every save.
 We select four files of varying sizes: small ($\sim$ 50 LOC), medium ($\sim$300 LOC), large ($\sim$1.000 LOC) and extra large ($\sim$4.500 LOC).
 We use the OpenJDK Java Microbenchmark Harness (JMH)\autocite{OpenJ38:online} to measure the time it takes format the files.
 JMH can be used to build, run and analyze benchmarks written in languages targeting the JVM, including Scala.
@@ -18,6 +25,16 @@ For accurate measurements, we run 10 warmup iterations followed by 10 measured i
 We compare the running time with Scalariform, an alternative code formatter for Scala discussed in section~\ref{sec:scalariform}.
 The micro benchmark is single threaded.
 
+Table~\ref{tab:micro} shows the results from the micro benchmark.
+\begin{table}
+  \centering
+  \input{target/micro.tex}
+  \caption{Results from micro benchmark.}\label{tab:micro}
+\end{table}
+Observe that there is a gap in the ratio between file sizes.
+The ratio is 11.51 for the Large file and 5.00 for the Small file, over 2x difference.
+
+\subsubsection{Macro benchmark}
 We run macro benchmarks to get insights into how scalafmt performs in a continuous integration setup.
 We format 9.423 source files taken from a subset of seven projects from the property based testing inputs\footnote{
   Download here \url{https://github.com/olafurpg/scalafmt/releases/download/v0.1.4/repos.tar.gz}
@@ -27,7 +44,7 @@ Table~\ref{tab:macro_sample} shows the distribution of file sizes.
 \begin{table}
   \centering
   \input{target/file_sizes.tex}
-  \caption{Percentiles of lines of code per file in macro benchmark.}~\label{tab:macro_sample}
+  \caption{Percentiles of lines of code per file in macro benchmark. For example, 25th percentile of files have 16 lines of code.}~\label{tab:macro_sample}
 \end{table}
 Observe that over 90 percent of all files contain under 300 lines of code.
 Less than one percent of all files contain over 1.000 lines of code.
@@ -35,27 +52,12 @@ For accurate measurements, we run three iterations of the macro benchmark.
 As with the micro benchmark, we compare the running time with Scalariform.
 The macro benchmark is multi-threaded and takes advantage of all cores on the underlying hardware.
 
-Our hardware is a Macbook Pro (Retina, 15-inch, Mid 2014) laptop with a quad-core 2.5 GHz Intel Core i7 processor, 256 KB L2 cache per core and 6 MB shared L3 cache.
-The laptop has 16 GB 1600 MHz DDR3 memory.
-The operating system is OS X El Capitan 10.11.5.
-We run the benchmarks from the scalafmt commit id \href{https://github.com/olafurpg/scalafmt/tree/aff5e794dae4787b08243f8abb87a3ca4d907e40}{aff5e794} compiled against Scala 2.11.7, running on JVM version 8, update 91.
-
-\subsubsection{Results}
-Table~\ref{tab:micro} shows the results from the micro benchmark.
-\begin{table}
-  \centering
-  \input{target/micro.tex}
-  \caption{Results from micro benchmark.}
-\end{table}
-
 Table~\ref{tab:macro} shows the results from the macro benchmark.
 \begin{table}
   \centering
-  \input{target/macro.tex}
+  \input{target/macro.tex}\label{tab:macro}
   \caption{Results from macro benchmark.}
 \end{table}
-Observe that the total time difference lower than all other columns.
-This is the result of the parallel execution of the benchmark, which means that the scalafmt test run utilized more CPU wall time than the Scalariform benchmark.
 
 \subsection{Adoption}\label{sec:adoption}
 
