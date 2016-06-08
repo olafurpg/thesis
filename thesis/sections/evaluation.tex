@@ -26,7 +26,7 @@ The whole sample contains a total of 1.219.235 lines of code.
 Table~\ref{tab:macro_sample} shows the distribution of file sizes.
 \begin{table}
   \centering
-  \csvautobooklongtable{data/file_sizes.csv}
+  \input{target/file_sizes.tex}
   \caption{Lines of code per file in macro benchmark}~\label{tab:macro_sample}
 \end{table}
 Observe that over 90 percent of all files contain under 300 lines of code.
@@ -44,15 +44,15 @@ We run the benchmarks from the scalafmt commit id \href{https://github.com/olafu
 Table~\ref{tab:micro} shows the results from the micro benchmark.
 \begin{table}\label{tab:micro}
   \centering
-  \caption{Results from micro benchmark}
   \csvautobooklongtable{data/file_sizes.csv}
+  \caption{Results from micro benchmark}
 \end{table}
 
 Table~\ref{tab:macro} shows the results from the macro benchmark.
-\begin{table}[H]
+\begin{table}
   \centering
   \input{target/macro.tex}
-  \caption{Results from macro benchmark}\label{tab:macro}
+  \caption{Results from macro benchmark. First rows are in milliseconds. \emph{Ratio} is calculated as  \texttt{scalafmt / scalariform}.}\label{tab:macro}
 \end{table}
 Observe that the total time difference lower than all other columns.
 This is the result of the parallel execution of the benchmark, which means that the scalafmt test run utilized more CPU wall time than the Scalariform benchmark.
