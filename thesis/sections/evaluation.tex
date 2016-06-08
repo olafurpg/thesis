@@ -48,12 +48,14 @@ Table~\ref{tab:micro} shows the results from the micro benchmark.
   \csvautobooklongtable{data/file_sizes.csv}
 \end{table}
 
-Table~\ref{tab:macro} shows the results from the micro benchmark.
+Table~\ref{tab:macro} shows the results from the macro benchmark.
 \begin{table}[H]
   \centering
-  \csvautobooklongtable{data/macro.csv}
+  \input{target/macro.tex}
   \caption{Results from macro benchmark}\label{tab:macro}
 \end{table}
+Observe that the total time difference lower than all other columns.
+This is the result of the parallel execution of the benchmark, which means that the scalafmt test run utilized more CPU wall time than the Scalariform benchmark.
 
 
 
