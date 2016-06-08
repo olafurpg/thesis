@@ -5,7 +5,7 @@ setup:
 	mv ~/Downloads/My\ Library.bib project.bib || true
 plot:
 	# gnuplot plots/file_sizes.gp
-	Rscript plots/file_size.R
+	Rscript plots/file_size.R # || true > target/file_sizes.tex || true
 format:
 	mkdir -p target
 	scalafmt -f code/unformatted.scala --maxColumn 35 > target/formatted1.scala
