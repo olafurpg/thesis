@@ -2,17 +2,25 @@
 #
 # Stacked histograms
 #
-set terminal epslatex size 8.89cm,6.65cm color colortext
+set terminal postscript enhanced color size 6cm,4cm font 'Verdana,8'
+set output "target/month.eps"
 
-set output "target/month.tex"
 
-set key invert reverse Left outside
-set key autotitle columnheader
-set style data histogram
-set style histogram rowstacked
-set style fill solid border -1
-set boxwidth 0.75
-#
-# plot 'data/month.dat' using 2:xtic(1), for [i=2:2] '' using i
-#
+set xdata time
+set timefmt "%Y-%m"
+set datafile separator ","
+set ylabel "Downloads"
+set xrange ["2016-3":"2016-5"]
+set pointsize 0.8
+set format x "%B"
+set border 11
+set tics front
+set key below
+set xtics ("2016-3", "2016-4", "2016-5")
 
+
+
+plot \
+  "data/month.dat" using 1:($2+$3+$4) title 'Github' with filledcurves x1, \
+  "data/month.dat" using 1:($2+$3) title 'Maven' with filledcurves x1, \
+  "data/month.dat" using 1:($2) title 'IntelliJ' with filledcurves x1
