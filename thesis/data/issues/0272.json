@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/272",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/272/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/272/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/272/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/272",
+  "id": 155754207,
+  "number": 272,
+  "title": "Binary operator precedence and spaces",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-05-19 14:42:44 UTC",
+  "updated_at": "2016-05-19 14:42:44 UTC",
+  "closed_at": null,
+  "body": "Original:\r\n```scala\r\n-    if (iv == value && 1.0/value != Double.NegativeInfinity) iv\r\n+    if (iv == value && 1.0 / value != Double.NegativeInfinity) iv\r\n```\r\nSee https://github.com/scala-js/scala-js/blob/master/CODINGSTYLE.md#spaces"
+}

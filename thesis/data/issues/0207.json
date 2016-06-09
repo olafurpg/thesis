@@ -1,0 +1,82 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/207",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/207/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/207/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/207/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/207",
+  "id": 152998818,
+  "number": 207,
+  "title": "Spurious space added betwen type and type params in case clause",
+  "user": {
+    "login": "propensive",
+    "id": 1024588,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1024588?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/propensive",
+    "html_url": "https://github.com/propensive",
+    "followers_url": "https://api.github.com/users/propensive/followers",
+    "following_url": "https://api.github.com/users/propensive/following{/other_user}",
+    "gists_url": "https://api.github.com/users/propensive/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/propensive/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/propensive/subscriptions",
+    "organizations_url": "https://api.github.com/users/propensive/orgs",
+    "repos_url": "https://api.github.com/users/propensive/repos",
+    "events_url": "https://api.github.com/users/propensive/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/propensive/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/bug",
+      "name": "bug",
+      "color": "fc2929"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/milestones/3",
+    "html_url": "https://github.com/olafurpg/scalafmt/milestones/0.2.3",
+    "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/milestones/3/labels",
+    "id": 1719323,
+    "number": 3,
+    "title": "0.2.3",
+    "description": "",
+    "creator": {
+      "login": "olafurpg",
+      "id": 1408093,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/olafurpg",
+      "html_url": "https://github.com/olafurpg",
+      "followers_url": "https://api.github.com/users/olafurpg/followers",
+      "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+      "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+      "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+      "repos_url": "https://api.github.com/users/olafurpg/repos",
+      "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 0,
+    "closed_issues": 5,
+    "state": "closed",
+    "created_at": "2016-04-19 21:40:01 UTC",
+    "updated_at": "2016-05-06 17:24:27 UTC",
+    "due_on": null,
+    "closed_at": "2016-05-06 17:24:27 UTC"
+  },
+  "comments": [
+
+  ],
+  "created_at": "2016-05-04 12:26:33 UTC",
+  "updated_at": "2016-05-06 16:16:09 UTC",
+  "closed_at": "2016-05-06 11:16:45 UTC",
+  "body": "Original:\r\n```scala\r\ntrait Foo[T]\r\nobject Test {\r\n  (new Foo[String] {}) match {\r\n    case x: Foo[_] => 1\r\n  }\r\n}\r\n```\r\n\r\nScalafmt:\r\n```scala\r\ntrait Foo[T]\r\nobject Test {\r\n  (new Foo[String] {}) match {\r\n    case x: Foo [_] => 1\r\n  }\r\n}\r\n```\r\n\r\nI would like the input to be unchanged.\r\n\r\nUsing\r\n* 0.2.2\r\n"
+}

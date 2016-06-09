@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/255",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/255/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/255/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/255/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/255",
+  "id": 155489885,
+  "number": 255,
+  "title": "Weird output",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/220594867",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/255#issuecomment-220594867",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/255",
+      "id": 220594867,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-05-20 12:40:04 UTC",
+      "updated_at": "2016-05-20 12:41:59 UTC",
+      "body": "Is this output less weird?\r\n\r\n```scala\r\n// original\r\n  implicit def toFunction8[T1, T2, T3, T4, T5, T6, T7, T8, R](f: Function8[T1, T2, T3, T4, T5, T6, T7, T8, R]): scala.Function8[T1, T2, T3, T4, T5, T6, T7, T8, R] = (x1, x2, x3, x4, x5, x6, x7, x8) => f(x1, x2, x3, x4, x5, x6, x7, x8)\r\n// scalafmt\r\nimplicit def toFunction8[T1, T2, T3, T4, T5, T6, T7, T8, R](\r\n    f: Function8[T1, T2, T3, T4, T5, T6, T7, T8, R]): scala.Function8[\r\n    T1, T2, T3, T4, T5, T6, T7, T8, R] =\r\n  (x1, x2, x3, x4, x5, x6, x7, x8) => f(x1, x2, x3, x4, x5, x6, x7, x8)\r\n```\r\n\r\nAnd function 22\r\n```scala\r\nimplicit def toFunction22[\r\n    T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17,\r\n    T18, T19, T20, T21, T22, R](f: Function22[\r\n        T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16,\r\n        T17, T18, T19, T20, T21, T22, R]): scala.Function22[\r\n    T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17,\r\n    T18, T19, T20, T21, T22, R] =\r\n  (x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17,\r\n  x18, x19, x20, x21, x22) =>\r\n    f(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16,\r\n        x17, x18, x19, x20, x21, x22)\r\n```"
+    }
+  ],
+  "created_at": "2016-05-18 12:33:52 UTC",
+  "updated_at": "2016-05-23 17:03:55 UTC",
+  "closed_at": "2016-05-23 17:03:55 UTC",
+  "body": "Original:\r\n```scala\r\n+  implicit def toFunction8[T1, T2, T3, T4, T5, T6, T7, T8, R](f: Function8[T1,\r\n+      T2, T3, T4, T5, T6, T7, T8, R]): scala.Function8[T1, T2, T3, T4, T5, T6,\r\n+  T7, T8, R] =\r\n+    (x1, x2, x3, x4, x5, x6, x7, x8) => f(x1, x2, x3, x4, x5, x6, x7, x8)\r\n+  implicit def toFunction9[T1, T2, T3, T4, T5, T6, T7, T8, T9, R](\r\n+      f: Function9[T1, T2, T3, T4, T5, T6, T7, T8, T9, R]): scala.Function9[T1,\r\n+  T2, T3, T4, T5, T6, T7, T8, T9, R] =\r\n+    (x1, x2, x3, x4, x5, x6, x7, x8, x9) =>\r\n+      f(x1, x2, x3, x4, x5, x6, x7, x8, x9)\r\n+  implicit def toFunction10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,\r\n+  R](f: Function10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,\r\n+      R]): scala.Function10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R] =\r\n+    (x1, x2, x3, x4, x5, x6, x7, x8, x9, x10) =>\r\n+      f(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)\r\n+  implicit def toFunction11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,\r\n+  R](f: Function11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,\r\n+      R]): scala.Function11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R] =\r\n+    (x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) =>\r\n+      f(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11)\r\n```\r\n"
+}

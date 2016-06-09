@@ -11,6 +11,9 @@ plot:
 	./plots/macro.py < data/file_sizes.csv > target/file_sizes.tex
 	./plots/macro.py < data/micro.csv > target/micro.tex
 	./plots/macro.py < data/installs.csv > target/installs.tex
+issues: # Stupid github web ui has no option to download issues as csv
+	find data/issues -exec jq '.user.login' {} \; | sort | uniq | wc -l # uniq contribors
+	ls data/issues | wc -l # reported issues
 format:
 	mkdir -p target
 	scalafmt -f code/unformatted.scala --maxColumn 35 > target/formatted1.scala

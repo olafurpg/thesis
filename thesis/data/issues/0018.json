@@ -1,0 +1,75 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/18",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/18/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/18/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/18/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/18",
+  "id": 126872355,
+  "number": 18,
+  "title": "Optimize policies.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/enhancement",
+      "name": "enhancement",
+      "color": "84b6eb"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/192962565",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/18#issuecomment-192962565",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/18",
+      "id": 192962565,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-06 18:52:53 UTC",
+      "updated_at": "2016-03-06 18:52:53 UTC",
+      "body": "Done long time ago."
+    }
+  ],
+  "created_at": "2016-01-15 13:27:26 UTC",
+  "updated_at": "2016-03-06 18:52:53 UTC",
+  "closed_at": "2016-03-06 18:52:43 UTC",
+  "body": "Currently, each FormatToken is run against all policies. This can lead to `O(n^2)` overhead (each token is run against policies for all previous tokens)."
+}

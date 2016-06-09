@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/210",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/210/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/210/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/210/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/210",
+  "id": 153270098,
+  "number": 210,
+  "title": "Consistent line breaking for all branches of pattern match",
+  "user": {
+    "login": "oyvindberg",
+    "id": 247937,
+    "avatar_url": "https://avatars.githubusercontent.com/u/247937?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/oyvindberg",
+    "html_url": "https://github.com/oyvindberg",
+    "followers_url": "https://api.github.com/users/oyvindberg/followers",
+    "following_url": "https://api.github.com/users/oyvindberg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/oyvindberg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/oyvindberg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/oyvindberg/subscriptions",
+    "organizations_url": "https://api.github.com/users/oyvindberg/orgs",
+    "repos_url": "https://api.github.com/users/oyvindberg/repos",
+    "events_url": "https://api.github.com/users/oyvindberg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/oyvindberg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/217252685",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/210#issuecomment-217252685",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/210",
+      "id": 217252685,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-05-05 19:28:09 UTC",
+      "updated_at": "2016-05-05 19:28:09 UTC",
+      "body": "I agree this would be cool. At the moment, there is no straightforward way to accomplish this. However, #166 will require a similar solution so once that's done then this will be a simple extension."
+    }
+  ],
+  "created_at": "2016-05-05 16:32:35 UTC",
+  "updated_at": "2016-05-05 19:28:09 UTC",
+  "closed_at": null,
+  "body": "Original:\r\n```scala\r\n  private def urlToReqResult[T](in: urls.ParseResult[T]): req.ParseResult[T] =\r\n    in match {\r\n      case urls.ParseOk(t)           ⇒ req.ParseOk(t)\r\n      case urls.ParseOverridable(t)  ⇒ req.ParseOverridable(t)\r\n      case urls.ParseNotProvided(fs) ⇒ req.ParseNotProvided(fs.map(f ⇒ FailNotProvided(ParamProp(ParamTypeUrl, f.fault.typename, Some(f.sym.toString)))))\r\n      case urls.ParseError(fs)       ⇒ req.ParseError      (fs.map(f ⇒ FailValidation( ParamProp(ParamTypeUrl, f.fault.typename, Some(f.sym.toString)), f.fault)))\r\n    }\r\n\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n  private def urlToReqResult[T](in: urls.ParseResult[T]): req.ParseResult[T] =\r\n    in match {\r\n      case urls.ParseOk(t) ⇒ req.ParseOk(t)\r\n      case urls.ParseOverridable(t) ⇒ req.ParseOverridable(t)\r\n      case urls.ParseNotProvided(fs) ⇒\r\n        req.ParseNotProvided(fs.map(f ⇒\r\n                  FailNotProvided(ParamProp(ParamTypeUrl,\r\n                                            f.fault.typename,\r\n                                            Some(f.sym.toString)))))\r\n      case urls.ParseError(fs) ⇒\r\n        req.ParseError(fs.map(f ⇒\r\n                  FailValidation(ParamProp(ParamTypeUrl,\r\n                                           f.fault.typename,\r\n                                           Some(f.sym.toString)),\r\n                                 f.fault)))\r\n    }\r\n\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n  private def urlToReqResult[T](in: urls.ParseResult[T]): req.ParseResult[T] =\r\n    in match {\r\n      case urls.ParseOk(t) ⇒ \r\n        req.ParseOk(t)                       <-- here\r\n      case urls.ParseOverridable(t) ⇒ \r\n        req.ParseOverridable(t)              <-- and here\r\n      case urls.ParseNotProvided(fs) ⇒\r\n        req.ParseNotProvided(fs.map(f ⇒\r\n                  FailNotProvided(ParamProp(ParamTypeUrl,\r\n                                            f.fault.typename,\r\n                                            Some(f.sym.toString)))))\r\n      case urls.ParseError(fs) ⇒\r\n        req.ParseError(fs.map(f ⇒\r\n                  FailValidation(ParamProp(ParamTypeUrl,\r\n                                           f.fault.typename,\r\n                                           Some(f.sym.toString)),\r\n                                 f.fault)))\r\n    }\r\n\r\n```\r\n\r\nUsing\r\n* 0.2.1 (intellij)\r\n\r\nI'll let you be the judge of whether you can afford to consider more extra context for each match expression, but i would certainly love the consistency. \r\n"
+}

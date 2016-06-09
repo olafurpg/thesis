@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/231",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/231/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/231/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/231/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/231",
+  "id": 154607672,
+  "number": 231,
+  "title": "0.2.4 rc1",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-05-13 00:04:29 UTC",
+  "updated_at": "2016-05-13 08:20:13 UTC",
+  "closed_at": "2016-05-13 08:20:09 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/231",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/231",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/231.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/231.patch"
+  },
+  "body": "There are some bugs that need fixing before 0.2.4, but will merge this now.\r\n\r\n```\r\n-          compileInputs in (It, compile) <<= (compileInputs in (It, compile)) dependsOn\r\n +          compileInputs in (It, compile) <<= (compileInputs in (It,\r\n +                  compile)) dependsOn\r\n\r\n\r\n -          if style.configStyleArguments &&\r\n -          (isDefnSite(leftOwner) || isCallSite(leftOwner)) &&\r\n -          opensConfigStyle(formatToken) =>\r\n +          if style.configStyleArguments && (isDefnSite(leftOwner) ||\r\n +              isCallSite(leftOwner)) && opensConfigStyle(formatToken) =>\r\n\r\n -      newlines > 1 ||\r\n -      (isDocstring(tok.right) && !tok.left.isInstanceOf[Comment])\r\n +      newlines > 1 || (isDocstring(tok.right) &&\r\n +          !tok.left.isInstanceOf[Comment])\r\n\r\n             for (result <- results.sortBy(-_.maxVisitsOnSingleToken)\r\n -                              if result.test.name != \"Warmup\") yield {\r\n +            if result.test.name != \"Warmup\") yield {\r\n\r\n```"
+}

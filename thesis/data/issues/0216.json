@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/216",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/216/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/216/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/216/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/216",
+  "id": 153821743,
+  "number": 216,
+  "title": "Optimizations: roughly 17% improvement",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-05-09 16:57:04 UTC",
+  "updated_at": "2016-05-09 20:54:59 UTC",
+  "closed_at": "2016-05-09 20:54:59 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/216",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/216",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/216.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/216.patch"
+  },
+  "body": "According to JMH micro benchmarks\r\n\r\n\r\n```\r\nBefore:\r\n[info] GenJsCode.scalafmt  avgt   10  1625.856 ± 100.811  ms/op\r\nAfter:\r\n[info] GenJsCode.scalafmt  avgt   10  1358.511 ± 74.241  ms/op\r\n```"
+}

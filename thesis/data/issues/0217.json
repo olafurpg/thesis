@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/217",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/217/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/217/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/217/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/217",
+  "id": 153868310,
+  "number": 217,
+  "title": "Return type is placed in new line without parenthesis in large method definitions",
+  "user": {
+    "login": "jvican",
+    "id": 2462974,
+    "avatar_url": "https://avatars.githubusercontent.com/u/2462974?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jvican",
+    "html_url": "https://github.com/jvican",
+    "followers_url": "https://api.github.com/users/jvican/followers",
+    "following_url": "https://api.github.com/users/jvican/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jvican/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jvican/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jvican/subscriptions",
+    "organizations_url": "https://api.github.com/users/jvican/orgs",
+    "repos_url": "https://api.github.com/users/jvican/repos",
+    "events_url": "https://api.github.com/users/jvican/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jvican/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/217996900",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/217#issuecomment-217996900",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/217",
+      "id": 217996900,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-05-09 21:33:53 UTC",
+      "updated_at": "2016-05-09 21:33:53 UTC",
+      "body": "> I wonder if it wouldn't be better to format to the desired one always.\r\n\r\nThat's how it worked before 0.2.3, but it caused non-idempotent formatting (#192). Problem is once you go into \"config-style\" (explained [here](https://olafurpg.github.io/scalafmt/#Functionapplication)) scalafmt doesn't go back. The solution was to put the newline before the colon `:` as the Spark style guide suggests, see #212.\r\n\r\nSo sorry, you'll have to opt-in manually for the config style."
+    }
+  ],
+  "created_at": "2016-05-09 20:58:20 UTC",
+  "updated_at": "2016-05-09 21:33:53 UTC",
+  "closed_at": "2016-05-09 21:33:53 UTC",
+  "body": "Original:\r\n```scala\r\n  implicit def vectorPickler[T: FastTypeTag](implicit elemPickler: Pickler[T],\r\n    elemUnpickler: Unpickler[T], collTag: FastTypeTag[Vector[T]], cbf: CanBuildFrom[Vector[T], T, Vector[T]]):\r\n    Pickler[Vector[T]] with Unpickler[Vector[T]] =\r\n    SeqSetPickler[T, Vector]\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n  implicit def vectorPickler[T : FastTypeTag](\r\n      implicit elemPickler: Pickler[T],\r\n      elemUnpickler: Unpickler[T],\r\n      collTag: FastTypeTag[Vector[T]],\r\n      cbf: CanBuildFrom[Vector[T], T, Vector[T]])\r\n    : Pickler[Vector[T]] with Unpickler[Vector[T]] =\r\n    SeqSetPickler[T, Vector]\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n  implicit def vectorPickler[T : FastTypeTag](\r\n      implicit elemPickler: Pickler[T],\r\n      elemUnpickler: Unpickler[T],\r\n      collTag: FastTypeTag[Vector[T]],\r\n      cbf: CanBuildFrom[Vector[T], T, Vector[T]]\r\n  ): Pickler[Vector[T]] with Unpickler[Vector[T]] =\r\n    SeqSetPickler[T, Vector]\r\n```\r\n\r\nUsing\r\n* 0.2.3\r\n  \r\nI also know that if I put a newline before the parenthesis, the output will be the desired one. However, I wonder if it wouldn't be better to format to the desired one always."
+}

@@ -83,9 +83,10 @@ As we'll discuss in the following section, our users seem to agree.
 \subsection{Adoption}\label{sec:adoption}
 Scalafmt has received quite some attention since its release in early March, three months ago.
 In this section we present the statistics we believe demonstrate that scalafmt is --- despite its young age --- already proving itself useful for the Scala community.
+All data points are as of June 9th, 2016.
 
 \subsubsection{Installations}
-As of June 9th 2016, Scalafmt has been installed over 6.500 times.
+Scalafmt has been installed over 6.500 times.
   Table~\ref{tab:installs} shows the installation numbers for each official distribution channel.
   \begin{figure}
     \CenterFloatBoxes
@@ -95,17 +96,34 @@ As of June 9th 2016, Scalafmt has been installed over 6.500 times.
       {\caption{Installations by month by channel.}\label{fig:installs}}
       \killfloatstyle
       \ttabbox{\input{target/installs.tex} }{
-        \caption{Download numbers for scalafmt as of June 9th 2016.}\label{tab:installs}}
+        \caption{Download numbers for scalafmt.}\label{tab:installs}}
     \end{floatrow}
   \end{figure}
 IntelliJ is the Jetbrains plugin repository\footnote{
   See \url{https://plugins.jetbrains.com/plugin/8236?pr=}
 }.
-Observe that data is not available for how many users built scalafmt from source.
+Data is not available for how many users built scalafmt from source.
 The numbers represent absolute download numbers, not unique users.
+Observe that v0.2.5 was released 22 days ago, meaning it has been installed 80 times on average per day since its release.
+Considering the v0.2.5 installations numbers, it is fair to estimate that scalafmt currently has at least 1.000 users.
+
 Figure~\ref{fig:installs} shows the growth in installations by month.
-Observe that v0.2.5 was released 22 days ago.
-Also, consider that those
+Observe that growth has doubled with each month.
+Github represented proportionally many installs in the first month but only represents a small fraction of installation in May.
+Maven installations quadrupled in May, taking the lead from the IntelliJ plugin in April.
+
+
+\subsubsection{Other}
+We present interesting data points from a variety of disparate data sources:
+
+\begin{itemize}
+  \item The scalafmt code repository has received contributions from 8 external contributors.
+    Several of these contributions added non-trivial features to scalafmt, including
+    new configuration flags and extensions to the Router.
+  \item 34 unique users, excluding the author, have opened a total of 138 tickets on the scalafmt issue tracker.
+  \item The scalafmt Gitter\footnote{See \url{https://gitter.im/olafurpg/scalafmt}} instant messaging channel has 47 members. The channel is used to informally discuss bugs, new features and more.
+  \item The user documentation website\footnote{See \url{http://scalafmt.org}} has been visited 5.422 times with an average visit duration of 98 seconds. That makes 138 hours of combined visit time.
+\end{itemize}
 
 
 

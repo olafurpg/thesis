@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/83",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/83/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/83/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/83/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/83",
+  "id": 137597787,
+  "number": 83,
+  "title": "Optimize formatting imports=",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/194999279",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/83#issuecomment-194999279",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/83",
+      "id": 194999279,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-10 18:52:03 UTC",
+      "updated_at": "2016-03-10 18:52:03 UTC",
+      "body": "Fixed in #118. Import lines must be on a single line."
+    }
+  ],
+  "created_at": "2016-03-01 15:04:53 UTC",
+  "updated_at": "2016-03-10 18:52:07 UTC",
+  "closed_at": "2016-03-10 18:52:03 UTC",
+  "body": "Something is wrong here:\r\n\r\n<img width=\"559\" alt=\"screen shot 2016-03-01 at 16 04 14\" src=\"https://cloud.githubusercontent.com/assets/1408093/13430890/4d6b3b1e-dfc7-11e5-841f-a4f5145d3f62.png\">\r\n"
+}

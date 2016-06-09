@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/149",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/149/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/149/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/149/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/149",
+  "id": 147990793,
+  "number": 149,
+  "title": "Treat defn.macro like defn.def",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/209916949",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/149#issuecomment-209916949",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/149",
+      "id": 209916949,
+      "user": {
+        "login": "lihaoyi",
+        "id": 934140,
+        "avatar_url": "https://avatars.githubusercontent.com/u/934140?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/lihaoyi",
+        "html_url": "https://github.com/lihaoyi",
+        "followers_url": "https://api.github.com/users/lihaoyi/followers",
+        "following_url": "https://api.github.com/users/lihaoyi/following{/other_user}",
+        "gists_url": "https://api.github.com/users/lihaoyi/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/lihaoyi/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/lihaoyi/subscriptions",
+        "organizations_url": "https://api.github.com/users/lihaoyi/orgs",
+        "repos_url": "https://api.github.com/users/lihaoyi/repos",
+        "events_url": "https://api.github.com/users/lihaoyi/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/lihaoyi/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-14 12:37:51 UTC",
+      "updated_at": "2016-04-14 12:37:51 UTC",
+      "body": "yay\n\nOn Thursday, 14 April 2016, Ólafur Páll Geirsson <notifications@github.com>\nwrote:\n\n> Closed #149 <https://github.com/olafurpg/scalafmt/issues/149> via d272b0a\n> <https://github.com/olafurpg/scalafmt/commit/d272b0ae8d7626de4558ca90759142e6aa0d2696>\n> .\n>\n> —\n> You are receiving this because you were mentioned.\n> Reply to this email directly or view it on GitHub\n> <https://github.com/olafurpg/scalafmt/issues/149#event-627048366>\n>\n"
+    }
+  ],
+  "created_at": "2016-04-13 08:52:54 UTC",
+  "updated_at": "2016-04-14 12:37:51 UTC",
+  "closed_at": "2016-04-14 09:27:45 UTC",
+  "body": "Reported by @lihaoyi in Gitter.\r\n\r\nOriginal:\r\n```scala\r\ndef callMain [T] (t: T): T = macro callMainImpl[T]\r\n```\r\n\r\nScalafmt:\r\n```scala\r\ndef callMain [T] (t: T): T = macro callMainImpl[T]\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\ndef callMain[T](t: T): T = macro callMainImpl[T]\r\n```\r\n\r\nUsing\r\n* 0.2.0"
+}

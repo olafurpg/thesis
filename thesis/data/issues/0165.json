@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/165",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/165/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/165/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/165/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/165",
+  "id": 148358617,
+  "number": 165,
+  "title": "type alias with type argument",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-14 13:17:17 UTC",
+  "updated_at": "2016-04-16 22:32:14 UTC",
+  "closed_at": "2016-04-16 22:32:10 UTC",
+  "body": "Original:\r\n```scala\r\n-  type Sequence[T] = js.Array[T]\r\n+  type Sequence [T] = js.Array[T]\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nOUTPUT FROM SCALAFMT\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\nHOW YOU WANT THE OUTPUT TO LOOK LIKE.\r\n```\r\n\r\nUsing\r\n* 0.1.x"
+}

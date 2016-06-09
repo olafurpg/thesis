@@ -1,0 +1,48 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/125",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/125/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/125/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/125/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/125",
+  "id": 140687769,
+  "number": 125,
+  "title": "Scala IDE plugin",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/help%20wanted",
+      "name": "help wanted",
+      "color": "159818"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-03-14 14:26:46 UTC",
+  "updated_at": "2016-03-14 14:26:46 UTC",
+  "closed_at": null,
+  "body": "I personally don't use Scala IDE. If you are interested in creating a Scala IDE plugin, then I'm happy to provide any assistance to make it happen. "
+}

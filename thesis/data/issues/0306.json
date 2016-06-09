@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/306",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/306/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/306/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/306/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/306",
+  "id": 158249521,
+  "number": 306,
+  "title": "New feature request: explicit types",
+  "user": {
+    "login": "JohnReedLOL",
+    "id": 5510392,
+    "avatar_url": "https://avatars.githubusercontent.com/u/5510392?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/JohnReedLOL",
+    "html_url": "https://github.com/JohnReedLOL",
+    "followers_url": "https://api.github.com/users/JohnReedLOL/followers",
+    "following_url": "https://api.github.com/users/JohnReedLOL/following{/other_user}",
+    "gists_url": "https://api.github.com/users/JohnReedLOL/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/JohnReedLOL/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/JohnReedLOL/subscriptions",
+    "organizations_url": "https://api.github.com/users/JohnReedLOL/orgs",
+    "repos_url": "https://api.github.com/users/JohnReedLOL/repos",
+    "events_url": "https://api.github.com/users/JohnReedLOL/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/JohnReedLOL/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/223450561",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/306#issuecomment-223450561",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/306",
+      "id": 223450561,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-06-02 23:16:57 UTC",
+      "updated_at": "2016-06-02 23:17:35 UTC",
+      "body": "I agree it would be a cool feature to insert type inferences and fill in implicit conversions. I am personally interested in expanding underscore imports.\r\n\r\nHowever, scalafmt doesn't have the semantic information to implement this feature. Same reason #188 won't work."
+    }
+  ],
+  "created_at": "2016-06-02 22:00:06 UTC",
+  "updated_at": "2016-06-02 23:17:35 UTC",
+  "closed_at": null,
+  "body": "I recently ran into a user transitioning from Java who found some Scala code harder to read and maintain because of the implicit types. He wants the ability to make the types explicit using some tool. One person suggested \"It's probably easier to add this [feature] to scalafmt, which uses scala.meta to format code. It wouldn't be too difficult to use scala.meta to get the type an expression and add it if it missing.\"\r\n\r\nWhat do you think?"
+}

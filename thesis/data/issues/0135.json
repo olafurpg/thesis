@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/135",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/135/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/135/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/135/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/135",
+  "id": 145168344,
+  "number": 135,
+  "title": "Format all files in intellij-scala",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/207970304",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/135#issuecomment-207970304",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/135",
+      "id": 207970304,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-10 11:48:23 UTC",
+      "updated_at": "2016-04-10 11:48:23 UTC",
+      "body": "Closed in 0.1.6"
+    }
+  ],
+  "created_at": "2016-04-01 12:28:44 UTC",
+  "updated_at": "2016-04-10 11:48:28 UTC",
+  "closed_at": "2016-04-10 11:48:23 UTC",
+  "body": "Success: 4000 (!!)\r\norg.scalafmt.Error$CantFormatFile: 27\r\norg.scalafmt.Error$FormatterOutputDoesNotParse: 1\r\n```\r\nScalaFile(\r\n    project: JetBrains\r\n    github: https://github.com/JetBrains/intellij-scala/blob/45c86930977278eb445b6aba79ac7011bc418490/src/org/jetbrains/plugins/scala/codeInspection/typeChecking/TypeCheckCanBeMatchInspection.scala\r\n    raw: https://raw.githubusercontent.com/JetBrains/intellij-scala/45c86930977278eb445b6aba79ac7011bc418490/src/org/jetbrains/plugins/scala/codeInspection/typeChecking/TypeCheckCanBeMatchInspection.scala\r\n) org.scalafmt.Error$FormatterOutputDoesNotParse: Formatter output does not parse:\r\n        ifStmt <- Option(PsiTreeUtil.getParentOfType(call, classOf[ScIfStmt]))\r\n        condition <- ifStmt.condition\r\n        iioCall <- findIsInstanceOfCalls(condition, onlyFirst = true)\r\n                      if iioCall == call if typeCheckIsUsedEnough(ifStmt, call)\r\n                                         ^\r\n```"
+}

@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/99",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/99/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/99/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/99/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/99",
+  "id": 139526352,
+  "number": 99,
+  "title": "Disappearing blank line between method and Scaladoc of the next method",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/194216866",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/99#issuecomment-194216866",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/99",
+      "id": 194216866,
+      "user": {
+        "login": "sjrd",
+        "id": 535934,
+        "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/sjrd",
+        "html_url": "https://github.com/sjrd",
+        "followers_url": "https://api.github.com/users/sjrd/followers",
+        "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+        "organizations_url": "https://api.github.com/users/sjrd/orgs",
+        "repos_url": "https://api.github.com/users/sjrd/repos",
+        "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/sjrd/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-09 09:58:00 UTC",
+      "updated_at": "2016-03-09 09:58:00 UTC",
+      "body": "This is probably as special-case of #102."
+    }
+  ],
+  "created_at": "2016-03-09 09:42:38 UTC",
+  "updated_at": "2016-03-10 12:45:48 UTC",
+  "closed_at": "2016-03-10 12:45:44 UTC",
+  "body": "Original:\r\n```scala\r\n  /**\r\n   * See [[https://streams.spec.whatwg.org/#reader-cancel §3.4.4.2. cancel(reason)]]\r\n   * of whatwg Streams spec.\r\n   *\r\n   * If the reader is active, the cancel method behaves the same as that for\r\n   * the associated stream. When done, it automatically releases the lock.\r\n   *\r\n   * //todo determine type of reason\r\n   */\r\n  def cancel(reason: Any): js.Promise[Any] = js.native //not actually sure what the return type is here\r\n\r\n  /**\r\n   * See [[https://streams.spec.whatwg.org/#reader-read 3.4.4.3. read()]] of\r\n   * whatwg Stream spec.\r\n   *\r\n   * The read method will return a promise that allows access to the next chunk\r\n   * from the stream’s internal queue, if available. If the chunk does become\r\n   * available, the promise will be fulfilled with an object of the form {\r\n   * value: theChunk, done: false }. If the stream becomes closed, the\r\n   * promise will be fulfilled with an object of the form { value: undefined,\r\n   * done: true }. If the stream becomes errored, the promise will be\r\n   * rejected with the relevant error. If reading a chunk causes the queue to\r\n   * become empty, more data will be pulled from the underlying source.\r\n   */\r\n  def read(): js.Promise[Chunk[T]] = js.native\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n  /**\r\n   * See [[https://streams.spec.whatwg.org/#reader-cancel §3.4.4.2. cancel(reason)]]\r\n   * of whatwg Streams spec.\r\n   *\r\n   * If the reader is active, the cancel method behaves the same as that for\r\n   * the associated stream. When done, it automatically releases the lock.\r\n   *\r\n   * //todo determine type of reason\r\n   */\r\n  def cancel(reason: Any): js.Promise[Any] =\r\n    js.native //not actually sure what the return type is here\r\n  /**\r\n   * See [[https://streams.spec.whatwg.org/#reader-read 3.4.4.3. read()]] of\r\n   * whatwg Stream spec.\r\n   *\r\n   * The read method will return a promise that allows access to the next chunk\r\n   * from the stream’s internal queue, if available. If the chunk does become\r\n   * available, the promise will be fulfilled with an object of the form {\r\n   * value: theChunk, done: false }. If the stream becomes closed, the\r\n   * promise will be fulfilled with an object of the form { value: undefined,\r\n   * done: true }. If the stream becomes errored, the promise will be\r\n   * rejected with the relevant error. If reading a chunk causes the queue to\r\n   * become empty, more data will be pulled from the underlying source.\r\n   */\r\n  def read(): js.Promise[Chunk[T]] = js.native\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n  /**\r\n   * See [[https://streams.spec.whatwg.org/#reader-cancel §3.4.4.2. cancel(reason)]]\r\n   * of whatwg Streams spec.\r\n   *\r\n   * If the reader is active, the cancel method behaves the same as that for\r\n   * the associated stream. When done, it automatically releases the lock.\r\n   *\r\n   * //todo determine type of reason\r\n   */\r\n  def cancel(reason: Any): js.Promise[Any] =\r\n    js.native //not actually sure what the return type is here\r\n\r\n  /**\r\n   * See [[https://streams.spec.whatwg.org/#reader-read 3.4.4.3. read()]] of\r\n   * whatwg Stream spec.\r\n   *\r\n   * The read method will return a promise that allows access to the next chunk\r\n   * from the stream’s internal queue, if available. If the chunk does become\r\n   * available, the promise will be fulfilled with an object of the form {\r\n   * value: theChunk, done: false }. If the stream becomes closed, the\r\n   * promise will be fulfilled with an object of the form { value: undefined,\r\n   * done: true }. If the stream becomes errored, the promise will be\r\n   * rejected with the relevant error. If reading a chunk causes the queue to\r\n   * become empty, more data will be pulled from the underlying source.\r\n   */\r\n  def read(): js.Promise[Chunk[T]] = js.native\r\n```\r\n\r\nUsing\r\n* 0.1.1\r\n* default\r\n"
+}

@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/168",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/168/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/168/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/168/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/168",
+  "id": 148365888,
+  "number": 168,
+  "title": "Single statement constructor",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-14 13:44:22 UTC",
+  "updated_at": "2016-04-16 22:32:14 UTC",
+  "closed_at": "2016-04-16 22:32:10 UTC",
+  "body": "Original:\r\n```scala\r\n   @deprecated(\"Use the overload with a ClipboardEventInit instead.\", \"0.8.1\")\r\n-  def this(`type`: String, settings: js.Dynamic) = this(`type`, settings.asInstanceOf[Clipbo\r\n+  def this(`type`: String, settings: js.Dynamic) = this(`type`,\r\n+      settings.asInstanceOf[ClipboardEventInit])\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nOUTPUT FROM SCALAFMT\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n  def this(`type`: String, settings: js.Dynamic) =\r\n    this(`type`, settings.asInstanceOf[ClipboardEventInit])\r\n```\r\n\r\nUsing\r\n* 0.1.x"
+}

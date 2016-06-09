@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/34",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/34/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/34/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/34/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/34",
+  "id": 128412523,
+  "number": 34,
+  "title": "Shrink search space.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-24 17:35:03 UTC",
+  "updated_at": "2016-01-25 13:54:38 UTC",
+  "closed_at": "2016-01-25 13:54:34 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/34",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/34",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/34.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/34.patch"
+  },
+  "body": "* Treat Defn/Case statements as blocks, memoize by (indentation, tree).\r\n* Prune branches that are clearly worse than a visited alternative."
+}

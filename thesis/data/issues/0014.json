@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/14",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/14/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/14/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/14/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/14",
+  "id": 126864180,
+  "number": 14,
+  "title": "Support splitting strategies",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/171970215",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/14#issuecomment-171970215",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/14",
+      "id": 171970215,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-01-15 14:10:09 UTC",
+      "updated_at": "2016-01-15 14:10:09 UTC",
+      "body": "Closed in 3b3001219b2a9f069cbdeafd4cdf58f9588492eb."
+    }
+  ],
+  "created_at": "2016-01-15 12:31:46 UTC",
+  "updated_at": "2016-01-15 14:10:13 UTC",
+  "closed_at": "2016-01-15 14:10:09 UTC",
+  "body": "Current model only supports local decisions for each FormatToken, however in some cases (e.g. argument list) I may want to make decisions at one FormatToken for multiple upcoming FormatTokens (e.g. opening '(' controls all commas and closing ')' of argument list)."
+}

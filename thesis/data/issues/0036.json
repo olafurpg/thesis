@@ -1,0 +1,75 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/36",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/36/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/36/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/36/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/36",
+  "id": 128829157,
+  "number": 36,
+  "title": "Correctly unindent multiline comments",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/bug",
+      "name": "bug",
+      "color": "fc2929"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/208326060",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/36#issuecomment-208326060",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/36",
+      "id": 208326060,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-11 12:54:25 UTC",
+      "updated_at": "2016-04-11 12:54:25 UTC",
+      "body": "Fixed long time ago."
+    }
+  ],
+  "created_at": "2016-01-26 14:05:42 UTC",
+  "updated_at": "2016-04-11 12:54:29 UTC",
+  "closed_at": "2016-04-11 12:54:25 UTC",
+  "body": "It's not enough to unindent the comment token here, we also want to remove 2 spaces before the * starting each line afterwards.\r\n```scala\r\n[info]   object a {\r\n[info]     /**\r\n[info]        * One\r\n[info]        */\r\n[info]     def one = 1\r\n[info]   }\r\n```"
+}

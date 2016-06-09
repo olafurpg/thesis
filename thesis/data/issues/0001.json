@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/1",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/1/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/1/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/1/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/1",
+  "id": 126425288,
+  "number": 1,
+  "title": "Format using shortest path search.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-13 14:09:17 UTC",
+  "updated_at": "2016-01-13 17:26:41 UTC",
+  "closed_at": "2016-01-13 17:26:36 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/1",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/1",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/1.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/1.patch"
+  },
+  "body": "This commit adds:\r\n- Formatter implementation based on Dijkstra's shortest path search\r\n  algorithm.  This way, we reduce the formatting problem to assigning a\r\n  weight to each formatting option between any two non-whitespace\r\n  tokens.\r\n- dartfmt inspired testing via FormatTest, see\r\nhttps://github.com/dart-lang/dart_style/tree/2fdfe08b92b0ee90492832df60d1eee9e47afcb5/test/splitting\r\n- logging using logback + scala-logging via ScalaFmtLogger."
+}

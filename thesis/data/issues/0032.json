@@ -1,0 +1,75 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/32",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/32/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/32/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/32/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/32",
+  "id": 128344952,
+  "number": 32,
+  "title": "Newline between `Defn`s",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/bug",
+      "name": "bug",
+      "color": "fc2929"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/177163338",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/32#issuecomment-177163338",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/32",
+      "id": 177163338,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-01-30 12:08:27 UTC",
+      "updated_at": "2016-01-30 12:08:27 UTC",
+      "body": "Fixed in some recent change."
+    }
+  ],
+  "created_at": "2016-01-23 18:36:35 UTC",
+  "updated_at": "2016-01-30 12:08:31 UTC",
+  "closed_at": "2016-01-30 12:08:27 UTC",
+  "body": "The current implentation is buggy, see output\r\n\r\n```scala\r\n[info]   case object OneArgOneLine extends ArgumentHandling trait ScalaStyle {\r\n[info]     def maxColumn: Int\r\n[info]       = 80 def argumentHandling: ArgumentHandling = OneArgOneLine\r\n[info]   }\r\n```\r\nThere should be a newline before the second `def`."
+}

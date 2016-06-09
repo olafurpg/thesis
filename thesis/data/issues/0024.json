@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/24",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/24/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/24/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/24/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/24",
+  "id": 127225981,
+  "number": 24,
+  "title": "Introduce policy, fixes #15.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-18 13:25:05 UTC",
+  "updated_at": "2016-01-18 13:25:18 UTC",
+  "closed_at": "2016-01-18 13:25:15 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/24",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/24",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/24.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/24.patch"
+  },
+  "body": "Policies replace strategies to enforcenon-local decisions. Policies are\r\napplied to Splits before being saved to a state. This way you can for\r\nexample increase costs or remove illegal splits."
+}

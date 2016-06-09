@@ -1,0 +1,48 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/184",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/184/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/184/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/184/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/184",
+  "id": 149142502,
+  "number": 184,
+  "title": "Alignment in mixed owner-type blocks",
+  "user": {
+    "login": "densh",
+    "id": 320966,
+    "avatar_url": "https://avatars.githubusercontent.com/u/320966?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/densh",
+    "html_url": "https://github.com/densh",
+    "followers_url": "https://api.github.com/users/densh/followers",
+    "following_url": "https://api.github.com/users/densh/following{/other_user}",
+    "gists_url": "https://api.github.com/users/densh/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/densh/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/densh/subscriptions",
+    "organizations_url": "https://api.github.com/users/densh/orgs",
+    "repos_url": "https://api.github.com/users/densh/repos",
+    "events_url": "https://api.github.com/users/densh/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/densh/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/alignment",
+      "name": "alignment",
+      "color": "0052cc"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-18 12:53:01 UTC",
+  "updated_at": "2016-04-18 13:11:41 UTC",
+  "closed_at": null,
+  "body": "Diff:\r\n```scala\r\n-    var deps       = mutable.Stack[Global](entry)\r\n-    var defns      = mutable.UnrolledBuffer.empty[Defn]\r\n-    val resolved   = mutable.Set.empty[Global]\r\n+    var deps  = mutable.Stack[Global](entry)\r\n+    var defns = mutable.UnrolledBuffer.empty[Defn]\r\n+    val resolved = mutable.Set.empty[Global]\r\n```\r\n\r\nI'd like for code to stay the way it was. This means that grouped blocks of vals/vars and defs would benefit from being aligned by equals sign.\r\n\r\nThe similar issue applies for aligning with \"extends\" over a group of objects/traits and classes. For example in following code formatted by scalafmt:\r\n\r\n```scala\r\nobject Val {\r\n  // low-level\r\n  final case object None  extends Val\r\n  final case object True  extends Val\r\n  final case object False extends Val\r\n  final case class Zero(zeroty: nir.Type)                     extends Val\r\n  final case class I8(value: Byte)                            extends Val\r\n  final case class I16(value: Short)                          extends Val\r\n  final case class I32(value: Int)                            extends Val\r\n  final case class I64(value: Long)                           extends Val\r\n  final case class F32(value: Float)                          extends Val\r\n  final case class F64(value: Double)                         extends Val\r\n  final case class Struct(name: nir.Global, values: Seq[Val]) extends Val\r\n  final case class Array(elemty: nir.Type, values: Seq[Val])  extends Val\r\n  final case class Chars(value: java.lang.String)             extends Val\r\n  final case class Local(name: nir.Local, valty: nir.Type)    extends Val\r\n  final case class Global(name: nir.Global, valty: nir.Type)  extends Val\r\n}\r\n```\r\n\r\nI'd like `extends Val` to be aligned throughout the whole block for both objects and classes. \r\n\r\nUsing: 0.2.1\r\n"
+}

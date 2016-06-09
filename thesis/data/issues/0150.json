@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/150",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/150/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/150/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/150/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/150",
+  "id": 147991564,
+  "number": 150,
+  "title": "Allow single line case if it fits on line",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/209675959",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/150#issuecomment-209675959",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/150",
+      "id": 209675959,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-13 22:32:58 UTC",
+      "updated_at": "2016-04-13 22:32:58 UTC",
+      "body": "For some reason I can't find a solution I'm happy with, I got really deep into issues with the `pruneSlowStates` optimization until I gave. Saving this issue for a later release, 0.2.1 is already useful as it is."
+    }
+  ],
+  "created_at": "2016-04-13 08:55:39 UTC",
+  "updated_at": "2016-04-13 22:32:58 UTC",
+  "closed_at": null,
+  "body": "From @lihaoyi on Gitter.\r\n\r\n> How is it that sometimes it puts `case (foo, bar) =>` on a new line, and sometimes it doesn't:\r\n```diff\r\n-        .action { (x, c) => c.copy(file = Some(Path(x, cwd))) }\r\n+        .action { (x, c) =>\r\n+          c.copy(file = Some(Path(x, cwd)))\r\n+        }\r\n```\r\nbut\r\n```diff\r\n-    val reads = paramSymbols.zip(apply.args).map{ case (param, term) =>\r\n-      val assign = term match{\r\n-        case q\"ammonite.repl.ScriptInit.arg($inner)\" =>\r\n-\r\n-          val newPrefix = q\"ammonite.repl.ScriptInit.parseScriptArg\"\r\n-          q\"$newPrefix[${param.typeSignature}](${param.name.decoded}, $inner)\"\r\n-        case x => x // This case should only be for default args, which we leave unchanged\r\n-      }\r\n-      assign\r\n+    val reads = paramSymbols.zip(apply.args).map {\r\n+      case (param, term) =>\r\n+        val assign = term match {\r\n+          case q\"ammonite.repl.ScriptInit.arg($inner)\" =>\r\n+            val newPrefix = q\"ammonite.repl.ScriptInit.parseScriptArg\"\r\n+            q\"$newPrefix[${param.typeSignature}](${param.name.decoded}, $inner)\"\r\n+          case x =>\r\n+            x // This case should only be for default args, which we leave unchanged\r\n+        }\r\n+        assign\r\n     }\r\n```"
+}

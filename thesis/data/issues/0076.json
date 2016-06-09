@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/76",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/76/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/76/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/76/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/76",
+  "id": 135729336,
+  "number": 76,
+  "title": "Fix multiple output bugs from FormatExperiment.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-02-23 12:54:49 UTC",
+  "updated_at": "2016-02-23 13:18:05 UTC",
+  "closed_at": "2016-02-23 13:18:01 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/76",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/76",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/76.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/76.patch"
+  },
+  "body": "* Fix cases where formatter produces unformattable code.\r\n* Handle curly brace starting new block.\r\n* Fixes #25.\r\n* Space after non-alphanumeric character identifiers.\r\n* Eliminate spaces after inline comments.\r\n* Fix type compounds and declarations\r\n* Fix spaces around orphan (\r\n\r\nParserExperiment\r\n\r\nFormatter timed out: 41\r\norg.scalafmt.Error$FormatterChangedAST$: 7\r\njava.lang.ClassCastException: 11\r\norg.scalafmt.Error$CantFormatFile$: 8\r\nSuccess: 853\r\nTotal: 920\r\n+------------+--------+--------------+----------+---------+----------+----------+\r\n|         Max|     Min|           Sum|      Mean|       Q1|        Q2|        Q3|\r\n+------------+--------+--------------+----------+---------+----------+----------+\r\n|9.946,107 ms|1,072 ms|811.343,078 ms|951,164 ms|50,666 ms|213,938 ms|876,157 ms|\r\n+------------+--------+--------------+----------+---------+----------+----------+"
+}

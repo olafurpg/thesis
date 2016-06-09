@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/45",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/45/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/45/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/45/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/45",
+  "id": 129975765,
+  "number": 45,
+  "title": "Simplify data submission.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-30 11:26:06 UTC",
+  "updated_at": "2016-01-30 12:19:11 UTC",
+  "closed_at": "2016-01-30 12:19:08 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/45",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/45",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/45.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/45.patch"
+  },
+  "body": "Removed Typesafe config + Ficus. Fixes #42"
+}

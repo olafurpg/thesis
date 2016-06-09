@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/158",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/158/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/158/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/158/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/158",
+  "id": 148356477,
+  "number": 158,
+  "title": "Breaking cost",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-14 13:07:58 UTC",
+  "updated_at": "2016-04-16 22:32:13 UTC",
+  "closed_at": "2016-04-16 22:32:10 UTC",
+  "body": "```\r\n object ReferrerPolicy {\r\n   val empty = \"\".asInstanceOf[ReferrerPolicy]\r\n   val `no-referrer` = \"no-referrer\".asInstanceOf[ReferrerPolicy]\r\n-  val `no-referrer-when-downgrade` = \"no-referrer-when-downgrade\".asInstanceOf[ReferrerPolic\r\n+  val `no-referrer-when-downgrade` = \"no-referrer-when-downgrade\".asInstanceOf[\r\n+      ReferrerPolicy]\r\n   val `origin-only` = \"origin-only\".asInstanceOf[ReferrerPolicy]\r\n-  val `origin-when-cross-origin` = \"origin-when-cross-origin\".asInstanceOf[ReferrerPolicy]\r\n+  val `origin-when-cross-origin` = \"origin-when-cross-origin\".asInstanceOf[\r\n+      ReferrerPolicy]\r\n   val `unsafe-url` = \"unsafe-url\".asInstanceOf[ReferrerPolicy]\r\n }\r\n```\r\n\r\nOriginal:\r\n```scala\r\nORIGINAL CODE SNIPPET\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nOUTPUT FROM SCALAFMT\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\nHOW YOU WANT THE OUTPUT TO LOOK LIKE.\r\n```\r\n\r\nUsing\r\n* 0.1.x"
+}

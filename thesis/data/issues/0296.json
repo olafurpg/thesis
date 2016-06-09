@@ -1,0 +1,75 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/296",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/296/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/296/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/296/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/296",
+  "id": 157508232,
+  "number": 296,
+  "title": "scalafmt creates huge diffs?",
+  "user": {
+    "login": "jkleiser",
+    "id": 107986,
+    "avatar_url": "https://avatars.githubusercontent.com/u/107986?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jkleiser",
+    "html_url": "https://github.com/jkleiser",
+    "followers_url": "https://api.github.com/users/jkleiser/followers",
+    "following_url": "https://api.github.com/users/jkleiser/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jkleiser/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jkleiser/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jkleiser/subscriptions",
+    "organizations_url": "https://api.github.com/users/jkleiser/orgs",
+    "repos_url": "https://api.github.com/users/jkleiser/repos",
+    "events_url": "https://api.github.com/users/jkleiser/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jkleiser/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/documentation",
+      "name": "documentation",
+      "color": "d4c5f9"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/222520516",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/296#issuecomment-222520516",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/296",
+      "id": 222520516,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-05-30 16:01:19 UTC",
+      "updated_at": "2016-05-30 16:01:19 UTC",
+      "body": "I suppose the wording in that sections could be better. scalafmt is quite opinionated on how argument/parameter lists look like so it may create larger diffs than scalariform. Still, it shouldn't create larger diffs than opinionated formatters for other languages such as dartfmt and clang-format."
+    }
+  ],
+  "created_at": "2016-05-30 13:58:46 UTC",
+  "updated_at": "2016-06-03 23:15:57 UTC",
+  "closed_at": "2016-06-03 23:15:57 UTC",
+  "body": "I read this http://olafurpg.github.io/scalafmt/#scalafmtcreateshugediffs!, and wonder, is this something we must expect most of the time when comitting changes to Scala code?\r\nI understand that there will be lots of diffs the first time scalafmt does reformatting, but why should there be huge diffs later on?"
+}

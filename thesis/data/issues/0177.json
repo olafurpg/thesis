@@ -1,0 +1,103 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/177",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/177/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/177/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/177/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/177",
+  "id": 149139627,
+  "number": 177,
+  "title": "Multiple pattern matching alternatives overflow the column limit",
+  "user": {
+    "login": "densh",
+    "id": 320966,
+    "avatar_url": "https://avatars.githubusercontent.com/u/320966?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/densh",
+    "html_url": "https://github.com/densh",
+    "followers_url": "https://api.github.com/users/densh/followers",
+    "following_url": "https://api.github.com/users/densh/following{/other_user}",
+    "gists_url": "https://api.github.com/users/densh/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/densh/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/densh/subscriptions",
+    "organizations_url": "https://api.github.com/users/densh/orgs",
+    "repos_url": "https://api.github.com/users/densh/repos",
+    "events_url": "https://api.github.com/users/densh/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/densh/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/bug",
+      "name": "bug",
+      "color": "fc2929"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/211407938",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/177#issuecomment-211407938",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/177",
+      "id": 211407938,
+      "user": {
+        "login": "sjrd",
+        "id": 535934,
+        "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/sjrd",
+        "html_url": "https://github.com/sjrd",
+        "followers_url": "https://api.github.com/users/sjrd/followers",
+        "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+        "organizations_url": "https://api.github.com/users/sjrd/orgs",
+        "repos_url": "https://api.github.com/users/sjrd/repos",
+        "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/sjrd/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-18 14:40:09 UTC",
+      "updated_at": "2016-04-18 14:40:09 UTC",
+      "body": "This is how I make it look in Scala.js: https://github.com/scala-js/scala-js/blob/master/ir/src/main/scala/org/scalajs/core/ir/Traversers.scala#L204-L207, i.e., wrap after a `|` and indent 4 spaces (the continuation indent)."
+    },
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/211874203",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/177#issuecomment-211874203",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/177",
+      "id": 211874203,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-19 11:42:39 UTC",
+      "updated_at": "2016-04-19 11:42:39 UTC",
+      "body": "That's what scalafmt does by default @sjrd, this issue came because there was no `_: ` before the types."
+    }
+  ],
+  "created_at": "2016-04-18 12:42:27 UTC",
+  "updated_at": "2016-04-19 15:54:26 UTC",
+  "closed_at": "2016-04-19 15:54:22 UTC",
+  "body": "Diff:\r\n```scala\r\n-        case NullTag\r\n-           | UnitTag\r\n-           | BooleanTag\r\n-           | ByteTag\r\n-           | ShortTag\r\n-           | CharTag\r\n-           | IntTag\r\n-           | LongTag\r\n-           | FloatTag\r\n-           | DoubleTag\r\n-           | StringTag =>\r\n+        case NullTag | UnitTag | BooleanTag | ByteTag | ShortTag | CharTag | IntTag | LongTag | FloatTag | DoubleTag | StringTag =>\r\n            focus withValue genLiteralValue(lit)\r\n```\r\n\r\nI'd like this to be within my 90-column limit, potentially aligned by `|` if possible.\r\n\r\nUsing: 0.2.1"
+}

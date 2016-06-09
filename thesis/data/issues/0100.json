@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/100",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/100/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/100/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/100/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/100",
+  "id": 139527459,
+  "number": 100,
+  "title": "Spurious breaking of a class header (it's not too long for one line)",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/194218663",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/100#issuecomment-194218663",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/100",
+      "id": 194218663,
+      "user": {
+        "login": "sjrd",
+        "id": 535934,
+        "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/sjrd",
+        "html_url": "https://github.com/sjrd",
+        "followers_url": "https://api.github.com/users/sjrd/followers",
+        "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+        "organizations_url": "https://api.github.com/users/sjrd/orgs",
+        "repos_url": "https://api.github.com/users/sjrd/repos",
+        "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/sjrd/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-09 10:02:57 UTC",
+      "updated_at": "2016-03-09 10:02:57 UTC",
+      "body": "I think it's related to the presence of the annotation on the class."
+    }
+  ],
+  "created_at": "2016-03-09 09:46:54 UTC",
+  "updated_at": "2016-03-10 12:45:49 UTC",
+  "closed_at": "2016-03-10 12:45:44 UTC",
+  "body": "Original:\r\n```scala\r\n *\r\n */\r\n@js.native\r\nclass MediaStream() extends EventTarget {\r\n\r\n  /**\r\n   * Is a Boolean value set to true if the ended event has been\r\n   * fired on the object, meaning that the stream has been completely read,\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n *\r\n */\r\n@js.native\r\nclass MediaStream()\r\n    extends EventTarget {\r\n  /**\r\n   * Is a Boolean value set to true if the ended event has been\r\n   * fired on the object, meaning that the stream has been completely read,\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n *\r\n */\r\n@js.native\r\nclass MediaStream() extends EventTarget {\r\n\r\n  /**\r\n   * Is a Boolean value set to true if the ended event has been\r\n   * fired on the object, meaning that the stream has been completely read,\r\n```\r\n\r\nUsing\r\n* 0.1.1\r\n* default\r\n"
+}

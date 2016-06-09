@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/167",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/167/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/167/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/167/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/167",
+  "id": 148362090,
+  "number": 167,
+  "title": "if/else in statement position",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-14 13:32:54 UTC",
+  "updated_at": "2016-04-14 13:32:54 UTC",
+  "closed_at": null,
+  "body": "Original:\r\n```scala\r\ndef f(): Unit = {\r\n  if (poij) {\r\n    if (x)\r\n      y\r\n    else\r\n      z\r\n  } else {\r\n    ...\r\n  }\r\n}\r\n```\r\nEasier:\r\n```scala\r\nif (index >= size)\r\n  throw new IndexOutOfBoundsException\r\n// no else\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nOUTPUT FROM SCALAFMT\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\nHOW YOU WANT THE OUTPUT TO LOOK LIKE.\r\n```\r\n\r\nUsing\r\n* 0.1.x\r\n"
+}

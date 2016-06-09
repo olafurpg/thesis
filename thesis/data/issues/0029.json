@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/29",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/29/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/29/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/29/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/29",
+  "id": 127289177,
+  "number": 29,
+  "title": "Prefer splitting at higher levels of nesting",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/174211214",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/29#issuecomment-174211214",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/29",
+      "id": 174211214,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-01-23 18:40:07 UTC",
+      "updated_at": "2016-01-23 18:40:07 UTC",
+      "body": "Doesn't appear to be necessary, since this behaviour comes for free with OneArgOneLine policy. Closed by #31 until I can find a better tests for this issue."
+    }
+  ],
+  "created_at": "2016-01-18 18:48:21 UTC",
+  "updated_at": "2016-01-23 18:40:10 UTC",
+  "closed_at": "2016-01-23 18:40:07 UTC",
+  "body": "This should be possible with policies, for example\r\n\r\n```scala\r\n<<< SKIP #15 Split at higher levels\r\nobject Object {\r\n  val x = function(first(a, b), second(c, d))\r\n}\r\n>>>\r\nobject Object {\r\n  val x = function(first(a, b),\r\n                   second(c, d))\r\n}\r\n```"
+}

@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/47",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/47/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/47/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/47/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/47",
+  "id": 129987449,
+  "number": 47,
+  "title": "Add expire field to Indent.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-30 13:40:26 UTC",
+  "updated_at": "2016-01-30 13:49:24 UTC",
+  "closed_at": "2016-01-30 13:49:20 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/47",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/47",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/47.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/47.patch"
+  },
+  "body": "This eliminates the most popular use case for policies. Fixes #43.\r\nTo find expire tokens, we precompute all matching parens. Fixes #17."
+}

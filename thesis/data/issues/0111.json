@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/111",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/111/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/111/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/111/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/111",
+  "id": 139536784,
+  "number": 111,
+  "title": "Breaking between params should be preferred over breaking inside []",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/194228025",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/111#issuecomment-194228025",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/111",
+      "id": 194228025,
+      "user": {
+        "login": "sjrd",
+        "id": 535934,
+        "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/sjrd",
+        "html_url": "https://github.com/sjrd",
+        "followers_url": "https://api.github.com/users/sjrd/followers",
+        "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+        "organizations_url": "https://api.github.com/users/sjrd/orgs",
+        "repos_url": "https://api.github.com/users/sjrd/repos",
+        "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/sjrd/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-09 10:27:48 UTC",
+      "updated_at": "2016-03-09 10:27:48 UTC",
+      "body": "Probably related to #96."
+    }
+  ],
+  "created_at": "2016-03-09 10:27:28 UTC",
+  "updated_at": "2016-03-10 12:45:49 UTC",
+  "closed_at": "2016-03-10 12:45:45 UTC",
+  "body": "Original:\r\n```scala\r\n@js.native\r\nclass MutationObserver(callback: js.Function2[js.Array[MutationRecord], MutationObserver, _]\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n@js.native\r\nclass MutationObserver(callback: js.Function2[js.Array[MutationRecord],\r\n    MutationObserver, _])\r\n    extends js.Object {\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n@js.native\r\nclass MutationObserver(\r\n    callback: js.Function2[js.Array[MutationRecord], MutationObserver, _])\r\n    extends js.Object {\r\n```\r\n\r\nUsing\r\n* 0.1.1\r\n* default\r\n"
+}

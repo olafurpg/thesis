@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/134",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/134/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/134/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/134/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/134",
+  "id": 145166874,
+  "number": 134,
+  "title": "Format all files in Akka",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/207970360",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/134#issuecomment-207970360",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/134",
+      "id": 207970360,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-10 11:48:34 UTC",
+      "updated_at": "2016-04-10 11:48:34 UTC",
+      "body": "Closed by 0.1.6"
+    }
+  ],
+  "created_at": "2016-04-01 12:21:25 UTC",
+  "updated_at": "2016-04-10 11:48:38 UTC",
+  "closed_at": "2016-04-10 11:48:34 UTC",
+  "body": "## Summary:\r\n\r\nscala.meta.parsers.common.ParseException: ) expected but identifier found: 1\r\n\r\nParseErr(ScalaFile(\r\n    project: akka\r\n    github: https://github.com/akka/akka/blob/3698928fbdaa8fef8e2037fbc51887ab60addefb/akka-actor/src/main/scala/akka/event/Logging.scala\r\n    raw: https://raw.githubusercontent.com/akka/akka/3698928fbdaa8fef8e2037fbc51887ab60addefb/akka-actor/src/main/scala/akka/event/Logging.scala\r\n))\r\n\r\nFormatter timed out: 2\r\n\r\nTimeout(ScalaFile(\r\n    project: akka\r\n    github: https://github.com/akka/akka/blob/3698928fbdaa8fef8e2037fbc51887ab60addefb/akka-stream-tests/src/test/scala/akka/stream/scaladsl/GraphZipWithSpec.scala\r\n    raw: https://raw.githubusercontent.com/akka/akka/3698928fbdaa8fef8e2037fbc51887ab60addefb/akka-stream-tests/src/test/scala/akka/stream/scaladsl/GraphZipWithSpec.scala\r\n))\r\nTimeout(ScalaFile(\r\n    project: akka\r\n    github: https://github.com/akka/akka/blob/3698928fbdaa8fef8e2037fbc51887ab60addefb/project/MiMa.scala\r\n    raw: https://raw.githubusercontent.com/akka/akka/3698928fbdaa8fef8e2037fbc51887ab60addefb/project/MiMa.scala\r\n))\r\n\r\norg.scalafmt.Error$FormatterOutputDoesNotParse: 1\r\n\r\nScalaFile(\r\n    project: akka\r\n    github: https://github.com/akka/akka/blob/3698928fbdaa8fef8e2037fbc51887ab60addefb/akka-stream-tests/src/test/scala/akka/stream/DslConsistencySpec.scala\r\n    raw: https://raw.githubusercontent.com/akka/akka/3698928fbdaa8fef8e2037fbc51887ab60addefb/akka-stream-tests/src/test/scala/akka/stream/DslConsistencySpec.scala\r\n) org.scalafmt.Error$FormatterOutputDoesNotParse: Formatter output does not parse:\r\n\r\nSuccess: 1760\r\n\r\n```\r\nTotal: 1764\r\n+------------+--------+--------------+----------+---------+---------+----------+\r\n|         Max|     Min|           Sum|      Mean|       Q1|       Q2|        Q3|\r\n+------------+--------+--------------+----------+---------+---------+----------+\r\n|5.250,663 ms|1,647 ms|326.080,829 ms|185,273 ms|36,866 ms|91,464 ms|216,191 ms|\r\n+------------+--------+--------------+----------+---------+---------+----------+\r\n```"
+}

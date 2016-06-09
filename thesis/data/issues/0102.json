@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/102",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/102/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/102/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/102/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/102",
+  "id": 139529455,
+  "number": 102,
+  "title": "Existing blank line between comments should be kept",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-03-09 09:57:34 UTC",
+  "updated_at": "2016-03-10 12:45:49 UTC",
+  "closed_at": "2016-03-10 12:45:44 UTC",
+  "body": "Original:\r\n```scala\r\n  // =======================================================================================\r\n  // 6.3.2 Modifier Keys\r\n\r\n  /** The Alternative (Alt, Option, Menu) key. Enable alternate modifier function for interp\r\n  final val Alt = \"Alt\"\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n  // =======================================================================================\r\n  // 6.3.2 Modifier Keys\r\n  /** The Alternative (Alt, Option, Menu) key. Enable alternate modifier function for interp\r\n  final val Alt = \"Alt\"\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n  // =======================================================================================\r\n  // 6.3.2 Modifier Keys\r\n\r\n  /** The Alternative (Alt, Option, Menu) key. Enable alternate modifier function for interp\r\n  final val Alt = \"Alt\"\r\n```\r\ni.e., the blank line that existed between two existing comments should be kept.\r\n\r\nUsing\r\n* 0.1.1\r\n* default\r\n"
+}

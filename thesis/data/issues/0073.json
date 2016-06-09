@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/73",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/73/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/73/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/73/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/73",
+  "id": 135060315,
+  "number": 73,
+  "title": "Limit calls to token.position.end.line.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/186571071",
+      "html_url": "https://github.com/olafurpg/scalafmt/pull/73#issuecomment-186571071",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/73",
+      "id": 186571071,
+      "user": {
+        "login": "codecov-io",
+        "id": 8655789,
+        "avatar_url": "https://avatars.githubusercontent.com/u/8655789?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/codecov-io",
+        "html_url": "https://github.com/codecov-io",
+        "followers_url": "https://api.github.com/users/codecov-io/followers",
+        "following_url": "https://api.github.com/users/codecov-io/following{/other_user}",
+        "gists_url": "https://api.github.com/users/codecov-io/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/codecov-io/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/codecov-io/subscriptions",
+        "organizations_url": "https://api.github.com/users/codecov-io/orgs",
+        "repos_url": "https://api.github.com/users/codecov-io/repos",
+        "events_url": "https://api.github.com/users/codecov-io/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/codecov-io/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-02-20 10:59:04 UTC",
+      "updated_at": "2016-02-20 10:59:04 UTC",
+      "body": "## [Current coverage][1] is `96.24%`\n> Merging **#73** into **master** will increase coverage by **+0.14%** as of [`7db43f7`][3]\n\n\n```diff\n@@            master     #73   diff @@\n======================================\n  Files           14      14       \n  Stmts          719     719       \n  Branches        85      87     +2\n  Methods                          \n======================================\n+ Hit            691     692     +1\n  Partial          0       0       \n+ Missed          28      27     -1\n```\n\n> Review entire [Coverage Diff][4] as of [`7db43f7`][3]\n\n\n-----\n### [Uncovered Suggestions][2]\n\n1. `+0.42%` via [...estFirstSearch.scala#213...215](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/BestFirstSearch.scala?ref=7db43f7c039053a5ef3d7e1983bd2ac73554b447#213) \n1. `+0.28%` via [...lafmt/ScalaFmt.scala#53...54](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/ScalaFmt.scala?ref=7db43f7c039053a5ef3d7e1983bd2ac73554b447#53) \n1. `+0.28%` via [...internal/Split.scala#79...80](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/Split.scala?ref=7db43f7c039053a5ef3d7e1983bd2ac73554b447#79) \n1. *[See 7 more...][2]*\n\n[1]: https://codecov.io/github/olafurpg/scalafmt?ref=7db43f7c039053a5ef3d7e1983bd2ac73554b447\n[2]: https://codecov.io/github/olafurpg/scalafmt/features/suggestions?ref=7db43f7c039053a5ef3d7e1983bd2ac73554b447\n[3]: https://codecov.io/github/olafurpg/scalafmt/commit/7db43f7c039053a5ef3d7e1983bd2ac73554b447\n[4]: https://codecov.io/github/olafurpg/scalafmt/compare/a6c4fed80249d42c986e31f89c9b17b6c8cac3e7...7db43f7c039053a5ef3d7e1983bd2ac73554b447\n\n> Powered by [Codecov](https://codecov.io). Updated on successful CI builds."
+    }
+  ],
+  "created_at": "2016-02-20 10:52:36 UTC",
+  "updated_at": "2016-02-20 11:18:21 UTC",
+  "closed_at": "2016-02-20 11:18:16 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/73",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/73",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/73.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/73.patch"
+  },
+  "body": "See https://github.com/scalameta/scalameta/issues/334.\r\nThe there is no need to format a range of lines then we call\r\nposition.end.line.\r\n\r\nScala.js\r\n========\r\nUnknown Failures: 62\r\nTimeout Failures: 9\r\nParse exceptions: 19\r\nFormat successes: 830\r\n\r\nBenchmark\r\n=========\r\n```\r\n[info] Benchmark                        Mode  Cnt     Score    Error  Units\r\n[info] BaseLinker.scalafmt              avgt    5   538.260 ± 86.656  ms/op\r\n[info] BaseLinker.scalametaParser       avgt    5     6.433 ±  2.844  ms/op\r\n[info] BaseLinker.scalariform           avgt    5    14.185 ±  1.416  ms/op\r\n[info] Basic.scalafmt                   avgt    5    21.574 ±  3.126  ms/op\r\n[info] Basic.scalametaParser            avgt    5    17.294 ±  2.465  ms/op\r\n[info] Basic.scalariform                avgt    5     0.486 ±  0.094  ms/op\r\n[info] Division.scalafmt                avgt    5  1997.131 ± 98.516  ms/op\r\n[info] Division.scalametaParser         avgt    5    17.151 ± 10.015  ms/op\r\n[info] Division.scalariform             avgt    5    31.963 ±  4.127  ms/op\r\n[info] JsDependency.scalafmt            avgt    5    48.036 ±  5.574  ms/op\r\n[info] JsDependency.scalametaParser     avgt    5     1.382 ±  0.216  ms/op\r\n[info] JsDependency.scalariform         avgt    5     3.247 ±  0.464  ms/op\r\n[info] Semantics.scalafmt               avgt    5    41.882 ±  3.945  ms/op\r\n[info] Semantics.scalametaParser        avgt    5     1.738 ±  0.373  ms/op\r\n[info] Semantics.scalariform            avgt    5     3.703 ±  0.225  ms/op\r\n[info] SourceMapWriter.scalafmt         avgt    5   173.634 ± 32.379  ms/op\r\n[info] SourceMapWriter.scalametaParser  avgt    5     3.330 ±  0.272  ms/op\r\n[info] SourceMapWriter.scalariform      avgt    5     7.100 ±  0.486  ms/op\r\n[info] Utils.scalafmt                   avgt    5    60.520 ± 17.482  ms/op\r\n[info] Utils.scalametaParser            avgt    5     1.992 ±  0.295  ms/op\r\n[info] Utils.scalariform                avgt    5     4.490 ±  0.172  ms/op\r\n```"
+}

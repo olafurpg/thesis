@@ -1,0 +1,75 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/126",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/126/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/126/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/126/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/126",
+  "id": 140991077,
+  "number": 126,
+  "title": "Performance regression",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/enhancement",
+      "name": "enhancement",
+      "color": "84b6eb"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/208327102",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/126#issuecomment-208327102",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/126",
+      "id": 208327102,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-11 12:55:44 UTC",
+      "updated_at": "2016-04-11 12:55:44 UTC",
+      "body": "Performance is OK in my opinion. If someone still thinks it's too slow we can take a look at this again."
+    }
+  ],
+  "created_at": "2016-03-15 14:36:11 UTC",
+  "updated_at": "2016-04-11 12:55:48 UTC",
+  "closed_at": "2016-04-11 12:55:44 UTC",
+  "body": "Benchmark at 0.1.3: 17947d7c17f357ee1eb91c768c2bcd026159a1a8\r\n\r\n```\r\n[info] # Run complete. Total time: 00:04:37\r\n[info]\r\n[info] Benchmark                        Mode  Cnt     Score     Error  Units\r\n[info] GenJsCode.scalafmt               avgt   10  2552.214 ± 145.240  ms/op\r\n[info] GenJsCode.scalariform            avgt   10   232.383 ±  14.297  ms/op\r\n[info] JavaLangString.scalafmt          avgt   10   283.862 ±  10.122  ms/op\r\n[info] JavaLangString.scalariform       avgt   10     6.124 ±   0.076  ms/op\r\n[info] OptimizerCore.scalafmt           avgt   10  1566.633 ±  57.402  ms/op\r\n[info] OptimizerCore.scalariform        avgt   10   223.666 ±  12.251  ms/op\r\n[info] ScalaJSClassEmitter.scalafmt     avgt   10  3359.548 ±  86.784  ms/op\r\n[info] ScalaJSClassEmitter.scalariform  avgt   10    34.176 ±   1.048  ms/op\r\n\r\nTotal: 920\r\n+-------------+--------+--------------+----------+---------+---------+----------+\r\n|          Max|     Min|           Sum|      Mean|       Q1|       Q2|        Q3|\r\n+-------------+--------+--------------+----------+---------+---------+----------+\r\n|27.366,865 ms|2,814 ms|490.016,449 ms|532,627 ms|37,029 ms|93,261 ms|223,037 ms|\r\n+-------------+--------+--------------+----------+---------+---------+----------+\r\n```\r\n\r\nThis is almost 2x slower than my benchmarks before 0.1.0."
+}

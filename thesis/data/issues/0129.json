@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/129",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/129/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/129/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/129/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/129",
+  "id": 141857308,
+  "number": 129,
+  "title": "0.1.4 fixes",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/198347793",
+      "html_url": "https://github.com/olafurpg/scalafmt/pull/129#issuecomment-198347793",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/129",
+      "id": 198347793,
+      "user": {
+        "login": "codecov-io",
+        "id": 8655789,
+        "avatar_url": "https://avatars.githubusercontent.com/u/8655789?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/codecov-io",
+        "html_url": "https://github.com/codecov-io",
+        "followers_url": "https://api.github.com/users/codecov-io/followers",
+        "following_url": "https://api.github.com/users/codecov-io/following{/other_user}",
+        "gists_url": "https://api.github.com/users/codecov-io/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/codecov-io/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/codecov-io/subscriptions",
+        "organizations_url": "https://api.github.com/users/codecov-io/orgs",
+        "repos_url": "https://api.github.com/users/codecov-io/repos",
+        "events_url": "https://api.github.com/users/codecov-io/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/codecov-io/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-18 13:08:04 UTC",
+      "updated_at": "2016-03-18 13:08:04 UTC",
+      "body": "## [Current coverage][1] is `93.00%`\n> Merging **#129** into **master** will increase coverage by **+0.07%** as of [`5c85942`][3]\n\n\n```diff\n@@            master   #129   diff @@\n=====================================\n  Files           22     22       \n  Stmts         1217   1230    +13\n  Branches       161    163     +2\n  Methods          0      0       \n=====================================\n+ Hit           1131   1144    +13\n  Partial          0      0       \n  Missed          86     86       \n```\n\n> Review entire [Coverage Diff][4] as of [`5c85942`][3]\n\n\n-----\n### [Uncovered Suggestions][2]\n\n1. `+1.14%` via [...estFirstSearch.scala#271...284](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/BestFirstSearch.scala?ref=5c85942dc283b1c4072f9d67eb4da8cc209e6fe1#271) \n1. `+0.65%` via [...ernal/TokenOps.scala#70...77](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/TokenOps.scala?ref=5c85942dc283b1c4072f9d67eb4da8cc209e6fe1#70) \n1. `+0.49%` via [...nternal/Router.scala#468...473](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/Router.scala?ref=5c85942dc283b1c4072f9d67eb4da8cc209e6fe1#468) \n1. *[See 7 more...][2]*\n\n[1]: https://codecov.io/github/olafurpg/scalafmt?ref=5c85942dc283b1c4072f9d67eb4da8cc209e6fe1\n[2]: https://codecov.io/github/olafurpg/scalafmt/features/suggestions?ref=5c85942dc283b1c4072f9d67eb4da8cc209e6fe1\n[3]: https://codecov.io/github/olafurpg/scalafmt/commit/5c85942dc283b1c4072f9d67eb4da8cc209e6fe1\n[4]: https://codecov.io/github/olafurpg/scalafmt/compare/8013ea257559c4a056c4635f7a4093c84af616d5...5c85942dc283b1c4072f9d67eb4da8cc209e6fe1\n\n> Powered by [Codecov](https://codecov.io). Updated on successful CI builds."
+    }
+  ],
+  "created_at": "2016-03-18 12:52:24 UTC",
+  "updated_at": "2016-03-18 13:20:32 UTC",
+  "closed_at": "2016-03-18 13:20:29 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/129",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/129",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/129.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/129.patch"
+  },
+  "body": ""
+}

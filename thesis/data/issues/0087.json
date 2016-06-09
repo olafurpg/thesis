@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/87",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/87/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/87/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/87/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/87",
+  "id": 138473277,
+  "number": 87,
+  "title": "Add support to call from Scala 2.10.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-03-04 13:11:56 UTC",
+  "updated_at": "2016-03-04 13:12:04 UTC",
+  "closed_at": "2016-03-04 13:12:00 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/87",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/87",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/87.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/87.patch"
+  },
+  "body": ""
+}

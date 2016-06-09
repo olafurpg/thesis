@@ -1,0 +1,48 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/193",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/193/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/193/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/193/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/193",
+  "id": 150687378,
+  "number": 193,
+  "title": "Improve .scalafmt and IntelliJ experience",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/enhancement",
+      "name": "enhancement",
+      "color": "84b6eb"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-24 18:21:14 UTC",
+  "updated_at": "2016-05-06 17:18:16 UTC",
+  "closed_at": "2016-05-06 17:18:16 UTC",
+  "body": "Currently, you need to restart IntelliJ each time you change .scalafmt. It would be better if the plugin could\r\n* automatically pickup new changes,\r\n* post some info bubble when it picks up new configuration."
+}

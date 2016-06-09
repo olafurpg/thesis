@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/287",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/287/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/287/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/287/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/287",
+  "id": 156623273,
+  "number": 287,
+  "title": "Expose --alignByArrowEnumeratorGenerator in CLI",
+  "user": {
+    "login": "djspiewak",
+    "id": 752,
+    "avatar_url": "https://avatars.githubusercontent.com/u/752?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/djspiewak",
+    "html_url": "https://github.com/djspiewak",
+    "followers_url": "https://api.github.com/users/djspiewak/followers",
+    "following_url": "https://api.github.com/users/djspiewak/following{/other_user}",
+    "gists_url": "https://api.github.com/users/djspiewak/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/djspiewak/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/djspiewak/subscriptions",
+    "organizations_url": "https://api.github.com/users/djspiewak/orgs",
+    "repos_url": "https://api.github.com/users/djspiewak/repos",
+    "events_url": "https://api.github.com/users/djspiewak/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/djspiewak/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/221424154",
+      "html_url": "https://github.com/olafurpg/scalafmt/pull/287#issuecomment-221424154",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/287",
+      "id": 221424154,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-05-24 22:43:50 UTC",
+      "updated_at": "2016-05-24 22:43:50 UTC",
+      "body": "Correct, thanks!"
+    }
+  ],
+  "created_at": "2016-05-24 22:23:36 UTC",
+  "updated_at": "2016-05-24 22:43:50 UTC",
+  "closed_at": "2016-05-24 22:43:01 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/287",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/287",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/287.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/287.patch"
+  },
+  "body": "I think I did this right?"
+}

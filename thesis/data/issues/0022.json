@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/22",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/22/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/22/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/22/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/22",
+  "id": 127189543,
+  "number": 22,
+  "title": "Add a Gitter chat badge to readme.md",
+  "user": {
+    "login": "gitter-badger",
+    "id": 8518239,
+    "avatar_url": "https://avatars.githubusercontent.com/u/8518239?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/gitter-badger",
+    "html_url": "https://github.com/gitter-badger",
+    "followers_url": "https://api.github.com/users/gitter-badger/followers",
+    "following_url": "https://api.github.com/users/gitter-badger/following{/other_user}",
+    "gists_url": "https://api.github.com/users/gitter-badger/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/gitter-badger/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/gitter-badger/subscriptions",
+    "organizations_url": "https://api.github.com/users/gitter-badger/orgs",
+    "repos_url": "https://api.github.com/users/gitter-badger/repos",
+    "events_url": "https://api.github.com/users/gitter-badger/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/gitter-badger/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-18 09:47:46 UTC",
+  "updated_at": "2016-01-18 09:49:07 UTC",
+  "closed_at": "2016-01-18 09:49:02 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/22",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/22",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/22.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/22.patch"
+  },
+  "body": "### olafurpg/scalafmt now has a Chat Room on Gitter\n\n@olafurpg has just created a chat room. You can visit it here: [https://gitter.im/olafurpg/scalafmt](https://gitter.im/olafurpg/scalafmt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link).\n\nThis pull-request adds this badge to your readme.md:\n\n\n[![Gitter](https://badges.gitter.im/olafurpg/scalafmt.svg)](https://gitter.im/olafurpg/scalafmt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)\n\nIf my aim is a little off, please [let me know](https://github.com/gitterHQ/readme-badger/issues).\n\nHappy chatting.\n\n\nPS: [Click here](https://gitter.im/settings/badger/opt-out) if you would prefer not to receive automatic pull-requests from Gitter in future.\n"
+}

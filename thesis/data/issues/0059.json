@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/59",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/59/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/59/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/59/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/59",
+  "id": 132471749,
+  "number": 59,
+  "title": "OptimalAt keyed by state.column -> format token.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-02-09 16:53:21 UTC",
+  "updated_at": "2016-02-09 16:53:32 UTC",
+  "closed_at": "2016-02-09 16:53:29 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/59",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/59",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/59.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/59.patch"
+  },
+  "body": "We must key by column to prevent bugs like in test unit/TermApply\r\noptimalAt memoization.\r\n\r\n* Fix cost of newline before if in cond.\r\n* Make compare report green when shrinking state.\r\n* Demo CLI interface for vim integration.\r\n* Fixed bug in partial functions."
+}

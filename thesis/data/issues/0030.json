@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/30",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/30/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/30/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/30/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/30",
+  "id": 127458282,
+  "number": 30,
+  "title": "Safer/richer indentation abstraction",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/174210842",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/30#issuecomment-174210842",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/30",
+      "id": 174210842,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-01-23 18:34:44 UTC",
+      "updated_at": "2016-01-23 18:34:44 UTC",
+      "body": "Closed by #31 "
+    }
+  ],
+  "created_at": "2016-01-19 14:31:22 UTC",
+  "updated_at": "2016-01-23 18:34:48 UTC",
+  "closed_at": "2016-01-23 18:34:44 UTC",
+  "body": "The indentation is managed by `State.indent: Int`. Splits and policies can increment/decrement the int.\r\n\r\n* This makes it tricky for example to indent a function argument to the same column as the opening `(` because we don't know the exact integer value of the state's column.\r\n* unindenting the same number of spaces at the closing `)` requires us to know integer value at the opening `)`\r\n* We violate DRY by relying on decrementing the same number as we increment.\r\n\r\nA more powerful abstraction would work like a stack, you push an `Indent` which can be a concrete number or a useful object like state.column"
+}

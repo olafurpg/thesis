@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/153",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/153/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/153/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/153/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/153",
+  "id": 148072231,
+  "number": 153,
+  "title": "No blank lines between top-level statements if there was none before",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-13 14:04:02 UTC",
+  "updated_at": "2016-04-14 09:27:51 UTC",
+  "closed_at": "2016-04-14 09:27:45 UTC",
+  "body": "Original:\r\n```scala\r\nclass A\r\nclass B\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nclass A\r\n\r\nclass B\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\nclass A\r\nclass B\r\n```\r\n\r\nUsing\r\n* 0.2.0"
+}

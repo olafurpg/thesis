@@ -1,0 +1,75 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/293",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/293/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/293/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/293/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/293",
+  "id": 157344771,
+  "number": 293,
+  "title": "Uppercase long literal suffix",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/configurable",
+      "name": "configurable",
+      "color": "e99695"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/222316398",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/293#issuecomment-222316398",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/293",
+      "id": 222316398,
+      "user": {
+        "login": "sjrd",
+        "id": 535934,
+        "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/sjrd",
+        "html_url": "https://github.com/sjrd",
+        "followers_url": "https://api.github.com/users/sjrd/followers",
+        "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+        "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+        "organizations_url": "https://api.github.com/users/sjrd/orgs",
+        "repos_url": "https://api.github.com/users/sjrd/repos",
+        "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/sjrd/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-05-28 16:16:33 UTC",
+      "updated_at": "2016-05-28 16:17:02 UTC",
+      "body": ":+1:\r\n\r\nAlso, lowercase float and double literals: `1f` and `1d` instead of `1F` and `1D`. The latter tends to more easily be interpreted as hexadecimal, for some weird cognitive reason.\r\n\r\nPS: you can enable that by default to the `--Scala.js` style as well."
+    }
+  ],
+  "created_at": "2016-05-28 15:51:33 UTC",
+  "updated_at": "2016-05-28 16:17:02 UTC",
+  "closed_at": null,
+  "body": "Taken from Spark coding style: https://github.com/databricks/scala-style-guide/blob/master/README.md#long-literals\r\n\r\nOriginal:\r\n```scala\r\n11l\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n11l\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n11L\r\n```\r\n\r\nUsing:\r\n* 0.2.5\r\n* --style default\r\n"
+}

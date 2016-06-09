@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/109",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/109/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/109/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/109/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/109",
+  "id": 139535307,
+  "number": 109,
+  "title": "(personal preference?) If breaking before `with`, should break before `extends` beforehand",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/194496858",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/109#issuecomment-194496858",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/109",
+      "id": 194496858,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-09 20:38:46 UTC",
+      "updated_at": "2016-03-09 20:38:46 UTC",
+      "body": "This was the behaviour for classes, forgot traits/objects. I personally also like this rule, will keep it the default unless someone objects."
+    }
+  ],
+  "created_at": "2016-03-09 10:20:55 UTC",
+  "updated_at": "2016-03-10 12:45:49 UTC",
+  "closed_at": "2016-03-10 12:45:45 UTC",
+  "body": "Original:\r\n```scala\r\ntrait WorkerNavigator extends NavigatorID with NavigatorOnLine with NavigatorLanguage\r\n```\r\n\r\nScalafmt:\r\n```scala\r\ntrait WorkerNavigator extends NavigatorID with NavigatorOnLine\r\n    with NavigatorLanguage\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\ntrait WorkerNavigator\r\n    extends NavigatorID with NavigatorOnLine with NavigatorLanguage\r\n```\r\nor, if that does not fit on the line length either:\r\n```scala\r\ntrait WorkerNavigator\r\n    extends NavigatorID with NavigatorOnLine\r\n    with NavigatorLanguage\r\n```\r\n\r\nUsing\r\n* 0.1.1\r\n* default"
+}

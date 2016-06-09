@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/110",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/110/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/110/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/110/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/110",
+  "id": 139536283,
+  "number": 110,
+  "title": "Absurd formatting of a (deprecated) secondary constructor",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-03-09 10:25:47 UTC",
+  "updated_at": "2016-03-10 12:45:49 UTC",
+  "closed_at": "2016-03-10 12:45:44 UTC",
+  "body": "Original:\r\n```scala\r\n@js.native\r\nclass ClipboardEvent(`type`: String, settings: ClipboardEventInit) extends Event {\r\n  @deprecated(\"Use the overload with a ClipboardEventInit instead.\", \"0.8.1\")\r\n  def this(`type`: String, settings: js.Dynamic) = this(`type`, settings.asInstanceOf[ClipboardEventInit])\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n@js.native\r\nclass ClipboardEvent(`type` : String, settings: ClipboardEventInit)\r\n    extends Event {\r\n  @deprecated(\"Use the overload with a ClipboardEventInit instead.\", \"0.8.1\") def this (`type` : String,\r\n  settings: js.Dynamic) = this(\r\n      `type`, settings.asInstanceOf[ClipboardEventInit])\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n@js.native\r\nclass ClipboardEvent(`type` : String, settings: ClipboardEventInit)\r\n    extends Event {\r\n  @deprecated(\"Use the overload with a ClipboardEventInit instead.\", \"0.8.1\")\r\n  def this (`type`: String, settings: js.Dynamic) =\r\n    this(`type`, settings.asInstanceOf[ClipboardEventInit])\r\n```\r\n\r\nUsing\r\n* 0.1.1\r\n* default\r\n"
+}

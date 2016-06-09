@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/85",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/85/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/85/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/85/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/85",
+  "id": 137985933,
+  "number": 85,
+  "title": "Support binpack + non-binpack parameters.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/191423164",
+      "html_url": "https://github.com/olafurpg/scalafmt/pull/85#issuecomment-191423164",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/85",
+      "id": 191423164,
+      "user": {
+        "login": "codecov-io",
+        "id": 8655789,
+        "avatar_url": "https://avatars.githubusercontent.com/u/8655789?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/codecov-io",
+        "html_url": "https://github.com/codecov-io",
+        "followers_url": "https://api.github.com/users/codecov-io/followers",
+        "following_url": "https://api.github.com/users/codecov-io/following{/other_user}",
+        "gists_url": "https://api.github.com/users/codecov-io/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/codecov-io/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/codecov-io/subscriptions",
+        "organizations_url": "https://api.github.com/users/codecov-io/orgs",
+        "repos_url": "https://api.github.com/users/codecov-io/repos",
+        "events_url": "https://api.github.com/users/codecov-io/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/codecov-io/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-02 20:48:27 UTC",
+      "updated_at": "2016-03-02 20:48:27 UTC",
+      "body": "## [Current coverage][1] is `92.60%`\n> Merging **#85** into **master** will decrease coverage by **-2.61%** as of [`390e2e9`][3]\n\n\n```diff\n@@            master    #85   diff @@\n=====================================\n  Files           14     14       \n  Stmts          877    919    +42\n  Branches       104    114    +10\n  Methods                         \n=====================================\n+ Hit            835    851    +16\n  Partial          0      0       \n- Missed          42     68    +26\n```\n\n> Review entire [Coverage Diff][4] as of [`390e2e9`][3]\n\n\n-----\n### [Uncovered Suggestions][2]\n\n1. `+1.41%` via [...estFirstSearch.scala#269...281](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/BestFirstSearch.scala?ref=390e2e90e3079c46e6efa9bf2a4cc2ea885f118f#269) \n1. `+0.76%` via [...nternal/Router.scala#278...284](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/Router.scala?ref=390e2e90e3079c46e6efa9bf2a4cc2ea885f118f#278) \n1. `+0.65%` via [...nternal/Router.scala#397...402](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/Router.scala?ref=390e2e90e3079c46e6efa9bf2a4cc2ea885f118f#397) \n1. *[See 7 more...][2]*\n\n[1]: https://codecov.io/github/olafurpg/scalafmt?ref=390e2e90e3079c46e6efa9bf2a4cc2ea885f118f\n[2]: https://codecov.io/github/olafurpg/scalafmt/features/suggestions?ref=390e2e90e3079c46e6efa9bf2a4cc2ea885f118f\n[3]: https://codecov.io/github/olafurpg/scalafmt/commit/390e2e90e3079c46e6efa9bf2a4cc2ea885f118f\n[4]: https://codecov.io/github/olafurpg/scalafmt/compare/8e15f44458d9bc2934f7652c5dd8025208d9dfe9...390e2e90e3079c46e6efa9bf2a4cc2ea885f118f\n\n> Powered by [Codecov](https://codecov.io). Updated on successful CI builds."
+    }
+  ],
+  "created_at": "2016-03-02 20:37:39 UTC",
+  "updated_at": "2016-03-02 20:49:16 UTC",
+  "closed_at": "2016-03-02 20:49:12 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/85",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/85",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/85.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/85.patch"
+  },
+  "body": "* Scala.js has binpacked arguments, I prefer non-binpack.\r\n* Setup test suite for scalajs\r\n* Fix bug in best optimization + EOF single line policies.\r\n\r\n```\r\n[info] Benchmark                        Mode  Cnt     Score     Error  Units\r\n[info] GenJsCode.scalafmt               avgt   10  2104.339 ± 363.524  ms/op\r\n[info] GenJsCode.scalariform            avgt   10   259.584 ±  44.253  ms/op\r\n[info] JavaLangString.scalafmt          avgt   10   196.015 ±  11.650  ms/op\r\n[info] JavaLangString.scalariform       avgt   10     9.484 ±   3.620  ms/op\r\n[info] OptimizerCore.scalafmt           avgt   10  1364.811 ± 100.927  ms/op\r\n[info] OptimizerCore.scalariform        avgt   10   239.519 ±  11.399  ms/op\r\n[info] ScalaJSClassEmitter.scalafmt     avgt   10   297.809 ±  31.952  ms/op\r\n[info] ScalaJSClassEmitter.scalariform  avgt   10    38.075 ±   2.490  ms/op\r\n\r\nObserve the slowdown for GenJsCode, I guess this comes from the\r\nincreased complexity of non-binpacked.\r\n```"
+}

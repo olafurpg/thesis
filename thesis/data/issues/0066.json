@@ -1,0 +1,62 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/66",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/66/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/66/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/66/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/66",
+  "id": 133844311,
+  "number": 66,
+  "title": "Get tests to register code coverage in `core`",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-02-15 23:46:05 UTC",
+  "updated_at": "2016-02-16 17:51:23 UTC",
+  "closed_at": "2016-02-16 17:51:20 UTC",
+  "body": "See https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt?ref=3ff3d1cab85dd804c40790a4ccd81fe243cc3620\r\n\r\nAfter I moved the tests to `tests` the code coverage got messed up."
+}

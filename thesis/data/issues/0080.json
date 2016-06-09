@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/80",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/80/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/80/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/80/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/80",
+  "id": 136747365,
+  "number": 80,
+  "title": "git sVarious optimizations, 4 files to go Scala.js.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-02-26 16:36:34 UTC",
+  "updated_at": "2016-02-26 16:37:13 UTC",
+  "closed_at": "2016-02-26 16:37:09 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/80",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/80",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/80.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/80.patch"
+  },
+  "body": "* Ignore singleline if obviously won't work.\r\n* Refactor optimizations, enable by flag.\r\n* Recurse on blocks inside no-opt zones, blocks are memoized.\r\n* Temporary fix for comments exceeding column limit.\r\n* Add a bunch of tests in Advanced.stat.\r\n* Early eliminate competing solutions if there is a 0 cost solution.\r\n\r\n```\r\n[info] Benchmark                        Mode  Cnt     Score    Error  Units\r\n[info] GenJsCode.scalafmt               avgt   10  1283.002 ± 77.631  ms/op\r\n[info] GenJsCode.scalariform            avgt   10   228.591 ± 10.815  ms/op\r\n[info] OptimizerCore.scalafmt           avgt   10  1242.236 ± 46.238  ms/op\r\n[info] OptimizerCore.scalariform        avgt   10   230.396 ±  8.253  ms/op\r\n[info] ScalaJSClassEmitter.scalafmt     avgt   10   308.831 ± 15.678  ms/op\r\n[info] ScalaJSClassEmitter.scalariform  avgt   10    35.309 ±  0.602  ms/op\r\n\r\nSuccess: 909\r\nTotal: 920\r\n\r\n+-------------+--------+--------------+----------+--------+---------+----------+\r\n|          Max|     Min|           Sum|      Mean|      Q1|       Q2|        Q3|\r\n+-------------+--------+--------------+----------+--------+---------+----------+\r\n|15.362,715 ms|2,165 ms|309.145,298 ms|340,094 ms|29,87 ms|74,412 ms|197,866 ms|\r\n+-------------+--------+--------------+----------+--------+---------+----------+\r\n```\r\n\r\nNOTE. Only 4 files time out when formatted individually, the other 7\r\nfiles probably suffer from the parallel run."
+}

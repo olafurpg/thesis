@@ -1,0 +1,48 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/182",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/182/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/182/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/182/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/182",
+  "id": 149141237,
+  "number": 182,
+  "title": "Don't move body of method to the same line",
+  "user": {
+    "login": "densh",
+    "id": 320966,
+    "avatar_url": "https://avatars.githubusercontent.com/u/320966?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/densh",
+    "html_url": "https://github.com/densh",
+    "followers_url": "https://api.github.com/users/densh/followers",
+    "following_url": "https://api.github.com/users/densh/following{/other_user}",
+    "gists_url": "https://api.github.com/users/densh/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/densh/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/densh/subscriptions",
+    "organizations_url": "https://api.github.com/users/densh/orgs",
+    "repos_url": "https://api.github.com/users/densh/repos",
+    "events_url": "https://api.github.com/users/densh/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/densh/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/configurable",
+      "name": "configurable",
+      "color": "e99695"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-18 12:48:08 UTC",
+  "updated_at": "2016-04-19 15:54:26 UTC",
+  "closed_at": "2016-04-19 15:54:22 UTC",
+  "body": "Original:\r\n```scala\r\ndef a =\r\n  b\r\ndef c = \r\n  d\r\n```\r\n\r\nScalafmt:\r\n```scala\r\ndef a = b\r\ndef c = d\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\ndef a =\r\n  b\r\ndef c = \r\n  d\r\n```\r\n\r\nUsing: 0.2.1"
+}

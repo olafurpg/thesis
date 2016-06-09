@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/122",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/122/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/122/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/122/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/122",
+  "id": 140174437,
+  "number": 122,
+  "title": "extra space inserted when formatting assignment to array",
+  "user": {
+    "login": "SethTisue",
+    "id": 161079,
+    "avatar_url": "https://avatars.githubusercontent.com/u/161079?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/SethTisue",
+    "html_url": "https://github.com/SethTisue",
+    "followers_url": "https://api.github.com/users/SethTisue/followers",
+    "following_url": "https://api.github.com/users/SethTisue/following{/other_user}",
+    "gists_url": "https://api.github.com/users/SethTisue/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/SethTisue/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/SethTisue/subscriptions",
+    "organizations_url": "https://api.github.com/users/SethTisue/orgs",
+    "repos_url": "https://api.github.com/users/SethTisue/repos",
+    "events_url": "https://api.github.com/users/SethTisue/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/SethTisue/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-03-11 12:39:37 UTC",
+  "updated_at": "2016-03-11 16:14:15 UTC",
+  "closed_at": "2016-03-11 16:14:12 UTC",
+  "body": "Original:\r\n```scala\r\nsieve(1) = false\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nsieve (1) = false\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\nsieve(1) = false\r\n```\r\n\r\nUsing\r\n* version: 0.1.2\r\n* style: default\r\n"
+}

@@ -1,0 +1,103 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/187",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/187/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/187/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/187/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/187",
+  "id": 149169164,
+  "number": 187,
+  "title": "Alignment broken around mix of appends and tuples",
+  "user": {
+    "login": "bdarfler",
+    "id": 197776,
+    "avatar_url": "https://avatars.githubusercontent.com/u/197776?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/bdarfler",
+    "html_url": "https://github.com/bdarfler",
+    "followers_url": "https://api.github.com/users/bdarfler/followers",
+    "following_url": "https://api.github.com/users/bdarfler/following{/other_user}",
+    "gists_url": "https://api.github.com/users/bdarfler/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/bdarfler/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/bdarfler/subscriptions",
+    "organizations_url": "https://api.github.com/users/bdarfler/orgs",
+    "repos_url": "https://api.github.com/users/bdarfler/repos",
+    "events_url": "https://api.github.com/users/bdarfler/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/bdarfler/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/alignment",
+      "name": "alignment",
+      "color": "0052cc"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/211868367",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/187#issuecomment-211868367",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/187",
+      "id": 211868367,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-19 11:33:03 UTC",
+      "updated_at": "2016-04-19 11:33:03 UTC",
+      "body": "I welcome contributions for improvements on vertical alignment, since I don't use the feature myself. I've labeled [all related issues here](https://github.com/olafurpg/scalafmt/issues?q=is%3Aissue+is%3Aopen+label%3Aalignment).\r\n\r\n`defaultWithAlign` does not align by `+=`, you'll need to configure it first. The current alignment implementation does not support aligning by a variable number of columns in subsequent rows, it will only align up to the last column that all rows have in common. [This comment](https://github.com/olafurpg/scalafmt/issues/172#issuecomment-211359227) describes  where would best to start."
+    },
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/211868863",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/187#issuecomment-211868863",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/187",
+      "id": 211868863,
+      "user": {
+        "login": "bdarfler",
+        "id": 197776,
+        "avatar_url": "https://avatars.githubusercontent.com/u/197776?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/bdarfler",
+        "html_url": "https://github.com/bdarfler",
+        "followers_url": "https://api.github.com/users/bdarfler/followers",
+        "following_url": "https://api.github.com/users/bdarfler/following{/other_user}",
+        "gists_url": "https://api.github.com/users/bdarfler/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/bdarfler/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/bdarfler/subscriptions",
+        "organizations_url": "https://api.github.com/users/bdarfler/orgs",
+        "repos_url": "https://api.github.com/users/bdarfler/repos",
+        "events_url": "https://api.github.com/users/bdarfler/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/bdarfler/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-19 11:34:18 UTC",
+      "updated_at": "2016-04-19 11:34:18 UTC",
+      "body": "Thanks I'll see if I can make some time for this.\n\nOn Tue, Apr 19, 2016, 7:33 AM Ólafur Páll Geirsson <notifications@github.com>\nwrote:\n\n> I welcome contributions for improvements on vertical alignment, since I\n> don't use the feature myself. I've labeled all related issues here\n> <https://github.com/olafurpg/scalafmt/issues?q=is%3Aissue+is%3Aopen+label%3Aalignment>\n> .\n>\n> defaultWithAlign does not align by +=, you'll need to configure it first.\n> The current alignment implementation does not support aligning by a\n> variable number of columns in subsequent rows, it will only align up to the\n> last column that all rows have in common. This comment\n> <https://github.com/olafurpg/scalafmt/issues/172#issuecomment-211359227>\n> describes where would best to start.\n>\n> —\n> You are receiving this because you authored the thread.\n> Reply to this email directly or view it on GitHub\n> <https://github.com/olafurpg/scalafmt/issues/187#issuecomment-211868367>\n>\n"
+    }
+  ],
+  "created_at": "2016-04-18 14:35:50 UTC",
+  "updated_at": "2016-04-19 11:34:18 UTC",
+  "closed_at": null,
+  "body": "Original:\r\n```scala\r\ndest     += s\"#$i $infix ${if (writeOnce) s\"if_not_exists(#$i, :$i)\" else s\":$i\"}\"\r\nvalues   += s\":$i\" -> toAttrVal(value)\r\nnames    += s\"#$i\" -> field \r\n```\r\n\r\nScalafmt:\r\n```scala\r\ndest += s\"#$i $infix ${if (writeOnce) s\"if_not_exists(#$i, :$i)\" else s\":$i\"}\"\r\nvalues += s\":$i\" -> toAttrVal(value)\r\nnames += s\"#$i\"  -> field\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\ndest     += s\"#$i $infix ${if (writeOnce) s\"if_not_exists(#$i, :$i)\" else s\":$i\"}\"\r\nvalues   += s\":$i\" -> toAttrVal(value)\r\nnames    += s\"#$i\" -> field \r\n```\r\n\r\nUsing\r\n* 0.2.1\r\n\r\n\r\n"
+}

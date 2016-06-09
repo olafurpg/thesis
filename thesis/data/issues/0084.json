@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/84",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/84/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/84/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/84/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/84",
+  "id": 137623812,
+  "number": 84,
+  "title": "Optimization: limit queue size even inside no opt zones.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/190814604",
+      "html_url": "https://github.com/olafurpg/scalafmt/pull/84#issuecomment-190814604",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/84",
+      "id": 190814604,
+      "user": {
+        "login": "codecov-io",
+        "id": 8655789,
+        "avatar_url": "https://avatars.githubusercontent.com/u/8655789?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/codecov-io",
+        "html_url": "https://github.com/codecov-io",
+        "followers_url": "https://api.github.com/users/codecov-io/followers",
+        "following_url": "https://api.github.com/users/codecov-io/following{/other_user}",
+        "gists_url": "https://api.github.com/users/codecov-io/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/codecov-io/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/codecov-io/subscriptions",
+        "organizations_url": "https://api.github.com/users/codecov-io/orgs",
+        "repos_url": "https://api.github.com/users/codecov-io/repos",
+        "events_url": "https://api.github.com/users/codecov-io/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/codecov-io/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-03-01 17:01:34 UTC",
+      "updated_at": "2016-03-01 17:01:34 UTC",
+      "body": "## [Current coverage][1] is `95.21%`\n> Merging **#84** into **master** will increase coverage by **+0.47%** as of [`d682fb5`][3]\n\n\n```diff\n@@            master     #84   diff @@\n======================================\n  Files           14      14       \n  Stmts          875     877     +2\n  Branches       104     104       \n  Methods                          \n======================================\n+ Hit            829     835     +6\n  Partial          0       0       \n+ Missed          46      42     -4\n```\n\n> Review entire [Coverage Diff][4] as of [`d682fb5`][3]\n\n\n-----\n### [Uncovered Suggestions][2]\n\n1. `+0.79%` via [...estFirstSearch.scala#273...279](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/BestFirstSearch.scala?ref=d682fb57fceb7a443ac359b7d9876238f3d215e6#273) \n1. `+0.57%` via [...internal/Split.scala#76...80](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/internal/Split.scala?ref=d682fb57fceb7a443ac359b7d9876238f3d215e6#76) \n1. `+0.22%` via [...lafmt/ScalaFmt.scala#53...54](https://codecov.io/github/olafurpg/scalafmt/core/src/main/scala/org/scalafmt/ScalaFmt.scala?ref=d682fb57fceb7a443ac359b7d9876238f3d215e6#53) \n1. *[See 7 more...][2]*\n\n[1]: https://codecov.io/github/olafurpg/scalafmt?ref=d682fb57fceb7a443ac359b7d9876238f3d215e6\n[2]: https://codecov.io/github/olafurpg/scalafmt/features/suggestions?ref=d682fb57fceb7a443ac359b7d9876238f3d215e6\n[3]: https://codecov.io/github/olafurpg/scalafmt/commit/d682fb57fceb7a443ac359b7d9876238f3d215e6\n[4]: https://codecov.io/github/olafurpg/scalafmt/compare/1a7c97e5bcf06a46c4c801b87fbbd4e09873096b...d682fb57fceb7a443ac359b7d9876238f3d215e6\n\n> Powered by [Codecov](https://codecov.io). Updated on successful CI builds."
+    }
+  ],
+  "created_at": "2016-03-01 16:36:54 UTC",
+  "updated_at": "2016-03-01 17:02:36 UTC",
+  "closed_at": "2016-03-01 17:02:32 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/84",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/84",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/84.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/84.patch"
+  },
+  "body": "This change is potentially dangerous but appears to work.\r\n\r\n[info] # Run complete. Total time: 00:03:24\r\n[info]\r\n[info] Benchmark                        Mode  Cnt     Score     Error  Units\r\n[info] GenJsCode.scalafmt               avgt   10  1375.404 ± 203.097  ms/op\r\n[info] GenJsCode.scalariform            avgt   10   238.604 ±  10.338  ms/op\r\n[info] JavaLangString.scalafmt          avgt   10   181.791 ±   3.683  ms/op\r\n[info] JavaLangString.scalariform       avgt   10     6.878 ±   0.769  ms/op\r\n[info] OptimizerCore.scalafmt           avgt   10  1330.836 ±  74.754  ms/op\r\n[info] OptimizerCore.scalariform        avgt   10   235.918 ±  10.049  ms/op\r\n[info] ScalaJSClassEmitter.scalafmt     avgt   10   305.206 ±  44.357  ms/op\r\n[info] ScalaJSClassEmitter.scalariform  avgt   10    37.935 ±   4.010  ms/op"
+}

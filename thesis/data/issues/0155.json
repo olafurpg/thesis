@@ -1,0 +1,71 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/155",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/155/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/155/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/155/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/155",
+  "id": 148142290,
+  "number": 155,
+  "title": "Unicode arrows don't align",
+  "user": {
+    "login": "lespea",
+    "id": 99605,
+    "avatar_url": "https://avatars.githubusercontent.com/u/99605?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/lespea",
+    "html_url": "https://github.com/lespea",
+    "followers_url": "https://api.github.com/users/lespea/followers",
+    "following_url": "https://api.github.com/users/lespea/following{/other_user}",
+    "gists_url": "https://api.github.com/users/lespea/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/lespea/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/lespea/subscriptions",
+    "organizations_url": "https://api.github.com/users/lespea/orgs",
+    "repos_url": "https://api.github.com/users/lespea/repos",
+    "events_url": "https://api.github.com/users/lespea/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/lespea/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/209600283",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/155#issuecomment-209600283",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/155",
+      "id": 209600283,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-13 19:11:36 UTC",
+      "updated_at": "2016-04-13 19:11:36 UTC",
+      "body": "My wild guess is that `//;.*` in the end is the culprit, because of #151. On my 0.2.1 branch I've added unicode symbols and `<-` for generators to the defaultWithAlign style."
+    }
+  ],
+  "created_at": "2016-04-13 18:21:22 UTC",
+  "updated_at": "2016-04-14 09:27:50 UTC",
+  "closed_at": "2016-04-14 09:27:45 UTC",
+  "body": "I can't get unicode arrows to align; even if I override alignTokens in `.scalafmt` with something like `--alignTokens ⇒;Case,=;Defn.(Va(l|r)|Def),→;Term.ApplyInfix,//;.*`.  Ideally scalafmt would align both by default (also the left arrow in for statements should be aligned as well)\r\n\r\nOriginal:\r\n```scala\r\n1 match {\r\n  case 1 ⇒ 1\r\n  case 11 ⇒ 1\r\n}\r\n\r\nval m = Map(\r\n  1 → 1,\r\n  11 → 1\r\n)\r\n\r\nfor {\r\n  a <- List(1)\r\n  aaa <- List(1)\r\n} yield 1\r\n\r\nfor {\r\n  a ← List(1)\r\n  aaa ← List(1)\r\n} yield 1\r\n```\r\n\r\nScalafmt:\r\n```scala\r\n1 match {\r\n  case 1 ⇒ 1\r\n  case 11 ⇒ 1\r\n}\r\n\r\nval m = Map(\r\n  1 → 1,\r\n  11 → 1\r\n)\r\n\r\nfor {\r\n  a <- List(1)\r\n  aaa <- List(1)\r\n} yield 1\r\n\r\nfor {\r\n  a ← List(1)\r\n  aaa ← List(1)\r\n} yield 1\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\n1 match {\r\n  case 1  ⇒ 1\r\n  case 11 ⇒ 1\r\n}\r\n\r\nval m = Map(\r\n  1  → 1,\r\n  11 → 1\r\n)\r\n\r\nfor {\r\n  a   <- List(1)\r\n  aaa <- List(1)\r\n} yield 1\r\n\r\nfor {\r\n  a   ← List(1)\r\n  aaa ← List(1)\r\n} yield 1\r\n```\r\n\r\nUsing\r\n* 0.2.0"
+}

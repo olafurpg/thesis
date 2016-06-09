@@ -1,0 +1,66 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/11",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/11/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/11/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/11/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/11",
+  "id": 126644642,
+  "number": 11,
+  "title": "Make it easy to validate performance improvements.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/enhancement",
+      "name": "enhancement",
+      "color": "84b6eb"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-14 12:23:41 UTC",
+  "updated_at": "2016-01-28 15:42:27 UTC",
+  "closed_at": "2016-01-28 15:42:23 UTC",
+  "body": "For example, keep a `golden-performance.csv` file under tests and after every test run compare performance of last run to golden performance. We need to take into account different hardware, of course."
+}

@@ -1,0 +1,103 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/195",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/195/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/195/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/195/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/195",
+  "id": 151620042,
+  "number": 195,
+  "title": "Lambdas nested in other expressions have inconsistent indentation ",
+  "user": {
+    "login": "densh",
+    "id": 320966,
+    "avatar_url": "https://avatars.githubusercontent.com/u/320966?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/densh",
+    "html_url": "https://github.com/densh",
+    "followers_url": "https://api.github.com/users/densh/followers",
+    "following_url": "https://api.github.com/users/densh/following{/other_user}",
+    "gists_url": "https://api.github.com/users/densh/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/densh/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/densh/subscriptions",
+    "organizations_url": "https://api.github.com/users/densh/orgs",
+    "repos_url": "https://api.github.com/users/densh/repos",
+    "events_url": "https://api.github.com/users/densh/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/densh/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/bug",
+      "name": "bug",
+      "color": "fc2929"
+    }
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/215401585",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/195#issuecomment-215401585",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/195",
+      "id": 215401585,
+      "user": {
+        "login": "densh",
+        "id": 320966,
+        "avatar_url": "https://avatars.githubusercontent.com/u/320966?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/densh",
+        "html_url": "https://github.com/densh",
+        "followers_url": "https://api.github.com/users/densh/followers",
+        "following_url": "https://api.github.com/users/densh/following{/other_user}",
+        "gists_url": "https://api.github.com/users/densh/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/densh/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/densh/subscriptions",
+        "organizations_url": "https://api.github.com/users/densh/orgs",
+        "repos_url": "https://api.github.com/users/densh/repos",
+        "events_url": "https://api.github.com/users/densh/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/densh/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-28 11:58:14 UTC",
+      "updated_at": "2016-04-28 11:58:14 UTC",
+      "body": "Another probably related example:\r\n\r\n```scala\r\n    if (isEntry) body\r\n    else {\r\n      val label = ui(sh\"${block.name}:\")\r\n      val prologue = r(\r\n        (pred match {\r\n      case ExSucc(branches) =>\r\n        params.zipWithIndex.map {\r\n          case (Val.Local(name, ty), i) =>\r\n            val branchshows = branches.map {\r\n              case (from, shows) =>\r\n                sh\"[${shows(i)}, %$from]\"\r\n            }\r\n            sh\"%$name = phi $ty ${r(branchshows, sep = \", \")}\"\r\n        }\r\n      case ExFail() =>\r\n        val Seq(Val.Local(excrec, _)) = params\r\n        Seq(\r\n          sh\"%$excrec = $landingpad\"\r\n        )\r\n    }).map(nl(_)))\r\n\r\n      sh\"$label$prologue${nl(\"\")}$body\"\r\n    }\r\n```\r\n\r\nNested match has really weird indentation. "
+    },
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/215418583",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/195#issuecomment-215418583",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/195",
+      "id": 215418583,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-04-28 13:12:49 UTC",
+      "updated_at": "2016-04-28 13:12:49 UTC",
+      "body": "These are bugs, thanks for reporting."
+    }
+  ],
+  "created_at": "2016-04-28 11:41:05 UTC",
+  "updated_at": "2016-05-13 08:20:10 UTC",
+  "closed_at": "2016-05-13 08:20:10 UTC",
+  "body": "Original:\r\n```scala\r\nval cases = catches.map {\r\n  case CaseDef(pat, _, body) =>\r\n    val (symopt, excty) = pat match {\r\n      case Typed(Ident(nme.WILDCARD), tpt) =>\r\n        (None, genType(tpt.tpe))\r\n      case Ident(nme.WILDCARD) =>\r\n        (None, genType(ThrowableClass.tpe))\r\n      case Bind(_, _) =>\r\n        (Some(pat.symbol), genType(pat.symbol.tpe))\r\n    }\r\n\r\n    (excty, { focus: Focus =>\r\n      val enter = symopt.map { sym =>\r\n        val cast = focus withOp Op.As(excty, exc.value)\r\n        curEnv.enter(sym, cast.value)\r\n        cast\r\n      }.getOrElse(focus)\r\n      val begin = enter withOp Nrt.call(Nrt.begin_catch, excwrap.value)\r\n      val res   = genExpr(body, begin)\r\n      val end   = res withOp Nrt.call(Nrt.end_catch)\r\n      end withValue res.value\r\n    })\r\n}\r\n```\r\n\r\nScalafmt:\r\n```scala\r\nval cases = catches.map {\r\n  case CaseDef(pat, _, body) =>\r\n    val (symopt, excty) = pat match {\r\n      case Typed(Ident(nme.WILDCARD), tpt) =>\r\n        (None, genType(tpt.tpe))\r\n      case Ident(nme.WILDCARD) =>\r\n        (None, genType(ThrowableClass.tpe))\r\n      case Bind(_, _) =>\r\n        (Some(pat.symbol), genType(pat.symbol.tpe))\r\n    }\r\n\r\n    (excty, { focus: Focus =>\r\n    val enter = symopt.map { sym =>\r\n      val cast = focus withOp Op.As(excty, exc.value)\r\n      curEnv.enter(sym, cast.value)\r\n      cast\r\n    }.getOrElse(focus)\r\n    val begin = enter withOp Nrt.call(Nrt.begin_catch, excwrap.value)\r\n    val res   = genExpr(body, begin)\r\n    val end   = res withOp Nrt.call(Nrt.end_catch)\r\n    end withValue res.value\r\n  })\r\n}\r\n```\r\n\r\nI would like the code to stay as-is same\r\n\r\nUsing\r\n* 0.2.2"
+}

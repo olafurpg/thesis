@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/152",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/152/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/152/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/152/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/152",
+  "id": 148069961,
+  "number": 152,
+  "title": "Alignment should not jump scope",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-04-13 13:58:36 UTC",
+  "updated_at": "2016-04-14 09:27:50 UTC",
+  "closed_at": "2016-04-14 09:27:45 UTC",
+  "body": "From #138 \r\n\r\n```diff\r\nobject Cleaver {\r\n   def apply[R, A, B](f: (A, B) => R, l: R => A, r: R => B): Cleaver[R, A, B] = new Cleaver[R, A, B] {\r\n-    def split(x: R): A -> B = (l(x), r(x))\r\n-    def join(x: A, y: B): R = f(x, y)\r\n-    def join(x: A -> B): R  = f(x._1, x._2)\r\n+    def split(x: R): A -> B                                                  = (l(x), r(x))\r\n+    def join(x: A, y: B): R                                                  = f(x, y)\r\n+    def join(x: A -> B): R                                                   = f(x._1, x._2)\r\n   }\r\n }\r\n```"
+}

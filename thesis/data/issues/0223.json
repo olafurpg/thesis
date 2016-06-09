@@ -1,0 +1,82 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/223",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/223/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/223/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/223/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/223",
+  "id": 154337124,
+  "number": 223,
+  "title": "Configuration: disallow layout 2 in argument list formatting",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/up%20for%20debate",
+      "name": "up for debate",
+      "color": "5319e7"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/milestones/5",
+    "html_url": "https://github.com/olafurpg/scalafmt/milestones/0.2.6",
+    "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/milestones/5/labels",
+    "id": 1764113,
+    "number": 5,
+    "title": "0.2.6",
+    "description": "",
+    "creator": {
+      "login": "olafurpg",
+      "id": 1408093,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/olafurpg",
+      "html_url": "https://github.com/olafurpg",
+      "followers_url": "https://api.github.com/users/olafurpg/followers",
+      "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+      "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+      "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+      "repos_url": "https://api.github.com/users/olafurpg/repos",
+      "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 13,
+    "closed_issues": 15,
+    "state": "open",
+    "created_at": "2016-05-13 08:39:58 UTC",
+    "updated_at": "2016-06-07 21:09:10 UTC",
+    "due_on": "2016-06-29 22:00:00 UTC",
+    "closed_at": null
+  },
+  "comments": [
+
+  ],
+  "created_at": "2016-05-11 20:36:58 UTC",
+  "updated_at": "2016-05-24 19:50:55 UTC",
+  "closed_at": null,
+  "body": "Scalafmt currently formats function application like this\r\n```scala\r\n// 40 columns                          |\r\nobject FunctionApplication {\r\n  // 1. Fits on a single line\r\n  function(arg1, arg2, arg3)\r\n\r\n  // 2. Fits on a single line, with newline indented by 4\r\n  function(\r\n      longerArg1, longerArg2, arg3)\r\n\r\n  // 3. One line for each argument, indented at (\r\n  function(longerArg1,\r\n           longerArg2,\r\n           longerArg3)\r\n\r\n  // 4. One line for each argument, indented at 4\r\n  function(\r\n      superDuperLongArg(\r\n          evenHasNestedArgs,\r\n          notOnlyOneButTwo), // This arg is too long.\r\n      arg2IsNotAsBad)\r\n\r\n}\r\n```\r\n\r\nI propose to eliminate the second option. I've come across several diffs where the second option produces quite bad output. Examples\r\n```scala\r\n// Original\r\n-    val dataSourceResult = \r\n-      FastEvalEngineWorkflow.getDataSourceResult(\r\n-        workflow = workflow,\r\n-        prefix = new DataSourcePrefix(prefix))\r\n// current\r\n+    val dataSourceResult = FastEvalEngineWorkflow.getDataSourceResult(\r\n+        workflow = workflow, prefix = new DataSourcePrefix(prefix))\r\n// proposed\r\n+    val dataSourceResult = FastEvalEngineWorkflow.getDataSourceResult(\r\n         workflow = workflow,\r\n         prefix = new DataSourcePrefix(prefix))\r\n// Original\r\n-  def batchPredictBase(sc: SparkContext, bm: Any, qs: RDD[(Long, Q)])\r\n-  : RDD[(Long, P)]\r\n// Current\r\n+  def batchPredictBase(\r\n+      sc: SparkContext, bm: Any, qs: RDD[(Long, Q)]): RDD[(Long, P)]\r\n// Proposed\r\n+  def batchPredictBase(sc: SparkContext,\r\n                        bm: Any,\r\n                        qs: RDD[(Long, Q)]): RDD[(Long, P)]\r\n```\r\n\r\nI understand this would come at the cost of vertical space in cases where there are many but small arguments. From best what I can tell, rustfmt and clang-format don't have rule 2 or 4. Dartfmt does have option 2 but otherwise [uses quite different rules from scalafmt (see section Rules)](http://journal.stuffwithstuff.com/2015/09/08/the-hardest-program-ive-ever-written/).\r\n\r\nA nice side-effect, the search space is smaller which makes formatting faster ^^"
+}

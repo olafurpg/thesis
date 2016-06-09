@@ -1,0 +1,103 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/201",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/201/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/201/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/201/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/201",
+  "id": 152045373,
+  "number": 201,
+  "title": "Nailgun integration",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/help%20wanted",
+      "name": "help wanted",
+      "color": "159818"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/224288381",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/201#issuecomment-224288381",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/201",
+      "id": 224288381,
+      "user": {
+        "login": "fdietze",
+        "id": 1186516,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1186516?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/fdietze",
+        "html_url": "https://github.com/fdietze",
+        "followers_url": "https://api.github.com/users/fdietze/followers",
+        "following_url": "https://api.github.com/users/fdietze/following{/other_user}",
+        "gists_url": "https://api.github.com/users/fdietze/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/fdietze/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/fdietze/subscriptions",
+        "organizations_url": "https://api.github.com/users/fdietze/orgs",
+        "repos_url": "https://api.github.com/users/fdietze/repos",
+        "events_url": "https://api.github.com/users/fdietze/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/fdietze/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-06-07 13:57:40 UTC",
+      "updated_at": "2016-06-07 13:57:40 UTC",
+      "body": "I just wrote some helper scripts to run scalariform with nailgun. Maybe these help:\r\nhttps://github.com/fdietze/dotfiles/commit/2896816990c0cf1a7a4e3c88abcecd082f9f07f4"
+    },
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/comments/224299373",
+      "html_url": "https://github.com/olafurpg/scalafmt/issues/201#issuecomment-224299373",
+      "issue_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/201",
+      "id": 224299373,
+      "user": {
+        "login": "olafurpg",
+        "id": 1408093,
+        "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/olafurpg",
+        "html_url": "https://github.com/olafurpg",
+        "followers_url": "https://api.github.com/users/olafurpg/followers",
+        "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+        "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+        "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+        "repos_url": "https://api.github.com/users/olafurpg/repos",
+        "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "created_at": "2016-06-07 14:32:45 UTC",
+      "updated_at": "2016-06-07 14:32:45 UTC",
+      "body": "Thanks! Using your example I managed to get nailgun working with scalafmt. It's so fast 😄 \r\n\r\nWhat's missing to get this integration working smoothly:\r\n* pick out the working directory from a nailgun context to support relative file paths\r\n* gracefully handle disconnections when formatting inside `.par.foreach`\r\n* bundle ng-* scripts together with the tar release"
+    }
+  ],
+  "created_at": "2016-04-30 18:34:46 UTC",
+  "updated_at": "2016-06-07 14:32:45 UTC",
+  "closed_at": null,
+  "body": "The CLI currently pays the JVM startup penalty on every invocation. Nailgun (http://www.martiansoftware.com/nailgun/) might solve this problem."
+}

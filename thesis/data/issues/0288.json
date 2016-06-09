@@ -1,0 +1,82 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/288",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/288/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/288/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/288/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/288",
+  "id": 156632784,
+  "number": 288,
+  "title": "Strange abstract type constructor reformatting",
+  "user": {
+    "login": "djspiewak",
+    "id": 752,
+    "avatar_url": "https://avatars.githubusercontent.com/u/752?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/djspiewak",
+    "html_url": "https://github.com/djspiewak",
+    "followers_url": "https://api.github.com/users/djspiewak/followers",
+    "following_url": "https://api.github.com/users/djspiewak/following{/other_user}",
+    "gists_url": "https://api.github.com/users/djspiewak/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/djspiewak/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/djspiewak/subscriptions",
+    "organizations_url": "https://api.github.com/users/djspiewak/orgs",
+    "repos_url": "https://api.github.com/users/djspiewak/repos",
+    "events_url": "https://api.github.com/users/djspiewak/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/djspiewak/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/olafurpg/scalafmt/labels/bug",
+      "name": "bug",
+      "color": "fc2929"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/milestones/5",
+    "html_url": "https://github.com/olafurpg/scalafmt/milestones/0.2.6",
+    "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/milestones/5/labels",
+    "id": 1764113,
+    "number": 5,
+    "title": "0.2.6",
+    "description": "",
+    "creator": {
+      "login": "olafurpg",
+      "id": 1408093,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/olafurpg",
+      "html_url": "https://github.com/olafurpg",
+      "followers_url": "https://api.github.com/users/olafurpg/followers",
+      "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+      "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+      "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+      "repos_url": "https://api.github.com/users/olafurpg/repos",
+      "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 13,
+    "closed_issues": 15,
+    "state": "open",
+    "created_at": "2016-05-13 08:39:58 UTC",
+    "updated_at": "2016-06-07 21:09:10 UTC",
+    "due_on": "2016-06-29 22:00:00 UTC",
+    "closed_at": null
+  },
+  "comments": [
+
+  ],
+  "created_at": "2016-05-24 23:35:57 UTC",
+  "updated_at": "2016-05-25 00:05:24 UTC",
+  "closed_at": null,
+  "body": "Original:\r\n```scala\r\ntrait Foo[F[_]] {\r\n  type G[A]\r\n```\r\n\r\nScalafmt:\r\n```scala\r\ntrait Foo[F[_]] {\r\n  type G [A]\r\n```\r\n\r\nI would like the input to look like this:\r\n```scala\r\ntrait Foo[F[_]] {\r\n  type G[A]\r\n```\r\n\r\nUsing:\r\n* master\r\n\r\n```\r\n--maxColumn 100\r\n# --binPackArguments false\r\n# --binPackParameters false\r\n# --binPackDotChains false\r\n--continuationIndentCallSite 2\r\n--allowNewlineBeforeColonInMassiveReturnTypes false\r\n--binPackParentConstructors false\r\n--alignByArrowEnumeratorGenerator false\r\n```\r\n"
+}

@@ -1,0 +1,50 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/38",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/38/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/38/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/38/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/pull/38",
+  "id": 129487484,
+  "number": 38,
+  "title": "Regression testing with speed.scalafmt.org, fixes #11.",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-01-28 15:42:18 UTC",
+  "updated_at": "2016-01-28 15:42:26 UTC",
+  "closed_at": "2016-01-28 15:42:23 UTC",
+  "pull_request": {
+    "url": "https://api.github.com/repos/olafurpg/scalafmt/pulls/38",
+    "html_url": "https://github.com/olafurpg/scalafmt/pull/38",
+    "diff_url": "https://github.com/olafurpg/scalafmt/pull/38.diff",
+    "patch_url": "https://github.com/olafurpg/scalafmt/pull/38.patch"
+  },
+  "body": "A report is written to target/compare.html that compares the current\r\nbranch with origin/master.  See screenshot, the difference in visits in\r\nhighlighted.\r\n<img width=\"377\" alt=\"screen shot 2016-01-28 at 15 47 14\" src=\"https://cloud.githubusercontent.com/assets/1408093/12649186/caceb38c-c5dd-11e5-901e-c823d503e06f.png\">\r\n"
+}

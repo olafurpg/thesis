@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/91",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/91/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/91/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/91/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/91",
+  "id": 139346254,
+  "number": 91,
+  "title": "Escape hatch",
+  "user": {
+    "login": "olafurpg",
+    "id": 1408093,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1408093?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/olafurpg",
+    "html_url": "https://github.com/olafurpg",
+    "followers_url": "https://api.github.com/users/olafurpg/followers",
+    "following_url": "https://api.github.com/users/olafurpg/following{/other_user}",
+    "gists_url": "https://api.github.com/users/olafurpg/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/olafurpg/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/olafurpg/subscriptions",
+    "organizations_url": "https://api.github.com/users/olafurpg/orgs",
+    "repos_url": "https://api.github.com/users/olafurpg/repos",
+    "events_url": "https://api.github.com/users/olafurpg/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/olafurpg/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "closed",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-03-08 17:49:51 UTC",
+  "updated_at": "2016-03-18 08:49:37 UTC",
+  "closed_at": "2016-03-18 08:49:33 UTC",
+  "body": "Original:\r\n```scala\r\n// format: OFF\r\nval identityMatrix = Array(1, 0, 0\r\n                           0, 1, 0\r\n                           0, 0, 1)\r\n// format: ON\r\n```\r\nI would like the input to look like this:\r\n```scala\r\n// format: OFF\r\nval identityMatrix = Array(1, 0, 0\r\n                           0, 1, 0\r\n                           0, 0, 1)\r\n// format: ON\r\n```"
+}

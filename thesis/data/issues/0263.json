@@ -1,0 +1,44 @@
+{
+  "url": "https://api.github.com/repos/olafurpg/scalafmt/issues/263",
+  "repository_url": "https://api.github.com/repos/olafurpg/scalafmt",
+  "labels_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/263/labels{/name}",
+  "comments_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/263/comments",
+  "events_url": "https://api.github.com/repos/olafurpg/scalafmt/issues/263/events",
+  "html_url": "https://github.com/olafurpg/scalafmt/issues/263",
+  "id": 155530525,
+  "number": 263,
+  "title": "Assignment newline penalties",
+  "user": {
+    "login": "sjrd",
+    "id": 535934,
+    "avatar_url": "https://avatars.githubusercontent.com/u/535934?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sjrd",
+    "html_url": "https://github.com/sjrd",
+    "followers_url": "https://api.github.com/users/sjrd/followers",
+    "following_url": "https://api.github.com/users/sjrd/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sjrd/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sjrd/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sjrd/subscriptions",
+    "organizations_url": "https://api.github.com/users/sjrd/orgs",
+    "repos_url": "https://api.github.com/users/sjrd/repos",
+    "events_url": "https://api.github.com/users/sjrd/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sjrd/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": [
+
+  ],
+  "created_at": "2016-05-18 15:23:51 UTC",
+  "updated_at": "2016-05-18 15:23:51 UTC",
+  "closed_at": null,
+  "body": "Original:\r\n```scala\r\n   private object Cache {\r\n-    val safeHasOwnProperty =\r\n-      Dynamic.global.Object.prototype.hasOwnProperty\r\n-        .asInstanceOf[ThisFunction1[Dictionary[_], String, Boolean]]\r\n+    val safeHasOwnProperty = Dynamic.global.Object.prototype.hasOwnProperty\r\n+      .asInstanceOf[ThisFunction1[Dictionary[_], String, Boolean]]\r\n   }\r\n```\r\n"
+}
