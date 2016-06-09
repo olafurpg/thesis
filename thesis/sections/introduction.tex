@@ -2,9 +2,6 @@
 \section{Introduction} % (fold)
 \label{sec:Introduction}
 \lstset{style=scala}
-The main motivation of this study is to bring scalafmt, a new Scala code formatter, to the Scala community.
-The goal is to capture many popular coding styles so that a wide part of the Scala community can enjoy the benefits that come with automatic code formatting.
-
 Without code formatters, software developers are responsible for manipulating all syntactic trivia in their programs.
 What is syntactic trivia?
 Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:formatted1}.
@@ -18,22 +15,19 @@ Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:
 \end{minipage}
 
 Both snippets represent the same program.
-The only difference lies in their syntactic trivia, that is where spaces and line breaks are used.
-% The snippet in listing~\ref{lst:formatted1} is result of running \scalafmt{} on listing~\ref{lst:unformatted} with a constrait of fitting maximum 35 characters on each line.
+The only difference lies in where the programmer has chosen to break lines.
+Characters that don't affect the execution of the program --- such as spaces and line breaks --- are syntactic trivia.
 Although syntactic trivia does not alter the execution of the program, listing~\ref{lst:formatted1} is arguably easier to read, understand and maintain for the software developer.
 The promise of code formatters is to automatically convert any program that may contain style issues, such as in listing~\ref{lst:unformatted}, into a readable and consistent looking program, such as in listing~\ref{lst:formatted1}.
 Code formatting brings several benefits to software development.
-% Without a code formatters, the software developer is left to come up with the layout she prefers the most.
-% With a code formatter, the choice is 
-% In this example, good code formatting offers great value to the software developer.
 
-Code formatting enables large-scale refactoring.
+Code formatting enables automated large-scale refactoring.
 Google used ClangFormat\autocite{jasper_clangformat_2013}, a code formatter, to migrate legacy C++ code to the modern C++11 standard\autocite{wright_large-scale_2013}.
 ClangFormat was used to ensure that the refactored code adhered to Google's strict C++ coding style\autocite{_google_????}.
 Similar migrations can be expected in the near future for the Scala community once new dialects, such as Dotty\autocite{rompf_f_2015}, gain popularity.
 
 Code formatting is valuable in collaborative coding environments.
-The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} --- which each Scala.js contributor is expected to know by heart --- is defined at a whooping 2.600 word count.
+The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} --- which each Scala.js contributor is expected to know by heart --- is defined at a whopping 2.600 word count.
 Each contributed patch is manually verified against the coding style by the project maintainers.
 This adds a burden on both contributors and maintainers.
 Several prominent Scala community members have raised this issue.
@@ -44,17 +38,12 @@ Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style s
 With code formatters, software developers are not burdened by syntactic trivia and can instead direct their full attention to writing correct, maintainable and fast code.
 
 \subsection{Contributions}
-The main contribution presented in this thesis are the following:
+The main contributions presented in this thesis are the following:
 \begin{itemize}
-  \item scalafmt, a code formatter for the Scala programming language.
-    At the time of this writing, scalafmt has been installed over 6.000 times in a period of 3 months, adopted by several open source libraries and attracted a vibrant community of external contributors.
-    For details on how to install and use scalafmt, refer to the scalafmt online documentation\autocite{geirsson_scalafmt_2016}.
-
-  \item algorithms and data structures to implement line wrapping with a maximum column-width limit --- the most challenging part of code formatting.
+  \item algorithms and data structures to implement line wrapping with a maximum column-width limit --- in our experience, the most challenging part of developing scalafmt --- as well as configurable vertical alignment.
     This work is presented in section~\ref{sec:algorithms}.
-  \item tools to develop and test code formatters.
+  \item tools to develop and test the presented algorithms.
     This work is presented in section~\ref{sec:tooling}.
+  \item practical validation of developed algorithms and methods with scalafmt, a code formatter for the Scala programming language.
+    The empirical results of this validation are presented in section~\ref{sec:evaluation}.
 \end{itemize}
-The scalafmt formatter itself may only be of direct interest to the Scala community.
-However, we hope that our experience from developing scalafmt --- presented in this thesis --- can be help to code formatter developers working with other programming languages.
-
