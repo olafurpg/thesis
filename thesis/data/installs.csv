@@ -1,9 +1,9 @@
-Channel                   ,Version , Installations
-Jetbrain plugin repository,All     , 3.273          
-                          ,v0.2.5  , 847            
-Maven Central             ,All     , 2.657          
-                          ,v0.2.5  , 788            
-Github                    ,All     , 929            
-                          ,v0.2.5  , 102            
-hline,Sum                 ,All     , 6.859          
-                          ,v0.2.5  , 1.737          
+Channel         ,Version , Installations
+IntelliJ        ,v0.2.5  , 847            
+                ,All     , 3.273
+Maven           ,v0.2.5  , 788            
+                ,All     , 2.657          
+Github          ,v0.2.5  , 102            
+                ,All     , 929            
+hline,Sum       ,v0.2.5  , 1.737          
+                ,All     , 6.859          

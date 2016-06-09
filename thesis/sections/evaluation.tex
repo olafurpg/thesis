@@ -23,8 +23,8 @@ The whole sample contains over 1.2 million lines of code --- orders of magnitude
 Table~\ref{tab:macro_sample} shows the distribution of file sizes.
 \begin{table}
   \centering
-  \input{target/file_sizes.tex}
   \caption{Percentiles of lines of code per file in macro benchmark.}~\label{tab:macro_sample}
+  \input{target/file_sizes.tex}
 \end{table}
 For example, 25th percentile of files have 16 lines of code.
 Observe that over 90 percent of all files are rather small, or under 300 lines of code.
@@ -36,8 +36,8 @@ The macro benchmark is multi-threaded and takes advantage of all cores on the un
 Table~\ref{tab:macro} shows the results from the macro benchmark.
 \begin{table}
   \centering
-  \input{target/macro.tex}
   \caption{Results from macro benchmark.}\label{tab:macro}
+  \input{target/macro.tex}
 \end{table}
 Scalafmt is much slower, which may not be surprising considering since scalafmt's primary goal has always been to produce appealing output.
 Scalafmt may try thousands of different formatting layouts to produce an optimal formatting output.
@@ -61,8 +61,8 @@ The micro benchmark is single threaded.
 Table~\ref{tab:micro} shows the results from the micro benchmark.
 \begin{table}
   \centering
-  \input{target/micro.tex}
   \caption{Results from micro benchmark.}\label{tab:micro}
+  \input{target/micro.tex}
 \end{table}
 No surprise, scalafmt is a slower than Scalariform again.
 In fact, scalafmt seems a lot slower in this benchmark compared to the macro benchmark.
@@ -84,22 +84,28 @@ As we'll discuss in the following section, our users seem to agree.
 Scalafmt has received quite some attention since its release in early March, three months ago.
 In this section we present the statistics we believe demonstrate that scalafmt is --- despite its young age --- already proving itself useful for the Scala community.
 
-\begin{itemize}
-  \item Scalafmt has been installed over 6.500 times.
-    Table~\ref{tab:installs} shows the installation numbers for each official distribution channel.
-    \begin{table}
-      \centering
-      \input{target/installs.tex}
-      \caption{Download numbers for scalafmt as of June 9th 2016.}\label{tab:installs}
-    \end{table}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.4\textwidth,angle=-90]{target/month.eps}
-      \caption{Download numbers for scalafmt as of June 9th 2016.}\label{tab:installs}
-    \end{figure}
-    Observe that v0.2.5 was released 22 days ago.
-    Also, consider that those
-\end{itemize}
+\subsubsection{Installations}
+As of June 9th 2016, Scalafmt has been installed over 6.500 times.
+  Table~\ref{tab:installs} shows the installation numbers for each official distribution channel.
+  \begin{figure}
+    \CenterFloatBoxes
+    \begin{floatrow}
+      \ffigbox
+      {\includegraphics[width=0.4\textwidth,angle=-90]{target/month.eps}}
+      {\caption{Installations by month by channel.}\label{fig:installs}}
+      \killfloatstyle
+      \ttabbox{\input{target/installs.tex} }{
+        \caption{Download numbers for scalafmt as of June 9th 2016.}\label{tab:installs}}
+    \end{floatrow}
+  \end{figure}
+IntelliJ is the Jetbrains plugin repository\footnote{
+  See \url{https://plugins.jetbrains.com/plugin/8236?pr=}
+}.
+Observe that data is not available for how many users built scalafmt from source.
+The numbers represent absolute download numbers, not unique users.
+Figure~\ref{fig:installs} shows the growth in installations by month.
+Observe that v0.2.5 was released 22 days ago.
+Also, consider that those
 
 
 

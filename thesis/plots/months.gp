@@ -2,7 +2,7 @@
 #
 # Stacked histograms
 #
-set terminal postscript enhanced color size 6cm,4cm font 'Verdana,8'
+set terminal postscript enhanced color size 5cm,4cm font 'Verdana,9'
 set output "target/month.eps"
 
 
