@@ -13,18 +13,17 @@ The benchmarks are run on a Macbook Pro (Retina, 15-inch, Mid 2014) laptop with 
 The laptop has 16 GB 1600 MHz DDR3 memory.
 The operating system is OS X El Capitan 10.11.5.
 We run the benchmarks from the scalafmt commit id \href{https://github.com/olafurpg/scalafmt/tree/aff5e794dae4787b08243f8abb87a3ca4d907e40}{aff5e794} compiled against Scala 2.11.7, running on JVM version 8, update 91.
-All benchmarks are run with the OpenJDK Java Microbenchmark Harness (JMH)\autocite{OpenJ38:online}.
-Benchmarking on the JVM is notoriously hard, JMH is designed to take into account a variety of parameters that affect performance on the JVM to obtain accurate measurements.
+For accurate measurements, all benchmarks are run with the OpenJDK Java Microbenchmark Harness (JMH)\autocite{OpenJ38:online}.
+JMH takes into account a variety of parameters that affect performance on the JVM.
 The sbt-jmh\autocite{ktoso84:online} plugin makes it easy to integrate JMH with a Scala project.
 
 \subsubsection{Macro benchmark}
 The macro benchmarks is designed to get insight on how scalafmt performs in a continuous integration setup.
-We format the entire Scala.js codebase.
-The codebase contains ??? source files with combined ??? lines of code.
-We believe the Scala.js codebase strikes a fine balance between size and X.
+For example, it is common to assert before code review that all source files are properly formatted.
+For this benchmark we format the entire Scala.js codebase.
+The codebase contains 915 source files and over 106 thousand lines of code, excluding blank lines and comments.
 For accurate measurements, we run five iterations of the macro benchmark.
 We compare the running time with Scalariform.
-The macro benchmark is multi-threaded and takes advantage of all cores on the underlying hardware.
 
 Table~\ref{tab:macro} shows the results from the macro benchmark.
 \begin{table}
@@ -32,24 +31,36 @@ Table~\ref{tab:macro} shows the results from the macro benchmark.
   \caption{Results from macro benchmark.}\label{tab:macro}
   \input{target/macro.tex}
 \end{table}
-Scalafmt is much slower, which may not be surprising considering since scalafmt's primary goal has always been to produce appealing output.
-Scalafmt may try thousands of different formatting layouts to produce an optimal formatting output.
-Scalariform's formatting algorithm is linear.
-Still, we are quite content with the performance of scalafmt.
-This benchmark reveals that scalafmt can format 12.000 lines of code per second.
+Scalafmt is almost 6x slower than Scalariform.
+Why is the performance gap so big?
+Is this gap acceptable for continuous integration setups?
 
+We believe two factors contribute to the fact that scalafmt is 6x slower than Scalariform.
+Firstly, scalafmt's formatting algorithm is more complex.
+Scalafmt may try thousands of different formatting layouts to find an optimal formatting output.
+In contrast, Scalariform's formatting algorithm is linear.
+Secondly, scalafmt's performance is tied with scala.meta, which is still a young library with opportunities to become better optimized.
+For example, profiling scalafmt reveals that 30\% of the formatting time is dedicated to a pre-processing step --- unrelated to the best-first search --- that could be accomplished with minimal overhead during parsing inside scala.meta.
+In addition, preliminary results indicate that scalafmt may speed up yet another 30\% by upgrading to the latest experimental release of scala.meta\footnote{
+scala.meta has gone through several difficult non-source-compatible upgrades during the development of scalafmt.}.
+
+We believe the current performance is acceptable for continuous integration setups.
+A typical diff in a code review touches only a few source files, and definitely far from 106 thousand lines of code as we test in this macro benchmark.
+Moreover, if the build server has multiple CPU cores the performance is less of an issue.
+However, we admit the current performance is far from excellent.
+We have reason to believe there are plenty of opportunities to improve scalafmt's performance.
 
 \subsubsection{Micro benchmark}
 The micro benchmark is designed to get insight into how scalafmt performs in an interactive software developer workflow.
 For example, it is common to configure a text editor to format source code on every save.
-First, we find out how many lines of code are typical in a source file.
+Before running the benchmark, we find out how many lines of code are found in a typical source file.
 
 We performed a small study to learn the size of a typical source file.
-We collected a sample of 3.2 million lines of code.
+We collected a sample of 3.2 million lines of code from 33 open source Scala projects.
 Table~\ref{tab:macro_sample} shows the distribution of file sizes in our sample.
 \begin{table}
   \centering
-  \caption{Percentiles of lines of code per file in macro benchmark.}~\label{tab:macro_sample}
+  \caption{Percentiles of lines of code per file in micro benchmark.}~\label{tab:macro_sample}
   \input{target/file_sizes.tex}
 \end{table}
 For example, 25th percentile of files have 16 lines of code.
@@ -68,15 +79,8 @@ Table~\ref{tab:micro} shows the results from the micro benchmark.
   \input{target/micro.tex}
 \end{table}
 No surprise, scalafmt is a slower than Scalariform again.
-In fact, scalafmt seems a lot slower in this benchmark compared to the macro benchmark.
-Why is that?
-Moreover, is this performance gap acceptable for interactive software development.
-
-To answer the first question, we believe scalafmt performs better in the macro benchmark --- relative to Scalariform --- because macro benchmark is multi-threaded while the micro benchmark is single threaded.
-As the measurements show, scalafmt operations are slower.
-Hence, the scheduler in the macro benchmark is presumably more efficient at allocating CPU wall time to the scalafmt test runs compared to Scalariform.
-
-Secondly, we believe this performance is usable for most use-cases, but needs improvements to be acceptable for settings such as reformat on save/compile.
+Is this performance gap acceptable for interactive software development?
+We believe this performance is usable for occasional code formatting, but needs improvements to be acceptable for settings such as reformat on save/compile.
 We currently don't recommend users to configure text editors to run scalafmt no every file save.
 Amazon famously showed that sales decreased by 1 percent for every 100ms increase in page load time\autocite{kohavi2007online}.
 We believe similar principles apply to scalafmt, every millisecond counts in the user experience.
