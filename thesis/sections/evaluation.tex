@@ -53,7 +53,7 @@ We have reason to believe there are plenty of opportunities to improve scalafmt'
 \subsubsection{Micro benchmark}
 The micro benchmark is designed to get insight into how scalafmt performs in an interactive software developer workflow.
 For example, it is common to configure a text editor to format source code on every save.
-Before running the benchmark, we find out how many lines of code are found in a typical source file.
+Before we run the benchmark, we must find out how many lines of code a typical source file contains.
 
 We performed a small study to learn the size of a typical source file.
 We collected a sample of 3.2 million lines of code from 33 open source Scala projects.
@@ -63,11 +63,11 @@ Table~\ref{tab:macro_sample} shows the distribution of file sizes in our sample.
   \caption{Percentiles of lines of code per file in micro benchmark.}~\label{tab:macro_sample}
   \input{target/file_sizes.tex}
 \end{table}
-For example, 25th percentile of files have 16 lines of code.
-Observe that over 90 percent of all files are rather small, or under 300 lines of code.
-Less than one percent of all files contain over 1.000 lines of code.
+Observe that over 90 percent of all files are rather small, or under 250 lines of code.
+Only one percent of files contain more than 1.000 lines of code.
+Still, we assume developers spend quite a lot of time editing such large files.
 
-Using the results from our small study, we choose to run the micro benchmark on select four selected files of varying sizes: small ($\sim$ 50 LOC), medium ($\sim$300 LOC), large ($\sim$1.000 LOC) and extra large ($\sim$4.500 LOC).
+Using the results from our small study, we choose to run the micro benchmark on four files of varying sizes: small ($\sim$ 50 LOC), medium ($\sim$300 LOC), large ($\sim$1.000 LOC) and extra large ($\sim$4.500 LOC).
 To minimize error margins, we run 10 warmup iterations followed by 10 measured iterations.
 As in the macro benchmark, we compare the running time with Scalariform.
 The micro benchmark is single threaded.
@@ -78,13 +78,13 @@ Table~\ref{tab:micro} shows the results from the micro benchmark.
   \caption{Results from micro benchmark.}\label{tab:micro}
   \input{target/micro.tex}
 \end{table}
-No surprise, scalafmt is a slower than Scalariform again.
+No surprise, scalafmt is again slower than Scalariform.
 Is this performance gap acceptable for interactive software development?
-We believe this performance is usable for occasional code formatting, but needs improvements to be acceptable for settings such as reformat on save/compile.
-We currently don't recommend users to configure text editors to run scalafmt no every file save.
+
+We believe this performance is usable for occasional code formatting, but not suitable for a workflow that formats on every save/compilation.
 Amazon famously showed that sales decreased by 1 percent for every 100ms increase in page load time\autocite{kohavi2007online}.
-We believe similar principles apply to scalafmt, every millisecond counts in the user experience.
-Still, we believe with the current performance scalafmt delivers enough benefits to be useful.
+We believe similar principles apply to scalafmt, every additional millisecond decreases the utility of scalafmt.
+Still, we believe with scalafmt's formatting output is appealing enough to outweigh the slow performance.
 As we'll discuss in the following section, our users seem to agree.
 
 \subsection{Adoption}\label{sec:adoption}
@@ -130,6 +130,13 @@ We present interesting data points from a variety of disparate data sources:
   \item 34 unique users, excluding the author, have opened a total of 138 tickets on the scalafmt issue tracker.
   \item The scalafmt Gitter\footnote{See \url{https://gitter.im/olafurpg/scalafmt}} instant messaging channel has 47 members. The channel is used to informally discuss bugs, new features and more.
   \item The user documentation website\footnote{See \url{http://scalafmt.org}} has been visited 5.422 times with an average visit duration of 98 seconds. That makes 138 hours of combined visit time.
+  \item Several popular open-source libraries have reformatted their codebases with scalafmt:
+    \begin{itemize}
+      \item scala-native: \url{https://github.com/scala-native/scala-native},
+      \item fetch: \url{https://github.com/47deg/fetch},
+      \item psp-std: \url{https://github.com/paulp/psp-std},
+      \item scala-js-dom: \url{https://github.com/scala-js/scala-js-dom}.
+    \end{itemize}
 \end{itemize}
 
 
