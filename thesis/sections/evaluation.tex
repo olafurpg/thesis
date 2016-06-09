@@ -42,10 +42,11 @@ This benchmark reveals that scalafmt can format 12.000 lines of code per second.
 \subsubsection{Micro benchmark}
 The micro benchmark is designed to get insight into how scalafmt performs in an interactive software developer workflow.
 For example, it is common to configure a text editor to format source code on every save.
-We performed a small study to learn the size of a typical source file.
-To get a representative image of what source files developers use
+First, we find out how many lines of code are typical in a source file.
 
-Table~\ref{tab:macro_sample} shows the distribution of file sizes.
+We performed a small study to learn the size of a typical source file.
+We collected a sample of 3.2 million lines of code.
+Table~\ref{tab:macro_sample} shows the distribution of file sizes in our sample.
 \begin{table}
   \centering
   \caption{Percentiles of lines of code per file in macro benchmark.}~\label{tab:macro_sample}
@@ -54,7 +55,8 @@ Table~\ref{tab:macro_sample} shows the distribution of file sizes.
 For example, 25th percentile of files have 16 lines of code.
 Observe that over 90 percent of all files are rather small, or under 300 lines of code.
 Less than one percent of all files contain over 1.000 lines of code.
-We select four files of varying sizes: small ($\sim$ 50 LOC), medium ($\sim$300 LOC), large ($\sim$1.000 LOC) and extra large ($\sim$4.500 LOC).
+
+Using the results from our small study, we choose to run the micro benchmark on select four selected files of varying sizes: small ($\sim$ 50 LOC), medium ($\sim$300 LOC), large ($\sim$1.000 LOC) and extra large ($\sim$4.500 LOC).
 To minimize error margins, we run 10 warmup iterations followed by 10 measured iterations.
 As in the macro benchmark, we compare the running time with Scalariform.
 The micro benchmark is single threaded.
