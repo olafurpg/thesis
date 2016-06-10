@@ -20,7 +20,7 @@ A token highlighted by the lightest shade of red was visited twice while a token
 This figure demonstrates several of the optimizations discussed in section~\ref{sec:optimizations}.
 Firstly, thanks to the \texttt{dequeueOnNewStatements} optimization, the background is plain white up to the \texttt{Seq}.
 The \texttt{Seq} gets visited twice, once when there's a space after the \texttt{=} and once when there's a newline.
-Secondly, due to the OptimalToken optimization, when the search gets into trouble it backtracks to the tuple \texttt{(0, 0)} instead of the \texttt{Seq[((Int, Int), Matri)]} type signature.
+Secondly, due to the OptimalToken optimization, when the search gets into trouble it backtracks to the tuple \texttt{(0, 0)} instead of the \texttt{Seq[((Int, Int), Matrix)]} type signature.
 Finally, because of the strategically placed comment at the end that exceeds the column limit, the search space grows out of bounds on the fourth argument triggering the \texttt{escapeInPathologicalCases} best-effort fallback.
 Without heatmaps, it would be a much greater challenge to get these insights.
 However, these heatmaps gave us limited insights in how our changes affected the search space in the best-first search.
@@ -70,10 +70,10 @@ For example, in one case, scalafmt inserted a newline after the keyword \texttt{
 Moreover, this property highlighted the danger of enabling the \texttt{stripMargin} alignment.
 Since the \texttt{stripMargin} modified the contents of regular and interpolated string literals,
 the AST of the formatted output changed.
-A sign that \texttt{stripMargin} should be disabled by default.
-Finally, by adhereing to AST integrity, we confine the scope of what scalafmt can do.
-This makes it easy for us to reject feature requests such as sorting imports.
-Such refactoring can be left to a separate tool, in our humble opinion.
+% TODO
+% A sign that \texttt{stripMargin} should be disabled by default.
+% Finally, by adhering to AST integrity, we confine the scope of what scalafmt can do.
+% Such refactoring can be left to a separate tool, in our humble opinion.
 % For example, if scalafmt would sort imports it would change the AST.
 % In Scala, imports can be relative and, hence, sorting them alphabetically can alter semantics.
 

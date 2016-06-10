@@ -29,7 +29,7 @@ In a nutshell, the job of the LineWrapper is to convert each FormatToken into a 
 
 \subsubsection{Decision}\label{sec:decision}
 A Decision is a pair of a FormatToken and a sequence of Splits.
-Listing~\ref{lst:decision} shows the Definition of decision.
+Listing~\ref{lst:decision} shows the definition of Decision.
 \lstinputlisting[label={lst:decision}, caption=Decision definition]{code/decision.scala}
 The \emph{splits} member represents the possible splits that the LineWrapper can choose for \emph{formatToken}.
 
@@ -149,7 +149,7 @@ The best-first\autocite{pearl_heuristics:_1984} algorithm is an excellent fit fo
 Best-first search is a graph search algorithm to efficiently traverse a directed weighted graph.
 The objective is reach the final token and once we reach there, we terminate the search because we're guaranteed no other solution is better.
 Algorithm~\ref{alg:bfsv1} shows a first attempt\footnote{
-  Unfortunately, we make heave use of mutation since graph search algorithms typically don't lend themselves well to functional programming principles.
+  We make heavy use of mutation since graph search algorithms typically don't lend themselves well to functional programming principles.
 } to adapt a best-first search algorithm to the data structures and terminologies introduced so far.
 \begin{algorithm}
   \caption{Scalafmt best-first search, first approach}\label{alg:bfsv1}
@@ -163,10 +163,12 @@ Absolutely not, this implementation contains several serious performance issues.
 Algorithm~\ref{alg:bfsv1} is exponential in the worst case.
 For example, listing~\ref{lst:exponential} shows a tiny input that triggers the search to explore over 8 million states.
 \lstinputlisting[label={lst:exponential}, caption=Exponential running time]{code/exponential.scala}
-Even if we could visit 1 state per microsecond --- reality is closer to 10 states/microsecond ---  the search will take almost 1 second to complete.
+Even if we could visit 1 state per microsecond\footnote{
+  Benchmarks reveal the best-first search visits on average one state per 10 microseconds
+} the search will take almost 1 second to complete.
 This is unacceptable performance to format only 2 lines of code.
 Of course, we could special-case long comments, but that would only provide us a temporary solution.
-Instead, like with ClangFormat and dartfmt, we must apply several domain specific optimizations.
+Instead, like with ClangFormat and dartfmt, we apply several domain specific optimizations.
 In the following section, we discuss the optimizations that have shown to work well for scalafmt.
 
 \subsection{Optimizations}\label{sec:optimizations}
@@ -270,10 +272,13 @@ A state progresses slowly if it visits a token after other equally or less expen
 The insight is that if two equally expensive states visit the same token, the first state to visits that token typically produces a better formatting layout.
 
 By eliminating slow states, we obtain a better formatting output in addition to minimizing the search space.
-Listing~\ref{lst:slow} shows two equally expensive formatting solutions where one solution is fast and other is slow.
+Listing~\ref{lst:slow} shows two formatting solutions that the Router has labelled as equally expensive.
+However, the fast solution is explored first by the best-first search and, hence, we call it \emph{faster}.
 \lstinputlisting[label={lst:slow}, caption=Slow states]{code/slow.scala}
-Of course, the line break after \texttt{g +} could be more expensive than the line break after \texttt{c +}.
-Instead, the Router is free to assign an identical cost to both line breaks and let \texttt{pruneSlowStates} take care of eliminating the slow state.
+The \texttt{pruneSlowStates} ensures that fast solutions are prioritized over slow solutions.
+Of course, the Router could have assigned different costs to the line break after \texttt{g +} and \texttt{c +}.
+However, our experience was that such as solution would introduce unnecessary complexity in the design of the Router.
+Instead, the \texttt{pruneSlowStates} is able to take care of eliminating the slow state.
 
 The \texttt{pruneSlowStates} is implemented as a extension to algorithm~\ref{alg:optimal}.
 Algorithm~\ref{alg:slow} shows a rough sketch of how the extension works.
@@ -351,8 +356,8 @@ In the FormatWriter, scalafmt rewrites string literals to automatically align th
 This setting is disabled by default since scalafmt requires semantic information to confidently determine if the \texttt{stripMargin} invocation calls the standard library method or a user-defined method.
 
 \subsubsection{Vertical alignment}
-It turns out that vertical alignment is incredibly popular in the Scala programming community.
-When lines are vertically aligned when similar operators from a sequence of lines align together.
+It turns out that vertical alignmyent is incredibly popular in the Scala programming community.
+Vertical alignment is a formatting convention where similar tokens from different lines align together on the same column.
 Listing~\ref{lst:align} shows an example of vertical alignment.
 \lstinputlisting[label={lst:align}, caption=Vertical alignment example]{code/align.scala}
 The lack of vertical alignment in the initial release of scalafmt was a hindrance for user-adoption.
@@ -361,17 +366,24 @@ Configurable vertical alignment was added to the 0.2 release.
 Vertical alignment is implemented in the FormatWriter as an extension to the reification of Splits.
 Instead of reifying a Space into a single space literal,
 the FormatWriter builds a \texttt{tokenAligns: Map[Split, Int]} which specifies the number of additional spaces to add for each Space.
-Listing~\ref{alg:align} shows a simplification of how the actual algorithm\footnote{
-  The actual implementation is 130 lines of code including helper methods, see
+Algorithm~\ref{alg:align} shows a simplification of how the actual algorithm\footnote{
+  The actual implementation is 130 lines of code, including helper methods. See
 \href{https://git.io/voIG4}{https://git.io/voIG4}}
 constructs the \texttt{tokenAligns} map.
 \begin{algorithm}
   \caption{Vertical alignment, simplified algorithm}\label{alg:align}
   \lstinputlisting[nolol]{code/align-alg.scala}
 \end{algorithm}
-In a nutshell, the algorithm builds blocks of lines that can be vertical aligned.
+The running time of this algorithm is linear to the number of tokens.
+In a nutshell, the algorithm builds blocks of lines that can be vertically aligned.
 Blocks are separated by blank lines or mismatching candidates in subsequent lines.
-As demonstrated in listing~\ref{lst:align}, key features of this algorithm include that users can configure arbitrary symbols to align by and lines can contain multiple vertically aligned columns.
+As demonstrated in listing~\ref{lst:align}, key features of this algorithm include that users can configure arbitrary symbols to align by and lines can contain multiple columns of vertically aligned tokens.
 This algorithm has two main limitations.
 Firstly, all lines in a block must have an equal number of matching columns.
-Secondly, the algorithm can't infer vertical alignment forcing the user to explicitly configure which tokens should align.
+Secondly, the algorithm does not infer vertical alignment forcing the user to explicitly configure which tokens should align.
+
+\subsubsection{Conclusion}
+This section introduced data structures and algorithms to implement line wrapping and vertical alignment.
+Similar to dartfmt and clang-format, we model line wrapping like a graph search problem.
+Tokens are nodes and each potential split forms a weighted edge to the next token, where the associated cost represents how appealing formatting layout is yielded by the split.
+Our algorithm

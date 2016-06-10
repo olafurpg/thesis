@@ -6,7 +6,7 @@ We do not measure how well software developers perceive scalafmt formatted code.
 Instead, we will focus on \emph{performance benchmarks} and \emph{user adoption}.
 
 \subsection{Performance benchmarks}
-In this chapter, we describe our test methodology, key metrics and the performance results.
+This chapter describes the 
 
 \subsubsection{Setup}
 The benchmarks are run on a Macbook Pro (Retina, 15-inch, Mid 2014) laptop with a quad-core 2.5 GHz Intel Core i7 processor, 256 KB L2 cache per core and 6 MB shared L3 cache.
@@ -18,7 +18,7 @@ JMH takes into account a variety of parameters that affect performance on the JV
 The sbt-jmh\autocite{ktoso84:online} plugin makes it easy to integrate JMH with a Scala project.
 
 \subsubsection{Macro benchmark}
-The macro benchmarks is designed to get insight on how scalafmt performs in a continuous integration setup.
+The macro benchmark is designed to get insight on how scalafmt performs in a continuous integration setup.
 For example, it is common to assert before code review that all source files are properly formatted.
 For this benchmark we format the entire Scala.js codebase.
 The codebase contains 915 source files and over 106 thousand lines of code, excluding blank lines and comments.
@@ -118,6 +118,7 @@ Figure~\ref{fig:installs} shows the growth in installations by month.
 Observe that growth has doubled with each month.
 Github represented proportionally many installs in the first month but only represents a small fraction of installation in May.
 Maven installations quadrupled in May, taking the lead from the IntelliJ plugin in April.
+We believe this increase in Maven installations is caused by projects installing the scalafmt SBT plugin for every test run in a continuous integration setup.
 
 
 \subsubsection{Other}

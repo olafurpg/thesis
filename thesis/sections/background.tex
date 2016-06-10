@@ -111,7 +111,7 @@ This feature plays nicely with exhaustivity checking in the Scala pattern matche
 % Library authors could take advantage of this new functionality to implement more advanced features in their libraries.
 % However, the Scala compiler metaprogramming facilities exposed compiler internals to its users.
 
-\subsection{Code formatters}
+\subsection{Code formatting}
 %
 % In the literature, the term \emph{pretty-printer} is more commonly used than code formatter.
 % This thesis uses code formatter the terms are used interchangeably and the author does not distinguish between the two.} 
@@ -132,7 +132,7 @@ Until that time, writers had been responsible for manually providing carriage re
 The motivation was to ``save operating labor and reduce human error''.
 Once type-setting became more commonplace, the methods for breaking lines of text got more sophisticated.
 
-Knuth and Plass developed in 1981 a famous line breaking algorithm\autocite{knuth_breaking_1981} for \LaTeX{}, a popular typesetting program among scientific academic circles.
+Knuth and Plass developed in 1981 a famous line breaking algorithm\autocite{knuth_breaking_1981} for \LaTeX{}, a popular typesetting program among scientific circles.
 \LaTeX{} is the program that was used to generate this very document.
 The line breaking problem was the same as in the 60s: how to optimally break a paragraph of text into lines so that the right margin is minimized.
 The primitive approach is to greedily fit as many words on a line as possible.
@@ -150,7 +150,7 @@ With hardware from 1971, SOAP could format 600 lines of code per minute.
 
 \subsubsection{LISP}\label{sec:lisp}
 In 1973, Goldstein\autocite{goldstein_pretty-printing_1973} explored code formatting algorithms for LISP\autocite{mccarthy_recursive_1960} programs.
-LISP is a family of programming languages and is famous for it's parenthesized prefix notation.
+LISP is a family of programming languages and is famous for its parenthesized prefix notation.
 Listing~\ref{lst:lisp} shows a program in LISP to calculate factorial numbers.
 \lstinputlisting[label={lst:lisp}, float, caption=A LISP program]{code/lisp.lisp}
 The simple syntax and extensive use of parentheses as delimiters makes LISP programs an excellent ground to study code formatters.
@@ -167,7 +167,7 @@ Bill Gosper used the re-predictor algorithm to implement GRINDEF\autocite{_bill_
 Goldstein's contributions extend beyond formatting algorithms.
 Firstly, in his paper he studies how to format comments.
 Secondly, he presents several different formatting layouts which can be configured by the users.
-Both relevant concerns for modern code formatters.
+Both are relevant concerns for modern code formatters.
 
 \subsubsection{Language agnostic}\label{sec:agnostic}
 Derek C. Oppen pioneered the work on language agnostic code formatting in 1980\autocite{oppen_prettyprinting_1980}.
@@ -175,9 +175,8 @@ A language agnostic formatting algorithm can be used for a variety of programmin
 tied to a single language.
 Users provide a preprocessor to integrate a particular programming language with the algorithm.
 Oppen's algorithm runs in $O(n)$ time and uses $O(m)$ memory for an input program of length $n$ and maximum column width $m$.
-Besides impressive performance results, Oppen claims that a key feature of the algorithms is its streaming nature.
-The algorithm prints formatted lines as soon as they are input instead of waiting until the entire input stream has been read.
-A feature which is typically not a concern for modern code formatters.
+Besides impressive performance results, Oppen claims that a key feature of the algorithms is its streaming nature; the algorithm prints formatted lines as soon as they are input instead of waiting until the entire input stream has been read.
+This feature is typically not a concern for modern code formatters.
 Moreover, Oppen's algorithm shares a worrying limitation with SOAP: it cannot handle the case when the line length is insufficiently large.
 
 Mark van der Brand presented a library in 1996 that generates a formatter given a context-free grammar\autocite{van_den_brand_generation_1996}.
@@ -190,9 +189,9 @@ Unlike Oppen's algorithm, Brand does not consider line length limits in his algo
 
 John Hughes extended on Oppen's work on language agnostic formatting in term of functional programming techniques\autocite{hughes_design_1995}.
 Hughes presented a design of a \emph{pretty-printing} library that leverages combinators with algebraic properties to express formatting layouts.
-Hughes claims that such a formal approach was invaluable when designing the pretty-printing library, which has seen wise use, including in the Glasgow Haskell compiler.
+Hughes claims that such a formal approach was invaluable when designing the pretty-printing library, which has seen wide use, including in the Glasgow Haskell compiler.
 Wadler\autocite{wadler_prettier_2003} and Chitil\autocite{swierstra_linear_2009} extend on Hughes's and Oppen's work in term of performance and programming techniques.
-However, this branch of work has been limited to printing data structures and not how to format format existing source code.
+However, this branch of work has been limited to printing data structures and not how to format existing source code.
 
 \subsubsection{gofmt}
 \gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
@@ -235,8 +234,7 @@ Scalariform has no setting to convert formatted code like in listing~\ref{lst:no
 
 \subsubsection{clang-format}
 Daniel Jasper triggered a new trend in optimization based coded formatters with the release of \emph{ClangFormat}\autocite{jasper_clang-format_2014} in 2013.
-ClangFormat is developed at Google and can format C, C++, Java, JavaScript, Objective-C and Protobuf code.
-An impressive number of languages.
+ClangFormat is developed at Google and can format an impressive number of languages: C, C++, Java, JavaScript, Objective-C and Protobuf code.
 Figure~\ref{fig:clang_format} shows the architecture of ClangFormat.
 \begin{figure}
   \centering
@@ -260,7 +258,7 @@ The first token of an unwrapped line is the root of the graph and all paths end 
 The layouter uses Dijkstra's\autocite{dijkstra_note_1959} shortest path algorithm to find the layout that has the lowest penalty.
 To obtain good performance, the layouter uses several domain specific optimizations to minimize the search space.
 
-Despite supporting an impressive number of programming languages, ClangFormat does not leverage the language agnostic formatting techniques described section~\ref{sec:agnostic}.
+Despite supporting several programming languages, ClangFormat does not leverage the language agnostic formatting techniques described section~\ref{sec:agnostic}.
 Support for each language has been added as ad-hoc extensions to the ClangFormat parser and layouter.
 ClangFormat supports a variety of configuration options, including 6 out-of-the-box styles based on coding styles from Google, LLVM and other well-known organizations.
 
@@ -275,9 +273,9 @@ This feature makes it possible to ensure that all code follows the same style gu
 
 \subsubsection{dartfmt}
 Dartfmt\autocite{nystrom_dart_style_2014} was released in 2014 and follows the optimization based trend initiated by ClangFormat.
-Darftfmt is a code formatter for the Dart programming language, developed at Google.
+Dartfmt is a code formatter for the Dart programming language, developed at Google.
 Like ClangFormat, dartfmt has a line length setting and is opinionated.
-Bob Nystrom, the author of dartfmt, discusses the design of dartfmt in an excellent post\autocite{nystrom_hardest_2015} on his blog.
+Bob Nystrom, the author of dartfmt, discusses the design of dartfmt in a blog post\autocite{nystrom_hardest_2015}.
 In his post, Nystrom argues that the design of a code formatters is significantly complicated by a column limit setting.
 The line wrapping algorithm in dartfmt employs a \emph{best-first search}\autocite{pearl_heuristics:_1984},
 a minor variant of the shortest path search in ClangFormat.
@@ -333,15 +331,15 @@ However, our preference changes if the function name is longer as is shown in li
 
 Here, we clearly prefer the stack block in listing~\ref{lst:rfmt4}.
 Listing~\ref{lst:rfmt-example} shows how we use the 6 fundamental blocks in the \rfmt{} combinator algebra to express the choice between these two formatting layouts.
-\lstinputlisting[numbers=none, label={lst:rfmt-example}, float,
+\lstinputlisting[numbers=none, label={lst:rfmt-example},
                  caption=Formatting layout for argument lists]{code/rfmt-example.scala}
 The variable $f$ denotes the function name and $a_1, ... a_m$ denotes the argument list.
 Observe that listing~\ref{lst:rfmt-example} does not express how to find the optimal layout.
 
-To find an optimal layout, \rfmt{} employs a smart dynamic programming trick.
+To find an optimal layout, \rfmt{} employs a novel indexing scheme.
 First, it is possible enumerate all layout combinations like the re-predictor algorithm does in section~\ref{sec:lisp}.
 This leads to exponential growth which turns out to be a problem for some cases.
-Dynamic programming comes to the rescue by allowing us to reuse partial solutions.
+Dynamic programming alleviates exponential growth by allowing us to reuse partial solutions.
 Instead of re-calculating the layout cost at each (starting column, block) pair, we store the result in an associative array keyed by the starting column.
 However, it turns out that this can still be inefficient in terms of memory and speed\footnote{
   In fact, ClangFormat started with a similar approach, as explained in this\autocite{clang84:online} video recording, but then switched to Dijkstra's shortest path algorithms (which in itself is another form of dynamic programming).
