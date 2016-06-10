@@ -28,7 +28,6 @@ The popularity of Apache Spark\autocite{_apache_????-1}, a cluster computing fra
 Scala is a programming language with rich syntax and many idioms.
 The following chapters discuss in detail several prominent syntactic features and idioms of Scala.
 Most importantly, we highlight coding patterns that encourage developers to write a single large statement over of multiple small statements.
-In section~\ref{sec:algorithms}, we will discover that large statements introduce a challenge to code formatting.
 
 \subsubsection{Higher order functions}
 Higher order functions (HOFs) are a common concept in functional programming languages as well as mathematics.
@@ -47,17 +46,19 @@ Listing~\ref{lst:hof_nosugar} shows an equivalent program to listing~\ref{lst:ho
 \lstinputlisting[label={lst:hof_nosugar}, float, caption=Higher order functions expanded]{code/hof-nosugar.scala}
 Observe that the body of \texttt{twice} was expressed as a single statement in line 1 of listing~\ref{lst:hof} but as two independent statements in listing~\ref{lst:hof_nosugar}.
 
-\subsubsection{Immutability}
-Functional programming encourages stateless functions which operate on immutable data structures and objects.
-An immutable object is an object that once initialized, cannot be modified.
-Immutability offers several benefits to software development in areas including concurrency and testing.
-Listing~\ref{lst:immutable} shows an example of manipulating an immutable list.
-\lstinputlisting[label={lst:immutable}, float, caption=Manipulating immutable list]{code/immutable.scala}
-Note that each \texttt{map} and \texttt{filter} operation creates a new copy of the list with the modified contents.
-The original list remains unchanged.
-Listing~\ref{lst:mutable} show the equivalent operation using a mutable list.
-\lstinputlisting[label={lst:mutable}, float, caption=Manipulating mutable list]{code/mutable.scala}
-Observe that listing~\ref{lst:immutable} is a single statement while listing~\ref{lst:mutable} contains multiple statements.
+% \subsubsection{Blocks} TODO
+% Blocks are 
+% \subsubsection{Immutability}
+% Functional programming encourages stateless functions which operate on immutable data structures and objects.
+% An immutable object is an object that once initialized, cannot be modified.
+% Immutability offers several benefits to software development in areas including concurrency and testing.
+% Listing~\ref{lst:immutable} shows an example of manipulating an immutable list.
+% \lstinputlisting[label={lst:immutable}, float, caption=Manipulating immutable list]{code/immutable.scala}
+% Note that each \texttt{map} and \texttt{filter} operation creates a new copy of the list with the modified contents.
+% The original list remains unchanged.
+% Listing~\ref{lst:mutable} show the equivalent operation using a mutable list.
+% \lstinputlisting[label={lst:mutable}, float, caption=Manipulating mutable list]{code/mutable.scala}
+% Observe that listing~\ref{lst:immutable} is a single statement while listing~\ref{lst:mutable} contains multiple statements.
 
 \subsubsection{SBT build configuration}\label{sec:sbt}
 SBT\autocite{_sbt_????} is an interactive build tool used by many Scala projects.
@@ -71,7 +72,7 @@ Due to the nature of build configurations, argument lists to can becomes unwield
 
 \subsection{scala.meta}\label{sec:scalameta}
 Scala.meta\autocite{scala57:online} is a metaprogramming toolkit for Scala.
-Before scala.meta, the state-of-the-art metaprogramming facilities relied on the Scala compiler internals.
+Before scala.meta, most metaprogramming facilities relied on Scala compiler internals.
 This had several severe limitations such as too-eager desugaring resulting in loss of syntactic details from the original source code.
 Scala.meta was designed to overcome these limitations and offer a more robust platform to develop metaprogramming tools for Scala.
 Several key features of scala.meta have made it an invaluable companion in the development of scalafmt.
@@ -79,15 +80,14 @@ Most notably among these features are dialect agnostic syntax trees, syntax tree
 
 Scala.meta provides facilities to tokenize and parse a variety of different Scala dialects.
 One such dialect is SBT configuration files, discussed in section~\ref{sec:sbt}.
-SBT adds custom support for top-level statements in \texttt{*.sbt} files.
-An attempt to parse an SBT file with the Scala compiler parser will result in a parse error.
+SBT adds custom support for top-level statements in \texttt{*.sbt} files, a disallowed feature in regular Scala programs.
 Working around this issue requires either depending on the SBT parser or reimplementing its parsing logic.
-To add insult to injury, top-level statements must be separated by a blank line if you use an SBT version lower than 0.13.6; a restriction that was lifted in SBT 0.13.7.
+To add insult to injury, top-level statements must be separated by a blank line if you use an SBT version 0.13.6 or lower; a restriction that was lifted in SBT 0.13.7.
 Listing~\ref{lst:dialect} show how to scala.meta makes it trivial to accommodate this zoo of nuances.
 \lstinputlisting[label={lst:dialect}, float, caption=Parsing different Scala dialects with scala.meta]{code/dialect.scala}
 The result after parsing is a dialect agnostic scala.meta tree structure.
 
-The structure of scala.meta trees can be serialized to strip off all syntactic details.
+The structure of scala.meta trees can be serialized to strip off all insignificant syntactic details.
 Listing~\ref{lst:structure} shows how to serialize the tree structure of a simple hello world application.
 \lstinputlisting[label={lst:structure}, float, caption=Serializing scala.meta trees]{code/structure.scala}
 For example, observe that the comment has been stripped away.
@@ -97,7 +97,7 @@ Tree node types in scala.meta preserve absolute fidelity with the original sourc
 This means we can obtain all syntactic details from a tree node such as whether a for comprehension uses parentheses or curly braces as delimiters, whitespace positions, comments and other syntactic trivia.
 The Scala compiler is infamous for desugaring for-comprehensions into \texttt{map/withFilter/flatMap} applications during the parse phase.
 This made it impossible to implement metaprogramming tasks such as code formatting.
-High-fidelity parsing in scala.meta has been essential for scalafmt because we can't loose critical syntactic details such as whether for-comprehensions are used over \texttt{flatMap}s.
+High-fidelity parsing in scala.meta has been essential for scalafmt because we can't lose critical syntactic details such as whether for-comprehensions are used over \texttt{flatMap}s.
 
 Tokens in scala.meta are strongly typed.
 Traditional object-oriented libraries treat tokens as a single type with multiple methods such as \texttt{isComma/isFor} which returns true if a token instance is a comma or a \texttt{for} keyword.
@@ -126,7 +126,7 @@ Code formatting and pretty printing\footnote{
 In this chapter, we look at a variety of tools and algorithm that have been developed over the last 70 years.
 
 \subsubsection{Natural language}
-The science of displaying aesthetically pleasing text predates as early as 1956\autocite{harris_keyboard_1956}.
+The science of displaying aesthetically pleasing text dates back as early as 1956\autocite{harris_keyboard_1956}.
 The first efforts involved inserting carriage returns in natural language text.
 Until that time, writers had been responsible for manually providing carriage returns in their documents before sending them off for printing.
 The motivation was to ``save operating labor and reduce human error''.
