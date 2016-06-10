@@ -16,9 +16,9 @@ Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:
 
 Both snippets represent the same program.
 The only difference lies in where the programmer has chosen to break lines.
-Characters that don't affect the execution of the program --- such as spaces and line breaks --- are syntactic trivia.
-Although syntactic trivia does not alter the execution of the program, listing~\ref{lst:formatted1} is arguably easier to read, understand and maintain for the software developer.
-The promise of code formatters is to automatically convert any program that may contain style issues, such as in listing~\ref{lst:unformatted}, into a readable and consistent looking program, such as in listing~\ref{lst:formatted1}.
+Characters such as spaces and line breaks that do not affect the execution of the program are syntactic trivia.
+Although syntactic trivia has no meaning for the execution of the program, listing~\ref{lst:formatted1} is arguably easier to read, understand and maintain for the software developer.
+The promise of code formatters is to modify syntactic trivia such that a program that contains style issues, such as in listing~\ref{lst:unformatted}, turns into a readable and maintainable program, such as in listing~\ref{lst:formatted1}.
 Code formatting brings several benefits to software development.
 
 Code formatting enables automated large-scale refactoring.
@@ -35,15 +35,15 @@ ENSIME\autocite{_ensime_????} is a popular Scala interaction mode for text edito
 Sam Halliday, an ENSIME maintainer, says ``I don't have time to talk about formatting in code reviews. I want the machine to do it so I can focus on the design.''\autocite{halliday_i_2016-1}.
 Akka\autocite{_akka_????} is a popular concurrent and distributed programming library for Scala with over 300 contributors.
 Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
-With code formatters, software developers are not burdened by syntactic trivia and can instead direct their full attention to writing correct, maintainable and fast code.
+With scalafmt, we hope to relieve Scala developers from the burden of manipulating syntactic trivia so they can instead direct their full attention to writing correct, maintainable and fast code.
 
 \subsection{Contributions}
 The main contributions presented in this thesis are the following:
 \begin{itemize}
-  \item language-agnostic algorithms and data structures to implement line wrapping with a maximum column-width limit --- in our experience, the most challenging part of developing scalafmt --- as well as configurable vertical alignment.
+  \item language-agnostic algorithms and data structures to implement line wrapping with a maximum line length setting --- in our experience, the most challenging part of developing scalafmt --- as well as configurable vertical alignment.
     This work is presented in section~\ref{sec:algorithms}.
-  \item tools to develop and test the developed algorithms.
+  \item methods to optimize and test the developed algorithms.
     This work is presented in section~\ref{sec:tooling}.
-  \item practical validation of developed algorithms and methods with scalafmt, a code formatter for the Scala programming language.
+  \item practical validation of developed algorithms and methods with scalafmt.
     The empirical results of this validation are presented in section~\ref{sec:evaluation}.
 \end{itemize}
