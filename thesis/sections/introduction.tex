@@ -1,5 +1,4 @@
-
-\section{Introduction} % (fold)
+\section{Motivation} % (fold)
 \label{sec:Introduction}
 \lstset{style=scala}
 Without code formatters, software developers are responsible for manipulating all syntactic trivia in their programs.
@@ -14,17 +13,17 @@ Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:
 \lstinputlisting[label={lst:formatted1}, caption=Formatted code]{target/formatted1.scala}
 \end{minipage}
 
-Both snippets represent the same program.
+Both snippets represent the same application.
 The only difference lies in where the programmer has chosen to break lines.
 Characters such as spaces and line breaks that do not affect the execution of the program are syntactic trivia.
 Although syntactic trivia has no meaning for the execution of the program, listing~\ref{lst:formatted1} is arguably easier to read, understand and maintain for the software developer.
-The promise of code formatters is to modify syntactic trivia such that a program that contains style issues, such as in listing~\ref{lst:unformatted}, turns into a readable and maintainable program, such as in listing~\ref{lst:formatted1}.
+Code formatters promise to modify syntactic trivia such that a program that contains style issues, such as in listing~\ref{lst:unformatted}, turns into a readable and maintainable program, such as in listing~\ref{lst:formatted1}.
 Code formatting brings several benefits to software development.
 
 Code formatting enables automated large-scale refactoring.
-Google used ClangFormat\autocite{jasper_clangformat_2013}, a code formatter, to migrate legacy C++ code to the modern C++11 standard\autocite{wright_large-scale_2013}.
-ClangFormat was used to ensure that the refactored code adhered to Google's strict C++ coding style\autocite{_google_????}.
-Similar migrations can be expected in the near future for the Scala community once new dialects, such as Dotty\autocite{rompf_f_2015}, gain popularity.
+Google uses ClangFormat\autocite{jasper_clangformat_2013}, a C++ code formatter, to automatically enforce that new C++ code adheres to Google's strict coding style\autocite{_google_????}.
+This has enabled Google to automatically migrate legacy C++98 code to use the modern C++11 standard\autocite{wright_large-scale_2013}.
+Similar migrations can be expected in the near future for the Scala community once new standards, such as Dotty\autocite{rompf_f_2015}, gain popularity.
 
 Code formatting is valuable in collaborative coding environments.
 The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} --- which each Scala.js contributor is expected to know by heart --- is defined at a whopping 2.600 word count.
@@ -35,15 +34,19 @@ ENSIME\autocite{_ensime_????} is a popular Scala interaction mode for text edito
 Sam Halliday, an ENSIME maintainer, says ``I don't have time to talk about formatting in code reviews. I want the machine to do it so I can focus on the design.''\autocite{halliday_i_2016-1}.
 Akka\autocite{_akka_????} is a popular concurrent and distributed programming library for Scala with over 300 contributors.
 Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
+
 With scalafmt, we hope to relieve Scala developers from the burden of manipulating syntactic trivia so they can instead direct their full attention to writing correct, maintainable and fast code.
 
 \subsection{Contributions}
 The main contributions presented in this thesis are the following:
 \begin{itemize}
-  \item language-agnostic algorithms and data structures to implement line wrapping with a maximum line length setting --- in our experience, the most challenging part of developing scalafmt --- as well as configurable vertical alignment.
+  \item language-agnostic algorithms and data structures to implement line
+    wrapping with a maximum line length setting --- in our opinion, the most
+    challenging part of developing a code formatter --- as well as configurable
+    vertical alignment.
     This work is presented in section~\ref{sec:algorithms}.
   \item methods to optimize and test the developed algorithms.
     This work is presented in section~\ref{sec:tooling}.
-  \item practical validation of developed algorithms and methods with scalafmt.
+  \item practical validation of developed algorithms and methods with the scalafmt code formatter.
     The empirical results of this validation are presented in section~\ref{sec:evaluation}.
 \end{itemize}
