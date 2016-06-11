@@ -384,6 +384,14 @@ Secondly, the algorithm does not infer vertical alignment forcing the user to ex
 
 \subsubsection{Conclusion}
 This section introduced data structures and algorithms to implement line wrapping and vertical alignment.
-Similar to dartfmt and clang-format, we model line wrapping like a graph search problem.
+Similar to dartfmt and ClangFormat, we model line wrapping like a graph search problem.
 Tokens are nodes and each potential split forms a weighted edge to the next token, where the associated cost represents how appealing formatting layout is yielded by the split.
-Our algorithm
+Our algorithm differs from dartfmt and clang
+
+\section{Related work}
+Scalafmt joins a rich tradition of code formatters with a long history.
+ClangFormats and dartfmts approach of modeling code formatting as a graph search problem build the foundation of scalafmts design.
+However, scalafmts implementation deviates quite significantly by introducing the concepts of Splits, Policies and Router.
+For example, we believe scalafmts use of partial functions in the Policy data type to enforce formatting layouts follows idiomatic Scala conventions, making it more approachable for Scala developers to comprehend and extend.
+Translating dartfmts concepts of Rules, Spans and Chunks or ClangFormats concept of unwrapped lines to Scala turned out to be a struggle.
+We leave it to the judgement of the reader to assess which concepts are more powerful or intuitive to understand.

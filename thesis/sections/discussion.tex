@@ -1,12 +1,21 @@
+
+\section{Future work}
+Scalafmt is not free from issues.
+The main areas for future work regard how to more soundly produce an optimal formatting layout and how to obtain better performance in an interactive developer workflow.
+
+We experienced a long tail of problems while getting the best-first search to reach the last token for a lot of Scala code that we found in the wild.
+If the search cannot reach the last token, scalafmt cannot format the file.
+Although the concept of policies does give a lot of flexibility to concisely express different formatting layouts, our experience is that it can be easy to create overly strict policies that eliminate all active search states.
+It is worth to explore more principal approaches on how to define formatting layouts so that we can better guarantee that the search completes successfully every time.
+We believe \rfmt{}s approach of combining the convenience of combinators with algebraic properties and optimized dynamic programming for excellent performance opens an interesting venue to solve this problem.
+
+Incremental formatting opens an opportunity to get ludicrous formatting speed in an interactive developer workflow.
+Incremental formatting works like incremental compilation in the sense that instead of formatting a whole file on every invocation, the formatter reuses output from previous invocations and only reformat the lines that have changed.
+We believe that incremental formatting could cut down the formatting time for a large source file by several orders of magnitude, for example from 2s to 20ms.
+
 \section{Conclusion}
-We set out to design abstractions that enable us to implement a code formatter for the Scala programming language that supports several important features: an opinionated setting, a maximum line length setting, vertical alignment and fast performance.
-In this thesis, we have presented data structures and algorithms that we used to develop scalafmt, a Scala code formatter.
-Our evaluation shows that scalafmt meets the first three requirements and goes a far to achieve good performance.
-Our micro and macro benchmarks reveals that scalafmt is still 6x slower than Scalariform, an alternative Scala code formatter.
-We estimate that scalafmt has currently around 1.000 active users.
-The user adoption of scalafmt indicates that scalafmt's current performance is acceptable for many software developers.
-
-
-% By achieving this goal, we hope to capture many popular Scala coding styles and idioms enabling the Scala community to enjoy the benefits that come with code formatting.
-\subsection{Related work}
-\subsection{Future work}
+We set out to implement a code formatter for the Scala programming language that supports several important features: an opinionated setting, a maximum line length setting, vertical alignment and fast performance.
+In this thesis, we have presented data structures and algorithms that we used to develop scalafmt, a Scala code formatter that supports the first three required features and goes far towards achieving good performance.
+Benchmarks reveal that scalafmt is 6x slower than Scalariform, an alternative Scala code formatter.
+However, the quick user adoption of scalafmt indicates that scalafmt's current performance is already acceptable for many software developers.
+We have reason to believe there is still plenty of room to improve on scalafmt's performance in order to meet the needs of the most performance demanding users.
