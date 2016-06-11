@@ -37,7 +37,7 @@ Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style s
 
 With scalafmt, we hope to relieve Scala developers from the burden of manipulating syntactic trivia so they can instead direct their full attention to writing correct, maintainable and fast code.
 
-\subsection{Problem statement}
+\subsection{Research objective}
 % Code formatters bring several benefits to software development.
 % However, the Scala community has enjoyed limited benefits from the 
 % Can we develop a code formatter for the Scala programming language
@@ -49,7 +49,7 @@ What algorithms and data structures allow us to develop a code formatter for the
   \item \textbf{Opinionated}:
     An opinionated setting is a prerequisite to enforce a uniform coding style.
     An opinionated code formatter takes liberty to disregard formatting decisions in the original source input to ensure that all source files follow the same line breaking conventions.
-  \item \textbf{Vertical alignment}: vertical alignment is a formatting convention where redundant whitespace is added before a token to align it on the same column as similar tokens from other lines. Many popular Scala coding styles enforce vertical alignment to enhance code readability.
+  \item \textbf{Vertical alignment}: vertical alignment is a formatting convention where redundant whitespace is added before a token to align it on the same vertical column as similar tokens from other lines. Many popular Scala coding styles enforce vertical alignment to enhance code readability.
   \item \textbf{Performance}: Users expect code formatter to run fast.
     In the most demanding settings, a code formatter needs to be able to format thousands of lines of code in only a few hundred milliseconds.
 

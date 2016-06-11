@@ -3,7 +3,7 @@ This chapter describes the tools that we developed while designing an implementi
 These tools were indispensable in giving us confidence that our algorithms worked as intended.
 
 \subsection{Heatmaps}
-Section~\ref{sec:optimizations} introduces several extensions to algorithm~\ref{alg:bfsv1} that were required go get acceptable performance.
+Section~\ref{sec:optimizations} introduces several extensions to algorithm~\ref{alg:bfsv1} that were required to get good performance for scalafmt.
 In general, the extensions involved eliminating search states.
 To identify code patterns that triggered excessive search growth, we developed heatmaps.
 
@@ -42,13 +42,12 @@ Then, we generate the diff heatmap by fetching two reports and calculating the d
 If the difference is negative for a particular token --- meaning we visited said token fewer times --- the background is highlighted green, otherwise red.
 
 \subsection{Property based testing}~\label{sec:testing}
-Property based tests verify that software implements a high-level specification.
-Unlike example based tests, the input is not manually curated by the software developer.
-Instead, the input is automatically generated.
-Property based tests played a vital role in development of scalafmt and gave us confidence that the algorithms in section~\ref{sec:algorithms} behave well in the real world.
-We collected a sample of 1.2 million lines of code from open source Scala projects available online.
+Property based tests played a vital role in the development of scalafmt and gave us confidence that the algorithms from section~\ref{sec:algorithms} behave well against the real world input.
+Typically, property based tests run again randomly generated input.
+However, generating random source files which might be unrepresentative for human written code.
+Instead, we chose to collect a large sample of 1.2 million lines of code from open source Scala projects available online.
 The sample was compressed into a 23mb zip file\footnote{See \url{https://github.com/olafurpg/scalafmt/releases/download/v0.1.4/repos.tar.gz}}.
-Our test suite would download the sample and test again three properties: \emph{can-format}, \emph{AST integrity} and \emph{idempotency}.
+Our test suite would download the sample and test three properties: \emph{can-format}, \emph{AST integrity} and \emph{idempotency}.
 
 \subsubsection{Can-format}
 The can-format property simply says that if the Scala compiler's parser is able to parse the source input file, then scalafmt should be able to format the source file.
@@ -70,12 +69,7 @@ For example, in one case, scalafmt inserted a newline after the keyword \texttt{
 Moreover, this property highlighted the danger of enabling the \texttt{stripMargin} alignment.
 Since the \texttt{stripMargin} modified the contents of regular and interpolated string literals,
 the AST of the formatted output changed.
-% TODO
-% A sign that \texttt{stripMargin} should be disabled by default.
-% Finally, by adhering to AST integrity, we confine the scope of what scalafmt can do.
-% Such refactoring can be left to a separate tool, in our humble opinion.
-% For example, if scalafmt would sort imports it would change the AST.
-% In Scala, imports can be relative and, hence, sorting them alphabetically can alter semantics.
+Knowing that scalafmt preserves the AST of the input code gives us great confidence that scalafmt will at least not introduce bugs in our users code.
 
 \subsubsection{Idempotency}
 The idempotency property says that if the output of formatting a source file twice should be identical to the output of formatting it once.
@@ -84,9 +78,6 @@ It is not at all obvious that the algorithms in section~\ref{sec:algorithms} ful
 Our experience reveals that it is in fact very easy to accidentally introduce non-idempotent formatting rules in the Router.
 We did not test for idempotency until the 0.2.3 release, after users reported non-idempotent formatting behavior in scalafmt.
 Yet, even after we started testing against idempotency in our comprehensive test-suite, we continued to receive issues with non-idempotent formatting.
+This time it appears that the \texttt{escapeInPathologicalCases} strategy from section~\ref{sec:escape} was the culprit.
+For the next release, we plan to disable \texttt{escapeInPathologicalCases} by default in favor use its safer alternative.
 It turns out that 1.2 million lines of code is not a large enough sample to catch all property bugs.
-
-% \subsection{Configuration}
-% \subsubsection{maxColumn}
-% \subsubsection{binPacking}
-% \subsubsection{vertical alignment}

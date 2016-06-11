@@ -5,11 +5,12 @@ The main areas for improvements regard how to more soundly produce an optimal fo
 We experienced a long tail of problems while getting the best-first search to reach the last token for Scala code that we found in the wild.
 If the best-first search cannot reach the last token, scalafmt cannot format the file.
 Although the concept of policies does give a lot of flexibility to concisely express different formatting layouts, our experience is that it can be easy to create overly strict policies that eliminate all active search states.
-It is worth to explore more principal approaches on how to define formatting layouts so that we can better guarantee that the search successfully completes every time.
+It is worth to explore more principal approaches on how to define formatting layouts so that we can guarantee that the search is sound and successfully completes every time.
 We believe \rfmt{}s approach of combining the convenience of combinators with algebraic properties and optimized dynamic programming for excellent performance opens an interesting venue to solve this problem.
 
 Incremental formatting provides an opportunity to get enormous performance improvements in an interactive developer workflow.
 Instead of formatting an entire source file on every invocation, incremental formatting reuses output from a previous invocation to only reformat lines that have changed.
 We believe that incremental formatting could cut down the formatting time for a large source file by several orders of magnitude, for example from 2s to 20ms.
-This improved performance would enable users to configure text editors to reformat on every files save.
+This would result in a huge improvement in user experience.
+Users could configure their text editors to reformat on every key press, if they so please.
 
