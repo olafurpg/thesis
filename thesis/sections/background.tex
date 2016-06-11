@@ -193,7 +193,7 @@ Hughes claims that such a formal approach was invaluable when designing the pret
 Wadler\autocite{wadler_prettier_2003} and Chitil\autocite{swierstra_linear_2009} extend on Hughes's and Oppen's work in term of performance and programming techniques.
 However, this branch of work has been limited to printing data structures and not how to format existing source code.
 
-\subsubsection{gofmt}
+\subsubsection{Go}
 \gofmt\autocite{gofmt94:online} is a code formatter for the Go programming language, developed at Google.
 \gofmt{} was released in the early days of Go in 2009 and is noteworthy for its heavy adoption by the Go programming community.
 Official Go documentation\autocite{CodeR59:online} claims that almost all written Go code --- at Google and elsewhere --- is formatted with \gofmt{}.
@@ -206,7 +206,7 @@ The output of running \gofmt{} through listing~\ref{lst:gofmt} is identical to t
 This un-opinionated behavior may be considered desirable by many software developers.
 However, this thesis is only concerned with opinionated code formatting.
 
-\subsubsection{Scalariform}\label{sec:scalariform}
+\subsubsection{Scala}\label{sec:scalariform}
 Scalariform\autocite{russell_scalariform_2010} was released in 2010 and is a widely used code formatter for Scala.
 Like \gofmt{}, Scalariform does an excellent job of tidying common formatting errors.
 Moreover, Scalariform supports a variety of configuration options.
@@ -232,7 +232,7 @@ Listings~\ref{lst:bin_pack} and~\ref{lst:non_bin_pack} shows an example of bin p
 Since Scalariform preserves the line breaking decisions from the input,
 Scalariform has no setting to convert formatted code like in listing~\ref{lst:non_bin_pack} to the code in listing~\ref{lst:bin_pack}.
 
-\subsubsection{clang-format}
+\subsubsection{C-family}
 Daniel Jasper triggered a new trend in optimization based coded formatters with the release of \emph{ClangFormat}\autocite{jasper_clang-format_2014} in 2013.
 ClangFormat is developed at Google and can format an impressive number of languages: C, C++, Java, JavaScript, Objective-C and Protobuf code.
 Figure~\ref{fig:clang_format} shows the architecture of ClangFormat.
@@ -271,7 +271,7 @@ Listing~\ref{lst:clang_opinion2} shows the same snippet after being formatted wi
 ClangFormat is opinionated in the sense that it does not respect the user's line breaking decisions.
 This feature makes it possible to ensure that all code follows the same style guide, regardless of author.
 
-\subsubsection{dartfmt}
+\subsubsection{Dart}
 Dartfmt\autocite{nystrom_dart_style_2014} was released in 2014 and follows the optimization based trend initiated by ClangFormat.
 Dartfmt is a code formatter for the Dart programming language, developed at Google.
 Like ClangFormat, dartfmt has a line length setting and is opinionated.
@@ -287,7 +287,7 @@ A plain best-first search would perform a lot of redundant search inside the arg
 However, \texttt{firstCall} already fits on a line and there is no need to explore line breaks inside its argument list.
 The dartfmt optimized search is able to eliminate such dead ends and quickly figure out to break before the \texttt{"long argument string"} literal.
 
-\subsubsection{rfmt}
+\subsubsection{R}
 The most recent addition to the optimization based formatting trend is \rfmt\autocite{yelland_new_2016},
 a code formatter for the statistical programming environment \emph{R}.
 The formatter was released in 2016 -- after the background work on this thesis started -- and like its forerunners is also developed at Google.
