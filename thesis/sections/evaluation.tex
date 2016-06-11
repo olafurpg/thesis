@@ -109,13 +109,13 @@ Scalafmt has been installed over 6.500 times.
 IntelliJ is the Jetbrains plugin repository\footnote{
   See \url{https://plugins.jetbrains.com/plugin/8236?pr=}
 }.
-Data is not available for how many users built scalafmt from source.
 The numbers represent absolute download numbers, not unique users.
+Data is not available for how many users built scalafmt from source, so it is fair to estimate that the actual number of installation is even higher.
 Observe that v0.2.5 was released 22 days ago, meaning it has been installed 80 times on average per day since its release.
-Considering the v0.2.5 installations numbers, it is fair to estimate that scalafmt currently has at least 1.000 users.
+Extrapolating from the v0.2.5 installations numbers, we expect that scalafmt currently has roughly 1.000 active users.
 
 Figure~\ref{fig:installs} shows the growth in installations by month.
-Observe that growth has doubled with each month.
+Observe that growth has doubled with each new month.
 Github represented proportionally many installs in the first month but only represents a small fraction of installation in May.
 Maven installations quadrupled in May, taking the lead from the IntelliJ plugin in April.
 We believe this increase in Maven installations is caused by projects installing the scalafmt SBT plugin for every test run in a continuous integration setup.
@@ -157,8 +157,8 @@ We present interesting data points from a variety of disparate data sources:
     Table~\ref{tab:oss} shows an incomplete list libraries that have so far taken the jump.
     Observe that all libraries take advantage of vertical alignment.
     Moreover, each library customize on top of the base \texttt{default} style.
-    It is worth mentioning that all libraries except Scala.js dom are relatively newly released.
-    We believe more mature libraries wait longer before adopting such a new technology.
+    It is worth mentioning that all libraries except Scala.js dom are relatively new.
+    We believe more mature libraries are slower to adopt such new technology.
   \item The scalafmt code repository has received contributions from 8 external contributors.
     Several of these contributions added non-trivial features to scalafmt, including
     new configuration flags and extensions to the Router.
