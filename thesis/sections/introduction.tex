@@ -42,17 +42,16 @@ With scalafmt, we hope to relieve Scala developers from the burden of manipulati
 % However, the Scala community has enjoyed limited benefits from the 
 % Can we develop a code formatter for the Scala programming language
 
-What algorithms, data structures and abstractions allow us to develop a code formatter for the Scala programming language the has the following properties?
+What algorithms and data structures allow us to develop a code formatter for the Scala programming language with the following properties?
 \begin{itemize}
-  \item 
-    \textbf{Opinionated}:
-    An opinionated code formatter takes liberty to disregard formatting decisions in the original source input in order to preserve a uniform coding style across a codebase.
-    An opinionated setting is necessary to capture popular Scala coding styles and idioms.
-  \item \textbf{Maximum line length setting}: a code formatter with a maximum line length setting ensures that no lines in the formatted output contains more than a certain number of characters.
-    Many popular coding styles enforce a maximum line length in order to make code accesssible inside a variety of different enviroments.
-  \item \textbf{Vertical alignment}: many popular Scala coding styles encourage vertically alignment to enhance code readability.
+  \item \textbf{Maximum line length setting}: a code formatter with a maximum line length setting ensures that each line in the formatted output contains no more than a certain number of characters.
+    Many popular coding styles enforce a maximum line length in order to make code readable inside a variety of different environments.
+  \item \textbf{Opinionated}:
+    An opinionated setting is a prerequisite to enforce a uniform coding style.
+    An opinionated code formatter takes liberty to disregard formatting decisions in the original source input to ensure that all source files follow the same line breaking conventions.
+  \item \textbf{Vertical alignment}: vertical alignment is a formatting convention where redundant whitespace is added before a token to align it on the same column as similar tokens from other lines. Many popular Scala coding styles enforce vertical alignment to enhance code readability.
   \item \textbf{Performance}: Users expect code formatter to run fast.
-    In the most demanding settings, a code formatter should format large source files with a few thousands of lines of code in under a few hundred milliseconds.
+    In the most demanding settings, a code formatter needs to be able to format thousands of lines of code in only a few hundred milliseconds.
 
 \end{itemize}
 

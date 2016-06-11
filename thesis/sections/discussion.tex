@@ -1,11 +1,12 @@
-\section{Discussion}
-We set out to find out whether we could develop a code formatter for the Scala programming language.
-The code formatter should capture many popular Scala coding styles and idioms;
-support line wrapping with a maximum line length setting, and be able to vertically align tokens.
-Our evaluation shows that.
-We presented scalafmt, a Scala code formatter that we believe achieves these goals.
+\section{Conclusion}
+We set out to design abstractions that enable us to implement a code formatter for the Scala programming language that supports several important features: an opinionated setting, a maximum line length setting, vertical alignment and fast performance.
+In this thesis, we have presented data structures and algorithms that we used to develop scalafmt, a Scala code formatter.
+Our evaluation shows that scalafmt meets the first three requirements and goes a far to achieve good performance.
+Our micro and macro benchmarks reveals that scalafmt is still 6x slower than Scalariform, an alternative Scala code formatter.
+We estimate that scalafmt has currently around 1.000 active users.
+The user adoption of scalafmt indicates that scalafmt's current performance is acceptable for many software developers.
 
-We set out to develop scalafmt, a code formatter for the Scala programming language that captures popular coding styles and Scala idioms.
 
+% By achieving this goal, we hope to capture many popular Scala coding styles and idioms enabling the Scala community to enjoy the benefits that come with code formatting.
+\subsection{Related work}
 \subsection{Future work}
-\subsection{Conclusion}
