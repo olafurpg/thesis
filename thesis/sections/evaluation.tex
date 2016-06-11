@@ -123,21 +123,48 @@ We believe this increase in Maven installations is caused by projects installing
 
 \subsubsection{Other}
 We present interesting data points from a variety of disparate data sources:
+\begin{table}
+  \hyphenpenalty=1000
+  \caption{Open source libraries that have reformatted their codebase with scalafmt and their customized settings.}\label{tab:oss}
+  \begin{tabular}{lp{90mm}}
+    Project & Customized coding style \\
+    \hline \hline
+    Scala Native\tablefootnote{
+      \url{https://github.com/scala-native/scala-native}} & \texttt{defaultWithAlign} base style,
+                                                            80 character column limit,
+                                                            Java docstrings. \\
+    Scala.js dom\tablefootnote{
+      \url{https://github.com/scala-js/scala-js-dom}}     & \texttt{Scala.js} base style:
+                                                            80 character column limit,
+                                                            vertical alignment on case arrows,
+                                                            bin packed arguments/parameters/parent constructors,
+                                                            Java docstrings. \\
+    Fetch\tablefootnote{
+      \url{https://github.com/47deg/fetch}}               & \texttt{defaultWithAlign} base style,
+                                                            100 character column limit,
+                                                            Scala docstrings. \\
+    psp-std\tablefootnote{
+      \url{https://github.com/paulp/psp-std}}             & Customized vertical alignment,
+                                                            160 character column limit,
+                                                            2 space continuation indent,
+                                                            spaces in import curly braces,
+                                                            Scala docstrings.
 
+  \end{tabular}
+\end{table}
 \begin{itemize}
+  \item Several popular open-source libraries have reformatted their codebases with scalafmt.
+    Table~\ref{tab:oss} shows an incomplete list libraries that have so far taken the jump.
+    Observe that all libraries take advantage of vertical alignment.
+    Moreover, each library customize on top of the base \texttt{default} style.
+    It is worth mentioning that all libraries except Scala.js dom are relatively newly released.
+    We believe more mature libraries wait longer before adopting such a new technology.
   \item The scalafmt code repository has received contributions from 8 external contributors.
     Several of these contributions added non-trivial features to scalafmt, including
     new configuration flags and extensions to the Router.
   \item 34 unique users, excluding the author, have opened a total of 138 tickets on the scalafmt issue tracker.
   \item The scalafmt Gitter\footnote{See \url{https://gitter.im/olafurpg/scalafmt}} instant messaging channel has 47 members. The channel is used to informally discuss bugs, new features and more.
-  \item The user documentation website\footnote{See \url{http://scalafmt.org}} has been visited 5.422 times with an average visit duration of 98 seconds. That makes 138 hours of combined visit time.
-  \item Several popular open-source libraries have reformatted their codebases with scalafmt:
-    \begin{itemize}
-      \item scala-native: \url{https://github.com/scala-native/scala-native},
-      \item fetch: \url{https://github.com/47deg/fetch},
-      \item psp-std: \url{https://github.com/paulp/psp-std},
-      \item scala-js-dom: \url{https://github.com/scala-js/scala-js-dom}.
-    \end{itemize}
+  \item The user documentation website\footnote{See \url{http://scalafmt.org}} has been visited 5.422 times with an average visit duration of 98 seconds.
 \end{itemize}
 
 

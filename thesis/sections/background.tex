@@ -265,9 +265,9 @@ ClangFormat supports a variety of configuration options, including 6 out-of-the-
 A notable feature of ClangFormat is that it's opinionated.
 ClangFormat produces well-formatted output for even the most egregiously formatted input.
 Listing~\ref{lst:clang_opinion} shows an offensively formatted C++ code snippet.
-\lstinputlisting[label={lst:clang_opinion}, float, caption=Unformatted C++ code]{code/terrible.cpp}
+\lstinputlisting[label={lst:clang_opinion}, float, language=c, caption=Unformatted C++ code]{code/terrible.cpp}
 Listing~\ref{lst:clang_opinion2} shows the same snippet after being formatted with ClangFormat.
-\lstinputlisting[label={lst:clang_opinion2}, float, caption=ClangFormat formatted C++ code]{target/unterrible.cpp}
+\lstinputlisting[label={lst:clang_opinion2}, float, language=c, caption=ClangFormat formatted C++ code]{target/unterrible.cpp}
 ClangFormat is opinionated in the sense that it does not respect the user's line breaking decisions.
 This feature makes it possible to ensure that all code follows the same style guide, regardless of author.
 
