@@ -34,7 +34,7 @@ Several prominent Scala community members have raised this issue.
 ENSIME\autocite{_ensime_????} is a popular Scala interaction mode for text editors such as Vim and Emacs.
 Sam Halliday, an ENSIME maintainer, says ``I don't have time to talk about formatting in code reviews. I want the machine to do it so I can focus on the design.''\autocite{halliday_i_2016-1}.
 Akka\autocite{_akka_????} is a popular concurrent and distributed programming library for Scala with over 300 contributors.
-Viktor Klang, a maintainer of Akka, suggests a better alternative ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
+Viktor Klang, a maintainer of Akka, suggests a better alternative: ``Code style should not be enforced by review, but by automate rewriting. Evolve the style using PRs against the rewriting config.''.\autocite{klang_code_2016}.
 
 With scalafmt, we hope to relieve Scala developers from the burden of manipulating syntactic trivia so they can instead direct their full attention to writing correct, maintainable and fast code.
 
@@ -43,10 +43,11 @@ With scalafmt, we hope to relieve Scala developers from the burden of manipulati
 % However, the Scala community has enjoyed limited benefits from the 
 % Can we develop a code formatter for the Scala programming language
 
-What algorithms and data structures allow us to develop a code formatter for the Scala programming language with the following properties?
+What algorithms and data structures allow us to develop a code formatter for the Scala programming language with a \emph{maximum line length setting}, \emph{opinionated setting}, \emph{vertical alignment} and \emph{good performance}?
+Those features are defined as follows:
 \begin{itemize}
   \item \textbf{Maximum line length setting}: a code formatter with a maximum line length setting ensures that each line in the formatted output contains no more than a certain number of characters.
-    Many coding styles enforce a maximum line length in order to make code readable from different environments such as small split screens and code review interfaces.
+    Many coding styles enforce a maximum line length to ensure code is readable from different environments such as small split screens and code review interfaces.
   \item \textbf{Opinionated}:
     An opinionated setting is a prerequisite to enforce a uniform coding style.
     An opinionated code formatter takes liberty to disregard line breaks and other formatting decisions in the original source input to ensure that formatted source files follow the same line breaking conventions.
