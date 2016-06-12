@@ -70,14 +70,14 @@ Instead, the second argument is defined inline making the entire \texttt{functio
 % \lstinputlisting[label={lst:mutable}, float, caption=Manipulating mutable list]{code/mutable.scala}
 % Observe that listing~\ref{lst:immutable} is a single statement while listing~\ref{lst:mutable} contains multiple statements.
 
-\subsubsection{SBT build configuration}\label{sec:sbt}
+\subsubsection{SBT}\label{sec:sbt}
 SBT\autocite{_sbt_????} is an interactive build tool used by many Scala projects.
 SBT configuration files are written in \texttt{*.sbt} or \texttt{*.scala} files using Scala syntax and semantics.
 Although SBT configuration files use plain Scala, they typically use coding patterns which are different from traditional Scala programs.
 Listing~\ref{lst:sbt} is an example project definition in SBT.
 \lstinputlisting[label={lst:sbt}, float, caption=SBT project definition]{code/sbt.scala}
 Observe that the project is defined as a single statement and makes extensive use of symbolic infix operators.
-Due to the nature of build configurations, argument lists to can becomes unwieldy long and a single project statement can span over dozens or even hundreds of lines of code.
+Due to the nature of build configurations, argument lists can becomes unwieldy long and a single project statement can span over dozens or even hundreds of lines of code.
 
 
 \subsection{scala.meta}\label{sec:scalameta}
@@ -91,23 +91,23 @@ Most notably among these features are dialect agnostic syntax trees, syntax tree
 Scala.meta provides facilities to tokenize and parse a variety of different Scala dialects.
 One such dialect is SBT configuration files, discussed in section~\ref{sec:sbt}.
 SBT adds custom support for top-level statements in \texttt{*.sbt} files, a disallowed feature in regular Scala programs.
-Working around this issue requires either depending on the SBT parser or reimplementing its parsing logic.
-To add insult to injury, top-level statements must be separated by a blank line if you use an SBT version 0.13.6 or lower; a restriction that was lifted in SBT 0.13.7.
-Listing~\ref{lst:dialect} show how to scala.meta makes it trivial to accommodate this zoo of nuances.
+Then, to format SBT files requires either depending on the SBT parser or reimplementing its parsing logic.
+To add insult to injury, top-level statements must be separated by a blank line if you use SBT version 0.13.6 or lower; a restriction that was lifted in SBT 0.13.7.
+Listing~\ref{lst:dialect} shows how scala.meta dialects makes it trivial to accommodate this zoo of nuances.
 \lstinputlisting[label={lst:dialect}, float, caption=Parsing different Scala dialects with scala.meta]{code/dialect.scala}
 The result after parsing is a dialect agnostic scala.meta tree structure.
 
-The structure of scala.meta trees can be serialized to strip off all insignificant syntactic details.
+The structure of scala.meta trees can be serialized to a string to strip off all insignificant syntactic details.
 Listing~\ref{lst:structure} shows how to serialize the tree structure of a simple hello world application.
 \lstinputlisting[label={lst:structure}, float, caption=Serializing scala.meta trees]{code/structure.scala}
 For example, observe that the comment has been stripped away.
 As we discuss in section~\ref{sec:tooling}, this feature was instrumental in testing scalafmt.
 
-Tree node types in scala.meta preserve absolute fidelity with the original source file.
+Node types in scala.meta trees preserve absolute fidelity with the original source file.
 This means we can obtain all syntactic details from a tree node such as whether a for comprehension uses parentheses or curly braces as delimiters, whitespace positions, comments and other syntactic trivia.
 The Scala compiler is infamous for desugaring for-comprehensions into \texttt{map/withFilter/flatMap} applications during the parse phase.
 This made it impossible to implement metaprogramming tasks such as code formatting.
-High-fidelity parsing in scala.meta has been essential for scalafmt because we can't lose critical syntactic details such as whether for-comprehensions are used over \texttt{flatMap}s.
+High-fidelity parsing in scala.meta has been essential for scalafmt because we can't lose critical syntactic details such as whether for-comprehensions are used over \texttt{flatMap} method calls.
 
 Tokens in scala.meta are strongly typed.
 Traditional object-oriented libraries treat tokens as a single type with multiple methods such as \texttt{isComma/isFor} which returns true if a token instance is a comma or a \texttt{for} keyword.
@@ -133,13 +133,13 @@ Code formatting and pretty printing\footnote{
   According to Hughes\autocite{hughes_design_1995}, pretty printing is a subset of code formatting where
   the former is only concerned with presenting data structures while the latter is
   concerned with the harder problem of formatting existing source code --- the main topic of this thesis.} has a long tradition.
-In this chapter, we look at a variety of tools and algorithm that have been developed over the last 70 years.
+In this chapter, we look at a variety of tools and algorithms that have been developed over the last 70 years.
 
 \subsubsection{Natural language}
 The science of displaying aesthetically pleasing text dates back as early as 1956\autocite{harris_keyboard_1956}.
 The first efforts involved inserting carriage returns in natural language text.
 Until that time, writers had been responsible for manually providing carriage returns in their documents before sending them off for printing.
-The motivation was to ``save operating labor and reduce human error''.
+The motivation behind automating this process was to ``save operating labor and reduce human error''.
 Once type-setting became more commonplace, the methods for breaking lines of text got more sophisticated.
 
 Knuth and Plass developed in 1981 a famous line breaking algorithm\autocite{knuth_breaking_1981} for \LaTeX{}, a popular typesetting program among scientific circles.
@@ -151,7 +151,7 @@ Knuth's algorithm uses dynamic programming to find an optimal layout with regard
 This algorithm remains a textbook example of an application of dynamic programming\autocite{dreyfus2002richard,kleinberg2006algorithm}.
 
 \subsubsection{ALGOL 60}
-Scowen\autocite{scowen_soapprogram_1971} developed SOAP in 1971, a code formatter for ALGOL 60.
+Scowen\autocite{scowen_soapprogram_1971} developed SOAP in 1971, a code formatter for the programming language ALGOL 60.
 The main motivation for SOAP was to make it ``easier for a programmer to examine and follow a program'' as well as to maintain a consistent coding style.
 This motivation is still relevant in modern software development.
 SOAP did provide a maximum line length limit.
@@ -168,9 +168,9 @@ The simple syntax and extensive use of parentheses as delimiters makes LISP prog
 Goldstein presented a \emph{recursive re-predictor} algorithm in his paper.
 The recursive re-predictor algorithm runs a top-down traversal on the abstract syntax tree of a LISP program.
 While visiting each node, the algorithm tries to first obtain a \emph{linear-format},
-i.e. fit remaining body on a single line,
+i.e. fit remaining body of that node on a single line,
 with a fallback to \emph{standard-format},
-i.e. each argument is put on a separate line aligned by the first argument.
+i.e. each child of that node is put on a separate line aligned by the first child.
 Goldstein observes that this algorithm is practical despite the fact that its running time is exponential in the worst case.
 Bill Gosper used the re-predictor algorithm to implement GRINDEF\autocite{_bill_????}, one of the first code formatters for LISP.
 
