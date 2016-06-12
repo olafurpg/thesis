@@ -25,10 +25,10 @@ A \texttt{FormatToken} is a pair of two non-whitespace tokens.
 Listing~\ref{lst:format_token} shows the definition of the \texttt{FormatToken} data type.
 \lstinputlisting[label={lst:format_token}, caption=FormatToken definition]{code/format_token.scala}
 As shown in the architecture overview in figure~\ref{fig:architecture}, each token, except the first and last tokens, appear twice in the sequence of \texttt{FormatToken}s: once as the \texttt{left} member and once as the \texttt{right} member.
-In a nutshell, the job of the \texttt{Router} is to convert each \texttt{FormatToken} into a \texttt{Split}
+In a nutshell, the job of the \texttt{Router} is to convert each \texttt{FormatToken} into a \texttt{Decision}
 
 \subsubsection{Decision}\label{sec:decision}
-A \texttt{Decision} is a pair of a \texttt{FormatToken} and a sequence of Splits.
+A \texttt{Decision} is a pair of a \texttt{FormatToken} and a sequence of \texttt{Split}s.
 Listing~\ref{lst:decision} shows the definition of \texttt{Decision}.
 \lstinputlisting[label={lst:decision}, caption=Decision definition]{code/decision.scala}
 The \texttt{splits} member represents the possible splits that the LineWrapper can choose for \texttt{formatToken}.
@@ -42,20 +42,26 @@ Listing~\ref{lst:policy} shows the definition of Policy.
 A Policy is a partial function that should be applied to future \texttt{Decision}s up until the \texttt{expire} token.
 Policies easily compose using the Scala standard library \texttt{orElse} and \texttt{andThen} methods on PartialFunction\footnote{
   Fun fact. Careful eyes will observe that Policy is in fact a monoid with the empty partial function as identity and function composition as associative operator.}.
-% The \texttt{isProhibitive} member annotates whether this policy can possibly eliminate Splits from future \texttt{Decision}s.
-% This is necessary for an optimization explained in section~\ref{sec:dequeue}.
 Policies enable a high-level way to express arbitrary formatting layouts over a region of code.
+For example, listing~\ref{lst:singleline} show a \texttt{Policy} to enforce that all tokens fit on a single line up to an expire token.
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:singleline}, caption=Single line Policy]{code/singleline.scala}
+\end{minipage}
+Observe that we could easily extend the method to handle corner cases such as comments and excluding regions.
+A few general purpose policies such as the single line \texttt{Policy} make up the majority of all policies in the actual scalafmt implementation.
 
 \subsubsection{Indent}\label{sec:indent}
 An \texttt{Indent} describes indentation over a region of code.
+Listing~\ref{lst:indent} shows the definition of \texttt{Indent} along with the algebraic data type \texttt{Length}.
+\begin{minipage}{\linewidth}
 \lstinputlisting[label={lst:indent}, caption=Indent definition]{code/indent.scala}
-Listing~\ref{lst:indent} shows the definition of Indent along with the algebraic data type \texttt{Length}.
-Length can either be \texttt{Num(n)} where $n$ represents an explicit number of spaces to indent by or \texttt{StateColumn} which is a placeholder for the number of spaces required to vertically align by the current column.
-Indent is type parameterized by Length so that, at some point, we can replace StateColumn placeholders with Nums to obtain a concrete number.
+\end{minipage}
+\texttt{Length} can either be \texttt{Num(n)} where $n$ represents a concrete number of spaces to indent by or \texttt{StateColumn} which is a placeholder for the number of spaces required to vertically align by the current column.
+\texttt{Indent} is type parameterized by \texttt{Length} so that, at some point, we can replace \texttt{StateColumn} placeholders with Nums to obtain a concrete number.
 For example, given a scala.meta tree \texttt{expr}, the definition \texttt{Indent(Num(2), expr.tokens.last, inclusive=true)}
 increases the indentation level by 2 spaces up to and including the last token of \texttt{expr}.
 The \texttt{inclusive} member is set to false when the indentation should expire before the expire token, for example in a block wrapped by curly braces, since the closing curly brace should not be indented by 2 spaces.
-The StateColumn placeholder is required to allow memoization of Splits, which is critical for performance reason as explained in section~\ref{sec:router} on the \texttt{Router}.
+The \texttt{StateColumn} placeholder is required to allow memoization of \texttt{Split}s, which is critical for performance reasons.
 
 \subsubsection{Split}
 A \texttt{Split} represents a (possibly empty) whitespace character to be inserted between two non-whitespace tokens.
@@ -74,23 +80,23 @@ The \texttt{line} member allows a powerful debugging technique explained in sect
 The \texttt{policy} and \texttt{indents} members are explained in sections~\ref{sec:policy} and~\ref{sec:indent}, respectively.
 
 \subsubsection{State}
-A \texttt{State} is a partial formatting solution during the best-first search.
-Listing~\ref{lst:state} shows the definition of the State class and companion object.
+A \texttt{State} represents a partial formatting solution inside the best-first search.
+Listing~\ref{lst:state} shows the definition of the \texttt{State} class and companion object.
 \begin{minipage}{\linewidth}
   \lstinputlisting[label={lst:state}, caption=State definition]{code/state.scala}
 \end{minipage}
-Observe the similarity of State and Split.
+Observe the similarity of \texttt{State} and \texttt{Split}.
 A State contains various summaries calculated from the \texttt{splits} vector.
 The summaries are necessary for performance reasons in the best-first search.
-Observe that the indents are type parameterized by \texttt{Num}, meaning they only contain concrete indentations and no \texttt{StateColumn} indents.
-The \texttt{indentation} member is the sum of all currently active indents and \texttt{column} represents how many characters have been consumed since the last newline.
+Observe that the \texttt{indents} member is type parameterized by \texttt{Num}, meaning it can only cannot contain \texttt{StateColumn} indents.
+The \texttt{column} member represents how many characters have been consumed since the last newline.
 The State class extends the \texttt{Ordered} trait to allow for efficient polling from a priority queue.
-The \texttt{compare} method orders States firstly by their \texttt{totalCost} member, secondly by \texttt{splits.length} -- how many \texttt{FormatToken}s have been formatted -- and finally breaking ties by the \texttt{indentation}.
-The method \texttt{nextState} calculates a penalty for characters that overflow the column limit and prepares
+The \texttt{compare} method orders States firstly by their \texttt{totalCost} member, secondly by \texttt{splits.length} (i.e., how many \texttt{FormatToken}s have been formatted) and finally breaking ties by the \texttt{indentation}.
+The method \texttt{State.nextState} calculates the necessary summaries create a new state from \texttt{currentState} and a new \texttt{split}.
 The method is implemented as efficiently as possible since the method is on a hot path in the best-first search.
 
 \subsection{LineWrapper}
-The LineWrapper is responsible for turning \texttt{FormatToken}s into Splits.
+The LineWrapper is responsible for turning \texttt{FormatToken}s into \texttt{Split}s.
 To accomplish this, the LineWrapper employs a \texttt{Router} and a \emph{best-first search}.
 
 \subsubsection{Router}\label{sec:router}
@@ -102,12 +108,12 @@ Figure~\ref{fig:router} shows all possible formatting layout for the small input
   \caption{Example graph produced by Router}
   \label{fig:router}
 \end{figure}
-In this figure, the \texttt{Router} is the planner that has chosen to open up multiple branches at \texttt{=} and \texttt{+} and only one branch for the remaining tokens.
+In this figure, the \texttt{Router} has chosen to open up multiple branches at \texttt{=} and \texttt{+} and only one branch for the remaining tokens.
 This is no easy task since a \texttt{FormatToken} can be any pair of two tokens.
 How do we go about implementing a \texttt{Router}?
 
 The \texttt{Router} is implemented as one large pattern match on a \texttt{FormatToken}.
-Listing~\ref{lst:match} shows how we can pattern match on a \texttt{FormatToken} and produce Splits.
+Listing~\ref{lst:match} shows how we can pattern match on a \texttt{FormatToken} and produce \texttt{Split}s.
 \begin{minipage}{\linewidth}
   \lstinputlisting[label={lst:match}, caption=Pattern matching on FormatToken]{code/match.scala}
 \end{minipage}
@@ -116,31 +122,31 @@ The underscore \texttt{\_} ignores the underlying value.
 Keyword is a super-class of all scala.meta keyword token types.
 Now, a good observer will notice that this pattern match can quickly grow unwieldy long once you account for all of Scala's rich syntax.
 How does this solution scale?
-Also, once the match grows bigger how can we know from which case each Split origins?
-It turns out that Scala's pattern matching and scala.meta's algebraically typed tokens are able to help us.
+Also, once the match grows bigger how can we know from which case each \texttt{Split} origins?
+It turns out that Scalas pattern matching and scala.meta's algebraically typed tokens are able to help us.
 
 The Scala compiler can statically detect unreachable code.
 If we add a case that is already covered higher up in the pattern match, the Scala compiler issues a warning.
-For example, listing~\ref{lst:exhaustive} shows an example where the compiler issues a warning.
+For example, listing~\ref{lst:exhaustive} shows how the compiler issues a warning.
 \begin{minipage}{\linewidth}
   \lstinputlisting[label={lst:exhaustive}, caption=Unreachable code]{code/exhaustive.scala}
 \end{minipage}
 Here, we accidentally match on a \texttt{FormatToken} with an \texttt{else} keyword on the right which will never match because we have a broader match on a Keyword higher up.
-In this small example, the bug may seem obvious but once the \texttt{Router} grows bigger the compiler becomes unmissable.
-However, this still leaves us with the second question of finding the origin of each Split.
-Scala macros\autocite{burmako2013scala} and implicits\autocite{oliveira2010type} come to the rescue.
+In this small example, the bug may seem obvious but once the \texttt{Router} grows bigger the bugs become harder to manually catch.
+However, this still leaves us with the second question of finding the origin of each \texttt{Split}.
+Scala macros\autocite{burmako2013scala} and implicits\autocite{oliveira2010type} give us a helping hand.
 
-The source file line number of where a Split is instantiated is automatically attached on each Split.
-Remember in listing~\ref{lst:split} that the Split case class had an implicit member of type \texttt{sourcecode.Line}.
-Sourcecode\autocite{lihao91:online} is a tiny Scala library to extract source code metadata from your programs.
+The source file line number of where a \texttt{Split} is instantiated is automatically attached with each \texttt{Split}.
+Remember in listing~\ref{lst:split} that the \texttt{Split} case class had an implicit member of type \texttt{sourcecode.Line}.
+Sourcecode\autocite{lihao91:online} is a Scala library to extract source code metadata from your programs.
 The library leverages Scala macros and implicits to unobtrusively surface useful information such as line number of call sites.
 Listing~\ref{lst:sourcecode} shows how this works.
 \lstinputlisting[label={lst:sourcecode}, caption=Extracting line number from call site]{code/sourcecode.scala}
-When a \texttt{sourcecode.Line} not passed explicitly as an argument to Split's constructor, the Scala compiler will trigger its implicit search to fill the missing argument.
+When a \texttt{sourcecode.Line} is not passed explicitly as an argument to the \texttt{Split} constructor, the Scala compiler will trigger its implicit search to fill the missing argument.
 The \texttt{sourcecode.Line} companion contains an implicit macro that generates a Line instance from an extracted line number.
 Take a moment to appreciate how these two advanced features of the Scala programming language enable a very powerful debugging technique.
 The scalafmt \texttt{Router} implementation contains 88 cases and spans over 1.000 lines of code.
-The ability to trace the origin of each Split has been indispensable in the development of the \texttt{Router}.
+The ability to trace the origin of each \texttt{Split} to a line number in the \texttt{Router} source file has been indispensable in the development of the \texttt{Router}.
 
 \subsubsection{Best-first search}
 The \texttt{Decision}s from the \texttt{Router} produce a directed weighted graph, as demonstrated in figure~\ref{fig:router}.
@@ -235,14 +241,14 @@ With \texttt{recurseOnBlocks} and \texttt{dequeueOnNewStatements}, we have solve
 Next, we leverage recursion again to help the search queue stay small.
 
 \subsubsection{OptimalToken}\label{sec:optimal}
-An OptimalToken is a hint from a Split to the best-first search that enables the search to early eliminate competing Splits.
-Recall from listing~\ref{lst:split} that a Split has an \texttt{optimalToken} member.
+An OptimalToken is a hint from a \texttt{Split} to the best-first search that enables the search to early eliminate competing \texttt{Split}s.
+Recall from listing~\ref{lst:split} that a \texttt{Split} has an \texttt{optimalToken} member.
 Listing~\ref{lst:optimalToken} shows the definition of OptimalToken.
 \lstinputlisting[label={lst:optimalToken}, float, caption=OptimalToken definition]{code/optimalToken.scala}
-When the best-first search encounters a Split with a defined OptimalToken,
+When the best-first search encounters a \texttt{Split} with a defined OptimalToken,
 the best-first search makes an attempt to reach that token with a budget of 0 cost.
-If successful, the search can eliminate the competing Splits.
-If unsuccessful and the \texttt{killOnFail} member is true, the best-first search eliminates the Split.
+If successful, the search can eliminate the competing \texttt{Split}s.
+If unsuccessful and the \texttt{killOnFail} member is true, the best-first search eliminates the \texttt{Split}.
 Otherwise, the best-first search continues as usual.
 
 By eliminating competing branches, we drastically minimize the search space.
@@ -261,9 +267,9 @@ Algorithm~\ref{alg:optimal} sketches how the extension works.
   \lstinputlisting[nolol]{code/optimalToken-alg.scala}
 \end{algorithm}
 The \texttt{bestFirstSearch} method has a new \texttt{maxCost} parameter, which is the highest cost that a new splits can have.
-Next, if a Split has defined an \texttt{OptimalToken} we make an attempt to format up to that token.
-If successful, we update \texttt{optimalFound} variable to eliminate other Splits from being added to the queue.
-If unsuccessful and \texttt{killOnFail} is true, we eliminate the Split that defined the OptimalToken.
+Next, if a \texttt{Split} has defined an \texttt{OptimalToken} we make an attempt to format up to that token.
+If successful, we update \texttt{optimalFound} variable to eliminate other \texttt{Split}s from being added to the queue.
+If unsuccessful and \texttt{killOnFail} is true, we eliminate the \texttt{Split} that defined the OptimalToken.
 A straightforward extension to this algorithm would be to add a \texttt{maxCost} member to the \texttt{OptimalToken} definition from listing~\ref{lst:optimalToken}.
 However, this has not been necessary for scalafmt.
 
@@ -288,7 +294,7 @@ Algorithm~\ref{alg:slow} shows a rough sketch of how the extension works.
   \lstinputlisting[nolol]{code/slow-alg.scala}
 \end{algorithm}
 Observe that this algorithm is transparent to the \texttt{Router}.
-No special annotations are required from Splits.
+No special annotations are required from \texttt{Split}s.
 
 \subsubsection{escapeInPathologicalCases}\label{sec:escape}
 Alas, despite our best efforts to keep the search space small, some inputs can still trigger exponential running times.
@@ -310,7 +316,7 @@ However, in some cases the software developer may prefer to get a decent yet sub
 The best-effort fallback strategy applies heuristics to give a decent but suboptimal formatting output.
 When a token is visited for the 256th time, we select two candidate states from the search queue and eliminate all other states.
 The first state is the fastest state --- the state that has reached furthest into the token stream --- that is not bound a prohibitive single line policy.
-Single line policies are policies that eliminate newline Splits.
+Single line policies are policies that eliminate newline \texttt{Split}s.
 The second state is the current state --- the slow state that visited the token for the 256th time.
 The intuition is that the fast state has good formatting output so far but for is stuck on a challenging token for some reason.
 The slow may paid a hefty penalty early causing it to move slowly but maybe the early penalty will yield a better output in the end.
@@ -319,7 +325,7 @@ Algorithm~\ref{alg:best-effort} shows an example of the best-effort strategy can
   \caption{best-effort fallback strategy}\label{alg:best-effort}
   \lstinputlisting[nolol]{code/best-effort.scala}
 \end{algorithm}
-The \texttt{isSafe} method on State returns true if the state contains prohibitive policies, derived from annotated metadata in Splits from the \texttt{Router}.
+The \texttt{isSafe} method on State returns true if the state contains prohibitive policies, derived from annotated metadata in \texttt{Split}s from the \texttt{Router}.
 Observe that this algorithm will reapply the best-effort fallback until the search reaches the final token.
 In scalafmt, we bound the number of this can happen with a final fallback to the unformatted strategy.
 
@@ -332,7 +338,7 @@ This limitation renders the best-effort strategy useless in environments where c
 
 \subsection{FormatWriter}
 Recall from figure~\ref{fig:architecture}, the FormatWriter receives splits from the best-first search and produces the final output presented to the user.
-In addition to reifying Splits, the FormatWriter runs three post-processing steps: \emph{docstring formatting}, \emph{vertical alignment} and \emph{stripMargin alignment}.
+In addition to reifying \texttt{Split}s, the FormatWriter runs three post-processing steps: \emph{docstring formatting}, \emph{vertical alignment} and \emph{stripMargin alignment}.
 
 \subsubsection{Docstring formatting}\label{sec:docstring}
 Docstrings are used by software developers to document a specific part of code.
@@ -366,7 +372,7 @@ Many software developers speak against vertical alignment for this reason, as we
 Nevertheless, the lack of vertical alignment in the initial release of scalafmt was a hindrance for user-adoption.
 Configurable vertical alignment was added to the 0.2 release of scalafmt.
 
-Vertical alignment is implemented in the FormatWriter as an extension to the reification of Splits.
+Vertical alignment is implemented in the FormatWriter as an extension to the reification of \texttt{Split}s.
 Instead of reifying a Space into a single space literal,
 the FormatWriter builds a \texttt{tokenAligns: Map[Split, Int]} which specifies the number of additional spaces to add for each Space.
 Algorithm~\ref{alg:align} shows a simplification of how the actual algorithm\footnote{

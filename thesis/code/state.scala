@@ -2,7 +2,6 @@ case class State(splits: Vector[Split],
                  totalCost: Int,
                  policies: Vector[Policy],
                  indents: Vector[Indent[Num]],
-                 indentation: Int,
                  column: Int,
                  formatOff: Boolean) extends Ordered[State] {
 
