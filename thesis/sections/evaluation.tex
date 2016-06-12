@@ -1,7 +1,7 @@
 \section{Evaluation}\label{sec:evaluation}
 Code formatting is inherently a subjective topic.
 This introduces a challenge when evaluating a code formatter.
-In this chapter, we will present measurements that we believe show the success of scalafmt.
+This chapter presents measurements that we believe show the success of scalafmt.
 We do not measure how well software developers perceive scalafmt formatted code.
 Instead, we will focus on \emph{performance benchmarks} and \emph{user adoption}.
 
@@ -21,12 +21,13 @@ The sbt-jmh\autocite{ktoso84:online} plugin makes it easy to integrate JMH with 
 To repeat the benchmarks, execute the \texttt{run-benchmarks.sh} script in the root directory of the scalafmt project.
 
 \subsubsection{Macro benchmark}
-The macro benchmark is designed to get insight on how scalafmt performs in a continuous integration setup.
+The macro benchmark is designed to give us an insight on how scalafmt performs in a continuous integration setup.
 For example, it is common to assert before code review that all source files are properly formatted.
 For this benchmark we format the entire Scala.js codebase.
 The codebase contains 915 source files and over 106 thousand lines of code, excluding blank lines and comments.
 For accurate measurements, we run five iterations of the macro benchmark.
-We compare the running time with Scalariform.
+We run two version of the macro benchmark: one parallel using all cores on the machine and one synchronous using only a single core.
+In each run, we compare the running time with Scalariform.
 
 Table~\ref{tab:macro} shows the results from the macro benchmark.
 \begin{table}
@@ -50,14 +51,14 @@ Scalafmt may try thousands of different formatting layouts to find an optimal fo
 In contrast, Scalariform's formatting algorithm is linear.
 
 We believe the current performance is usable in a continuous integration setup, but would benefit greatly from performance improvements.
-The current performance is usable because a typical diff in a code review touches only a few source files, and definitely far from the 106 thousand lines of code that we format in this macro benchmark.
-On a smaller diffs, the gap between Scalariform and scalafmt is less pronounced.
+The current performance is usable because a typical diff in a code review touches only a few source files, and definitely far from the 106 thousand lines of code that we format in this benchmark.
+On smaller diffs, the gap between Scalariform and scalafmt is less pronounced.
 However, it is worth considering that continuous integration setups may not have access to the same powerful hardware as we do in this benchmarks.
 We estimate that scalafmt requires at least a 2-3x performance improvement to be integrated in continuous integration setups with less powerful hardware and projects that contains large amounts of code.
 
 
 \subsubsection{Micro benchmark}
-The micro benchmark is designed to get insight on how scalafmt performs in an interactive software developer workflow.
+The micro benchmark is designed to give us an insight on how scalafmt performs in an interactive software developer workflow.
 For example, many Scala developers configure SBT to reformat source files on every compilation.
 Before we run the benchmark, we must find out how many lines of code a typical source file contains.
 
