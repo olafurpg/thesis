@@ -18,6 +18,8 @@ For accurate measurements, all benchmarks are run with the OpenJDK Java Microben
 JMH takes into account a variety of parameters that affect performance on the JVM.
 The sbt-jmh\autocite{ktoso84:online} plugin makes it easy to integrate JMH with a Scala project.
 
+To repeat the benchmarks, execute the \texttt{run-benchmarks.sh} script in the root directory of the scalafmt project.
+
 \subsubsection{Macro benchmark}
 The macro benchmark is designed to get insight on how scalafmt performs in a continuous integration setup.
 For example, it is common to assert before code review that all source files are properly formatted.
@@ -37,23 +39,26 @@ Why is the performance gap so big?
 Is this gap acceptable for continuous integration setups?
 
 We believe two factors contribute to the fact that scalafmt is 6x slower than Scalariform.
-Firstly, scalafmt's formatting algorithm is more complex.
+Firstly, preliminary results from profiling scalafmt reveal that micro-optimizing scalafmt could yield great performance improvements.
+For example, over 30\% of the formatting time is dedicated to a pre-processing step --- unrelated to the best-first search --- that could be accomplished with minimal overhead during parsing inside scala.meta.
+Other experiments indicate that scalafmt may speed up yet another 30\% by upgrading to the latest release of scala.meta\footnote{
+  Scala.meta recently went through several non-source-compatible upgrades.
+  This has made it difficult for scalafmt to keep up with the latest release.
+}.
+Secondly, scalafmt's formatting algorithm is more complex.
 Scalafmt may try thousands of different formatting layouts to find an optimal formatting output.
 In contrast, Scalariform's formatting algorithm is linear.
-Secondly, scalafmt's performance is tied with scala.meta, which is still a young library with opportunities to become better optimized.
-For example, profiling scalafmt reveals that 30\% of the formatting time is dedicated to a pre-processing step --- unrelated to the best-first search --- that could be accomplished with minimal overhead during parsing inside scala.meta.
-In addition, preliminary results indicate that scalafmt may speed up yet another 30\% by upgrading to the latest experimental release of scala.meta\footnote{
-scala.meta has gone through several difficult non-source-compatible upgrades during the development of scalafmt.}.
 
-We believe the current performance is acceptable for continuous integration setups.
-A typical diff in a code review touches only a few source files, and definitely far from 106 thousand lines of code as we test in this macro benchmark.
-Moreover, if the build server has multiple CPU cores the performance is less of an issue.
-However, we admit the current performance is far from excellent.
-We have reason to believe there are plenty of opportunities to improve scalafmt's performance.
+We believe the current performance is usable in a continuous integration setup, but would benefit greatly from performance improvements.
+The current performance is usable because a typical diff in a code review touches only a few source files, and definitely far from the 106 thousand lines of code that we format in this macro benchmark.
+On a smaller diffs, the gap between Scalariform and scalafmt is less pronounced.
+However, it is worth considering that continuous integration setups may not have access to the same powerful hardware as we do in this benchmarks.
+We estimate that scalafmt requires at least a 2-3x performance improvement to be integrated in continuous integration setups with less powerful hardware and projects that contains large amounts of code.
+
 
 \subsubsection{Micro benchmark}
-The micro benchmark is designed to get insight into how scalafmt performs in an interactive software developer workflow.
-For example, it is common to configure a text editor to format source code on every save.
+The micro benchmark is designed to get insight on how scalafmt performs in an interactive software developer workflow.
+For example, many Scala developers configure SBT to reformat source files on every compilation.
 Before we run the benchmark, we must find out how many lines of code a typical source file contains.
 
 We performed a small study to learn the size of a typical source file.
@@ -82,7 +87,7 @@ Table~\ref{tab:micro} shows the results from the micro benchmark.
 No surprise, scalafmt is again slower than Scalariform.
 Is this performance gap acceptable for interactive software development?
 
-We believe this performance is usable for occasional code formatting, but not suitable for a workflow that formats on every save/compilation.
+We believe this performance is usable for occasional code formatting, but not suitable for a workflow that formats on every compilation.
 Amazon famously showed that sales decreased by 1 percent for every 100ms increase in page load time\autocite{kohavi2007online}.
 We believe similar principles apply to scalafmt, every additional millisecond decreases the utility of scalafmt.
 Still, we believe with scalafmt's formatting output is appealing enough to outweigh the slow performance.

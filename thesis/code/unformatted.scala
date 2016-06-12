@@ -1,5 +1,5 @@
 object MyApp extends App {
-  Initialize(config, port(get(
+  Initialize(context, config(port(
     "port.http"),
     settings + custom))
 }

@@ -362,9 +362,10 @@ It turns out that vertical alignment is incredibly popular in the Scala programm
 Vertical alignment is a formatting convention where redundant spaces are inserted before a token to put on the same vertical column as related tokens from other lines.
 Listing~\ref{lst:align} shows an example of vertical alignment.
 \lstinputlisting[label={lst:align}, caption=Vertical alignment example]{code/align.scala}
-Many software developers are against vertical alignment for several reasons such as producing unnecessarily large diffs in code reviews.
-The lack of vertical alignment in the initial release of scalafmt was a hindrance for user-adoption.
-Configurable vertical alignment was added to the 0.2 release.
+Observe that if we add a new library dependency that has a long name in the first column, we must add additional spaces after \texttt{"org.scala-lang"} and \texttt{"com.lihaoyi"} to preserve the vertical alignment.
+Many software developers speak against vertical alignment for this reason, as well as several other reasons.
+Nevertheless, the lack of vertical alignment in the initial release of scalafmt was a hindrance for user-adoption.
+Configurable vertical alignment was added to the 0.2 release of scalafmt.
 
 Vertical alignment is implemented in the FormatWriter as an extension to the reification of Splits.
 Instead of reifying a Space into a single space literal,
@@ -384,6 +385,14 @@ As demonstrated in listing~\ref{lst:align}, key features of this algorithm inclu
 This algorithm has two main limitations.
 Firstly, all lines in a block must have an equal number of matching columns.
 Secondly, the algorithm does not infer vertical alignment forcing the user to explicitly configure which tokens should align.
+The first limitation can be addressed by extending the implementation of the \texttt{allColumnsMatch} method.
+The second limitation can be addressed by treat all tokens as candidates (i.e., remove the call to \texttt{isCandidate}) and extend \texttt{allColumnsMatch} to include tokens that are aligned in the original source.
+
+% \subsubsection{Example}
+% The previous sections have explained the building blocks for how scalafmt formats a source file.
+% In this section we take a simple example to show how all concepts work together.
+% We will go through the steps of formatting the listing in the introduction.
+%
 
 \subsubsection{Conclusion}
 This section introduced the data structures and algorithms that scalafmt uses to implement line wrapping and vertical alignment.

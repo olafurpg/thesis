@@ -16,14 +16,15 @@ Consider the Scala code snippets in listings~\ref{lst:unformatted} and~\ref{lst:
 Both snippets represent the same application.
 The only difference lies in where the programmer has chosen to break lines.
 Characters such as spaces and line breaks that do not affect the execution of the program are syntactic trivia.
-Although syntactic trivia has no meaning for the execution of the program, listing~\ref{lst:formatted1} is arguably easier to read, understand and maintain for the software developer.
-Code formatters promise to modify syntactic trivia such that a program that contains style issues, such as in listing~\ref{lst:unformatted}, turns into a readable and maintainable program, such as in listing~\ref{lst:formatted1}.
+Although syntactic trivia has no meaning for the execution of the program, listing~\ref{lst:formatted1} is arguably easier to understand, maintain and extend for the software developer.
+A code formatter is a tool that automatically converts a program such as in listing~\ref{lst:unformatted} into a readable and maintainable program such as in listing~\ref{lst:formatted1}.
 Code formatting brings several benefits to software development.
 
 Code formatting enables automated large-scale refactoring.
-Google uses ClangFormat\autocite{jasper_clangformat_2013}, a C++ code formatter, to automatically enforce that new C++ code adheres to Google's strict coding style\autocite{_google_????}.
-This has enabled Google to automatically migrate legacy C++98 code to use the modern C++11 standard\autocite{wright_large-scale_2013}.
-Similar migrations can be expected in the near future for the Scala community once new standards, such as Dotty\autocite{rompf_f_2015}, gain popularity.
+Google used ClangFormat\autocite{jasper_clangformat_2013}, a C++ code formatter,
+in the process of migrating a large legacy C++98 codebase to use the modern C++11 standard\autocite{wright_large-scale_2013}.
+The automatically refactored code was formatted with ClangFormat to ensure that it adhered to Google's strict coding style\autocite{_google_????}.
+Similar migrations can be expected in the near future for the Scala community once new dialects, such as Dotty\autocite{rompf_f_2015}, gain popularity.
 
 Code formatting is valuable in collaborative coding environments.
 The Scala.js project\autocite{_scala.js_????} has over 40 contributors and the Scala.js coding style\autocite{doeraene_scala.js_2015} --- which each Scala.js contributor is expected to know by heart --- is defined at a whopping 2.600 word count.
@@ -45,13 +46,13 @@ With scalafmt, we hope to relieve Scala developers from the burden of manipulati
 What algorithms and data structures allow us to develop a code formatter for the Scala programming language with the following properties?
 \begin{itemize}
   \item \textbf{Maximum line length setting}: a code formatter with a maximum line length setting ensures that each line in the formatted output contains no more than a certain number of characters.
-    Many popular coding styles enforce a maximum line length in order to make code readable inside a variety of different environments.
+    Many coding styles enforce a maximum line length in order to make code readable from different environments such as small split screens and code review interfaces.
   \item \textbf{Opinionated}:
     An opinionated setting is a prerequisite to enforce a uniform coding style.
-    An opinionated code formatter takes liberty to disregard formatting decisions in the original source input to ensure that all source files follow the same line breaking conventions.
-  \item \textbf{Vertical alignment}: vertical alignment is a formatting convention where redundant whitespace is added before a token to align it on the same vertical column as similar tokens from other lines. Many popular Scala coding styles enforce vertical alignment to enhance code readability.
-  \item \textbf{Performance}: Users expect code formatter to run fast.
-    In the most demanding settings, a code formatter needs to be able to format thousands of lines of code in only a few hundred milliseconds.
+    An opinionated code formatter takes liberty to disregard line breaks and other formatting decisions in the original source input to ensure that formatted source files follow the same line breaking conventions.
+  \item \textbf{Vertical alignment}: vertical alignment is a formatting convention where redundant whitespace is added before a token to align it on the same vertical column as similar tokens from other lines. Many Scala coding styles enforce vertical alignment to enhance code readability.
+  \item \textbf{Performance}: Users expect code formatters to run fast.
+    In the most demanding settings, a code formatter needs to be able to format thousands of lines of code in at most a few hundred milliseconds.
 
 \end{itemize}
 
