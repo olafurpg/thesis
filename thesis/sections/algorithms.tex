@@ -390,8 +390,11 @@ This section introduced the data structures and algorithms that scalafmt uses to
 Similar to dartfmt and ClangFormat, scalafmt models line wrapping like a graph search problem.
 Non-whitespace tokens represent nodes and each potential split forms a weighted edge to the next token.
 The edge with the lowest associated cost represents the best formatting output and the edge with the highest represents the least favorable formatting output.
-However, scalafmts implementation deviates quickly from there by introducing the concepts of Splits, Policies and Router.
-We believe scalafmts use of partial functions in the Policy data type to enforce formatting layouts follows idiomatic Scala conventions, making it approachable for Scala developers to maintain and extend.
-Similarly, we believe that translating dartfmts concepts of Rules, Spans and Chunks or ClangFormats concept of unwrapped lines to Scala would come at the price of less idiomatic Scala code.
-Nevertheless, these concepts are different means to the same end.
+Scalafmt uses best-first search to find the best formatting output (i.e., the cheapest path from the first token in the input to the last token in the input).
+However, scalafmts implementation deviates quickly from there by introducing the Split, Policy and Router abstractions.
+The motivation for coming up with our own abstractions was to make scalafmt approachable for Scala developers to maintain and extend.
+For example, the use of partial functions in the Policy data type follows a unique Scala idiom that translates poorly to Dart or C++.
+Likewise, we believe that translating dartfmts concept of Rules --- which relies heavily on mutation --- would come at the price of less idiomatic Scala code.
+Given the extensive use of higher order functions and blocks in Scala, we struggled to find a robust way to break a source files into a sequence of unwrapped lines like ClangFormat does.
+Nevertheless, these abstractions are different means to the same end.
 We leave it to the judgment of the reader to assess which concepts are more powerful or intuitive to understand.
