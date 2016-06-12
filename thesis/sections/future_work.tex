@@ -1,6 +1,8 @@
 \section{Future work}
 Scalafmt is not free from issues.
-The main areas for improvements regard how to more soundly produce an optimal formatting layout and how to obtain better performance in an interactive developer workflow.
+We identify two main main areas for improvements.
+Firstly, how do we more soundly produce an optimal formatting layout with better performance?
+Secondly, can we go even further to obtain orders of magnitude faster performance in an interactive developer workflow.
 
 We experienced a long tail of problems while getting the best-first search to reach the last token for Scala code that we found in the wild.
 If the best-first search cannot reach the last token, scalafmt cannot format the file.
