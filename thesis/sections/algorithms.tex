@@ -150,10 +150,10 @@ The ability to trace the origin of each \texttt{Split} to a line number in the \
 
 \subsubsection{Best-first search}
 The \texttt{Decision}s from the \texttt{Router} produce a directed weighted graph, as demonstrated in figure~\ref{fig:router}.
-To find the optimal formatting layout, our challenge is to find the cheapest path from the root node to a final node.
-The best-first\autocite{pearl_heuristics:_1984} algorithm is an excellent fit for the task.
+To find the optimal formatting layout, our challenge is to find the cheapest path from the first token to the last token.
+The best-first search algorithm\autocite{pearl_heuristics:_1984} is an excellent fit for the task.
 
-Best-first search is a graph search algorithm to efficiently traverse a directed weighted graph.
+Best-first search is an algorithm to efficiently traverse a directed weighted graph.
 The objective is reach the final token and once we reach there, we terminate the search because we're guaranteed no other solution is better.
 Algorithm~\ref{alg:bfsv1} shows a first attempt\footnote{
   We make heavy use of mutation since graph search algorithms typically don't lend themselves well to functional programming principles.
@@ -169,7 +169,9 @@ Absolutely not, this implementation contains several serious performance issues.
 
 Algorithm~\ref{alg:bfsv1} is exponential in the worst case.
 For example, listing~\ref{lst:exponential} shows a tiny input that triggers the search to explore over 8 million states.
-\lstinputlisting[label={lst:exponential}, caption=Exponential running time]{code/exponential.scala}
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:exponential}, caption=Exponential running time]{code/exponential.scala}
+\end{minipage}
 Even if we could visit 1 state per microsecond\footnote{
   Benchmarks reveal the best-first search visits on average one state per 10 microseconds
 } the search will take almost 1 second to complete.
@@ -180,14 +182,14 @@ In the following section, we discuss the optimizations that have shown to work w
 
 \subsection{Optimizations}\label{sec:optimizations}
 This section explains the most important domain-specific optimizations that were required to get good performance for scalafmt.
-We will see that some optimizations are quite ad-hoc and require some creative workarounds.
+We will see that some optimizations are rather ad-hoc and require creative workarounds.
 
 \subsubsection{dequeueOnNewStatements}\label{sec:dequeue}
 Once the search reaches the beginning of a new statement, empty the priority queue.
 Observe that the formatting layout for each statement is independent from the formatting layout of the previous statement.
 Consider listing~\ref{lst:dequeue}.
 \lstinputlisting[label={lst:dequeue}, caption=Two independent statements]{code/dequeue.scala}
-Both statements exceed the column limit, which means that the search must back-track to some extent.
+Both statements exceed the column limit, which means that the search must backtrack to some extent.
 However, once the search reaches \texttt{statement2} we have already found an optimal formatting layout for \texttt{statement1}.
 When we start backtracking in \texttt{statement2}, there is no need to explore alternative formatting layouts for \texttt{statement1}.
 Instead, we can safely empty the search queue once we reach the \texttt{statement2} token.
@@ -198,7 +200,7 @@ Algorithm~\ref{alg:dequeue} shows a rough sketch of how this is done.
 \caption{dequeueOnNewStatements optimization}\label{alg:dequeue}
   \lstinputlisting[nolol]{code/dequeue-alg.scala}
 \end{algorithm}
-With an empty queue, we ensure the search backtracks only as far back as is needed.
+With an empty queue, we ensure the search backtracks only as far is needed.
 The \texttt{statementStarts} variable contains all tokens that begin a new statement.
 To collect those tokens, we traverse the syntax tree of the input source file and select the first tokens of each statement of a block, each case in a partial function, enumerator in a for comprehension and so forth.
 The actual implementation is quite elaborate and is left out of this thesis for clarity reasons.
@@ -223,7 +225,7 @@ The intuition here is that by recursively running the best-first search, we keep
 This allows us to run aggressive optimizations such as \texttt{dequeueOnNewStatements}.
 
 The \texttt{recurseOnBlocks} optimization enables scalafmt to handle idiomatic Scala code where large bodies of higher order functions and blocks are passed around as arguments.
-Remember from section~\ref{sec:scala} that  Scala makes it syntactically convenient to in higher order functions as arguments to other functions.
+Remember from section~\ref{sec:scala} that  Scala makes it syntactically convenient to pass higher order functions around.
 Listing~\ref{lst:recurse} shows an example where this happens and we trigger the \texttt{recurseOnBlocks} optimization.
 \lstinputlisting[label={lst:recurse}, caption=recurseOnBlocks example]{code/recurse.scala}
 The \texttt{dequeueOnNewStatements} optimization is disabled inside argument list.
@@ -241,22 +243,22 @@ With \texttt{recurseOnBlocks} and \texttt{dequeueOnNewStatements}, we have solve
 Next, we leverage recursion again to help the search queue stay small.
 
 \subsubsection{OptimalToken}\label{sec:optimal}
-An OptimalToken is a hint from a \texttt{Split} to the best-first search that enables the search to early eliminate competing \texttt{Split}s.
+An \texttt{OptimalToken} is a hint from a \texttt{Split} to the best-first search that enables the search to early eliminate competing \texttt{Split}s.
 Recall from listing~\ref{lst:split} that a \texttt{Split} has an \texttt{optimalToken} member.
-Listing~\ref{lst:optimalToken} shows the definition of OptimalToken.
+Listing~\ref{lst:optimalToken} shows the definition of \texttt{OptimalToken}.
 \lstinputlisting[label={lst:optimalToken}, float, caption=OptimalToken definition]{code/optimalToken.scala}
-When the best-first search encounters a \texttt{Split} with a defined OptimalToken,
+When the best-first search encounters a \texttt{Split} with a defined \texttt{OptimalToken},
 the best-first search makes an attempt to reach that token with a budget of 0 cost.
 If successful, the search can eliminate the competing \texttt{Split}s.
 If unsuccessful and the \texttt{killOnFail} member is true, the best-first search eliminates the \texttt{Split}.
 Otherwise, the best-first search continues as usual.
 
 By eliminating competing branches, we drastically minimize the search space.
-Listing~\ref{lst:optimal} shows an example where the OptimalToken can be applied.
+Listing~\ref{lst:optimal} shows an example where the \texttt{OptimalToken} optimization can be applied.
 \lstinputlisting[label={lst:optimal}, float, caption=OptimalToken example]{code/optimal.scala}
 Scalafmt supports 4 different ways to format call-site function applications.
-This means that there will be $4^N$ number of open branches when the search reaches \texttt{UserObject} $N$.
-To overcome this issue, we define an OptimalToken at the closing parenthesis.
+This means that there will be $4^N$ number of open branches when the search reaches \texttt{UserObject} number $N$.
+To overcome this issue, we define an \texttt{OptimalToken} at the closing parenthesis.
 The best-first search successfully fits the argument list of each \texttt{UserObject} on a single line, and eliminates the 3 other competing branches.
 This makes the search run in linear time as opposed to exponential.
 
@@ -268,14 +270,14 @@ Algorithm~\ref{alg:optimal} sketches how the extension works.
 \end{algorithm}
 The \texttt{bestFirstSearch} method has a new \texttt{maxCost} parameter, which is the highest cost that a new splits can have.
 Next, if a \texttt{Split} has defined an \texttt{OptimalToken} we make an attempt to format up to that token.
-If successful, we update \texttt{optimalFound} variable to eliminate other \texttt{Split}s from being added to the queue.
-If unsuccessful and \texttt{killOnFail} is true, we eliminate the \texttt{Split} that defined the OptimalToken.
+If successful, we update the \texttt{optimalFound} variable to eliminate other \texttt{Split}s from being added to the queue.
+If unsuccessful and \texttt{killOnFail} is true, we eliminate the \texttt{Split} that defined the \texttt{OptimalToken}.
 A straightforward extension to this algorithm would be to add a \texttt{maxCost} member to the \texttt{OptimalToken} definition from listing~\ref{lst:optimalToken}.
-However, this has not been necessary for scalafmt.
+However, this has not yet been necessary for scalafmt.
 
 \subsubsection{pruneSlowStates}
 The pruneSlowStates is a optimization that eliminates states that progress slowly.
-A state progresses slowly if it visits a token after other equally or less expensive states.
+A state progresses slowly if it visits a token later than other states.
 The insight is that if two equally expensive states visit the same token, the first state to visits that token typically produces a better formatting layout.
 
 By eliminating slow states, we obtain a better formatting output in addition to minimizing the search space.
@@ -285,7 +287,7 @@ However, the fast solution is explored first by the best-first search and, hence
 The \texttt{pruneSlowStates} ensures that fast solutions are prioritized over slow solutions.
 Of course, the \texttt{Router} could have assigned different costs to the line break after \texttt{g +} and \texttt{c +}.
 However, our experience was that such as solution would introduce unnecessary complexity in the design of the \texttt{Router}.
-Instead, the \texttt{pruneSlowStates} is able to take care of eliminating the slow state.
+Instead, the \texttt{pruneSlowStates} can eliminate slow states transparently to the \texttt{Router}.
 
 The \texttt{pruneSlowStates} is implemented as a extension to algorithm~\ref{alg:optimal}.
 Algorithm~\ref{alg:slow} shows a rough sketch of how the extension works.
@@ -293,70 +295,74 @@ Algorithm~\ref{alg:slow} shows a rough sketch of how the extension works.
   \caption{pruneSlowStates optimization}\label{alg:slow}
   \lstinputlisting[nolol]{code/slow-alg.scala}
 \end{algorithm}
-Observe that this algorithm is transparent to the \texttt{Router}.
-No special annotations are required from \texttt{Split}s.
+Observe that no special annotations are required from \texttt{Split}s.
+This property of the \texttt{pruneSlowStates} optimization made it a simple extension to algorithm~\ref{alg:optimal}.
 
 \subsubsection{escapeInPathologicalCases}\label{sec:escape}
 Alas, despite our best efforts to keep the search space small, some inputs can still trigger exponential running times.
-The \texttt{escapeInPathologicalCases} optimization is our last resort to handle such pathological inputs.
-How do we detect that the search has encountered such a challenging input?
+The \texttt{escapeInPathologicalCases} optimization is our last resort to handle such challenging inputs.
+How do we detect that the search is in trouble?
 
 We detect the search space is growing out of bounds by tallying the number of visits per token.
 If we visit the same token $N$ times, we can estimate the current branching factor to be around $log_2(N)$.
 In scalafmt, we tune $N$ to be 256 so that the best-first search can split into two or more paths for up to 8 tokens.
 When a token has been visited more than 256 times, we trigger the \texttt{escapeInPathologicalCases} optimization.
-In the following paragraphs section, we present two alternative fallback strategies: \emph{leave unformatted} and \emph{best-effort}.
+In the following paragraphs, we present two alternative fallback strategies: \emph{leave unformatted} and \emph{best-effort}.
 
 The simplest and most obvious fallback strategy is to leave the pathologically nested code unformatted.
-This can be implemented by backtracing to the first token of the current statement and then reproduce the formatting input up to the last token of said statement.
+This can be implemented by backtracking to the first token of the current statement and then reproduce the formatting input up to the last token of that statement.
 This method is guaranteed to run linearly to the size of the input.
 The responsibility is left to the software developer to a manually format her code, removing all the benefits of code formatting.
-However, in some cases the software developer may prefer to get a decent yet suboptimal formatting output.
+However, in some cases the software developer may prefer the code formatter to produce some formatted output instead of nothing.
 
 The best-effort fallback strategy applies heuristics to give a decent but suboptimal formatting output.
 When a token is visited for the 256th time, we select two candidate states from the search queue and eliminate all other states.
-The first state is the fastest state --- the state that has reached furthest into the token stream --- that is not bound a prohibitive single line policy.
-Single line policies are policies that eliminate newline \texttt{Split}s.
-The second state is the current state --- the slow state that visited the token for the 256th time.
-The intuition is that the fast state has good formatting output so far but for is stuck on a challenging token for some reason.
-The slow may paid a hefty penalty early causing it to move slowly but maybe the early penalty will yield a better output in the end.
-Algorithm~\ref{alg:best-effort} shows an example of the best-effort strategy can be implemented as an extension to algorithm~\ref{alg:bfsv1}.
+The first candidate is the state that has reached furthest into the token stream that is not bound a prohibitive single line policy.
+A prohibitive single line \texttt{Policy} is a \texttt{Policy} that eliminates newline \texttt{Split}s.
+The \texttt{Router} must annotate which \texttt{Split}s are prohibitive.
+The second candidate is the current state --- the slow state that visited the token for the 256th time.
+The intuition is that the first candidate has good formatting output so far but for is stuck on a challenging token for some reason.
+The second candidate maybe paid a hefty penalty early on causing it to move slowly but maybe the early penalty will yield a better output in the end.
+Algorithm~\ref{alg:best-effort} shows an example of how the best-effort strategy can be implemented as an extension to algorithm~\ref{alg:bfsv1}.
 \begin{algorithm}
   \caption{best-effort fallback strategy}\label{alg:best-effort}
   \lstinputlisting[nolol]{code/best-effort.scala}
 \end{algorithm}
 The \texttt{isSafe} method on State returns true if the state contains prohibitive policies, derived from annotated metadata in \texttt{Split}s from the \texttt{Router}.
 Observe that this algorithm will reapply the best-effort fallback until the search reaches the final token.
-In scalafmt, we bound the number of this can happen with a final fallback to the unformatted strategy.
+In scalafmt, we bound how many times this can happen and fallback to the safe unformatted strategy as a last final resort.
 
 The unformatted and best-effort fallback strategies offer different trade-offs.
 The unformatted strategy works well in a scenario where a software developer is available to manually fix formatting errors.
-The best-effort strategy works well on computer generated code where just a modicum of formatting still greatly aid the legibility of the code.
-Unfortunately, as we discuss in section~\ref{sec:testing}, we struggled to guarantee idempotency using the best-effort strategy.
+The best-effort strategy works well on computer generated code where even a tiny bit of formatting improves code readability.
+Unfortunately, we struggled to guarantee idempotency using the best-effort strategy.
 This limitation renders the best-effort strategy useless in environments where code formatters are used to enforce a consistent coding style across a codebase.
+The best-effort fallback strategy will, thus, be disabled by default in the next release of scalafmt.
 
 
 \subsection{FormatWriter}
 Recall from figure~\ref{fig:architecture}, the FormatWriter receives splits from the best-first search and produces the final output presented to the user.
-In addition to reifying \texttt{Split}s, the FormatWriter runs three post-processing steps: \emph{docstring formatting}, \emph{vertical alignment} and \emph{stripMargin alignment}.
+In addition to reifying \texttt{Split}s, the FormatWriter runs three post-processing steps: \emph{docstring formatting}, \emph{stripMargin alignment} and \emph{vertical alignment}.
 
 \subsubsection{Docstring formatting}\label{sec:docstring}
 Docstrings are used by software developers to document a specific part of code.
 Like in Java, docstrings in Scala start with the \texttt{/**} pragma and end with \texttt{*/}.
-However, unlike in Java, the Scala community is split on whether new lines inside docstrings should align by the first or the second asterisk.
+However, unlike in Java, the Scala community is split on whether to align by the first or the second asterisk for new lines in docstrings.
 The official Scala Style Guide\autocite{Scala80:online} dictates that new lines should align by the second asterisk while the Java tradition is to align by the first asterisk.
 The Scala.js\autocite{doeraene_scala.js_2015} and Spark\autocite{xin_spark_2015} style guides follow the Java convention.
 To accommodate all needs, scalafmt allows the user to choose either style.
 To enforce that the asterisks are aligned according to the user's preferences,
 the FormatWriter rewrites docstring tokens.
-This is implemented with simple regular expressions.
+This is implemented with simple regular expressions and standard library method \texttt{String.replaceAll}.
 
 \subsubsection{stripMargin alignment}
 The Scala standard library adds a \texttt{stripMargin} extension method on strings.
 The method helps Scala developers write multiline interpolated and regular string literals.
 Listing~\ref{lst:stripMargin} shows an example usage of the \texttt{stripMargin} method.
-\lstinputlisting[label={lst:stripMargin}, caption=stripMargin example]{code/stripMargin.scala}
-After calling the method, the indentation and \texttt{|} character on line 3 are conveniently removed.
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:stripMargin}, caption=stripMargin example]{code/stripMargin.scala}
+\end{minipage}
+After calling the method, the whitespace indentation and \texttt{|} character on line 3 are conveniently removed.
 However, the hard-fought indentation on the pipe can easily be lost when the string is moved up or down a scope during refactoring.
 Scalafmt can automatically fix this issue.
 In the FormatWriter, scalafmt rewrites string literals to automatically align the \texttt{|} characters with the opening triple quotes \texttt{"""}.
@@ -364,9 +370,11 @@ This setting is disabled by default since scalafmt requires semantic information
 
 \subsubsection{Vertical alignment}
 It turns out that vertical alignment is incredibly popular in the Scala programming community.
-Vertical alignment is a formatting convention where redundant spaces are inserted before a token to put on the same vertical column as related tokens from other lines.
+Vertical alignment is a formatting convention where redundant spaces are inserted before a token to put it on the same vertical column as related tokens from other lines.
 Listing~\ref{lst:align} shows an example of vertical alignment.
-\lstinputlisting[label={lst:align}, caption=Vertical alignment example]{code/align.scala}
+\begin{minipage}{\linewidth}
+  \lstinputlisting[label={lst:align}, caption=Vertical alignment example]{code/align.scala}
+\begin{minipage}{\linewidth}
 Observe that if we add a new library dependency that has a long name in the first column, we must add additional spaces after \texttt{"org.scala-lang"} and \texttt{"com.lihaoyi"} to preserve the vertical alignment.
 Many software developers speak against vertical alignment for this reason, as well as several other reasons.
 Nevertheless, the lack of vertical alignment in the initial release of scalafmt was a hindrance for user-adoption.
@@ -374,7 +382,7 @@ Configurable vertical alignment was added to the 0.2 release of scalafmt.
 
 Vertical alignment is implemented in the FormatWriter as an extension to the reification of \texttt{Split}s.
 Instead of reifying a Space into a single space literal,
-the FormatWriter builds a \texttt{tokenAligns: Map[Split, Int]} which specifies the number of additional spaces to add for each Space.
+the FormatWriter builds a \texttt{tokenAligns: Map[Split, Int]} which specifies the number of additional spaces to add for each reified Space.
 Algorithm~\ref{alg:align} shows a simplification of how the actual algorithm\footnote{
   The actual implementation is 130 lines of code, including helper methods. See
 \href{https://git.io/voIG4}{https://git.io/voIG4}}
@@ -383,7 +391,7 @@ constructs the \texttt{tokenAligns} map.
   \caption{Vertical alignment, simplified algorithm}\label{alg:align}
   \lstinputlisting[nolol]{code/align-alg.scala}
 \end{algorithm}
-The running time of this algorithm is linear to the number of tokens.
+The running time of this algorithm is linear to the total number of tokens in the input source file.
 In a nutshell, the algorithm builds blocks of lines that can be vertically aligned.
 Blocks are separated by blank lines or mismatching candidates in subsequent lines.
 As demonstrated in listing~\ref{lst:align}, key features of this algorithm include that users can configure arbitrary symbols to align by and lines can contain multiple columns of vertically aligned tokens.
@@ -391,19 +399,13 @@ This algorithm has two main limitations.
 Firstly, all lines in a block must have an equal number of matching columns.
 Secondly, the algorithm does not infer vertical alignment forcing the user to explicitly configure which tokens should align.
 The first limitation can be addressed by extending the implementation of the \texttt{allColumnsMatch} method.
-The second limitation can be addressed by treat all tokens as candidates (i.e., remove the call to \texttt{isCandidate}) and extend \texttt{allColumnsMatch} to include tokens that are aligned in the original source.
-
-% \subsubsection{Example}
-% The previous sections have explained the building blocks for how scalafmt formats a source file.
-% In this section we take a simple example to show how all concepts work together.
-% We will go through the steps of formatting the listing in the introduction.
-%
+The second limitation can be addressed by treating all tokens as candidates (i.e., remove the \texttt{isCandidate} filter) and extend \texttt{allColumnsMatch} to include tokens that are aligned in the original source.
 
 \subsubsection{Conclusion}
-This section introduced the data structures and algorithms that scalafmt uses to implement line wrapping and vertical alignment.
+This section introduced the data structures and algorithms that scalafmt uses format Scala code.
 Similar to dartfmt and ClangFormat, scalafmt models line wrapping like a graph search problem.
 Non-whitespace tokens represent nodes and each potential split forms a weighted edge to the next token.
-The edge with the lowest associated cost represents the best formatting output and the edge with the highest represents the least favorable formatting output.
+The edge with the lowest associated cost represents the best formatting output and the edge with the highest cost represents the least favorable formatting output.
 Scalafmt uses best-first search to find the best formatting output (i.e., the cheapest path from the first token in the input to the last token in the input).
 However, scalafmts implementation deviates quickly from there by introducing the Split, Policy and \texttt{Router} abstractions.
 The motivation for coming up with our own abstractions was to make scalafmt approachable for Scala developers to maintain and extend.

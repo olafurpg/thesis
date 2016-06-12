@@ -1,5 +1,5 @@
 def bestFirstSearch(start: State, stop: Token, maxCost: Int): List[Split] = {
-  // ...
+  // while (...) { ...
   val splits = Router.getSplits(currentState.formatToken)
   var optimalFound = false
   splits.withFilter(_.cost < maxCost).foreach { split =>
@@ -18,4 +18,5 @@ def bestFirstSearch(start: State, stop: Token, maxCost: Int): List[Split] = {
     }
   }
   // ...
+  // }
 }
