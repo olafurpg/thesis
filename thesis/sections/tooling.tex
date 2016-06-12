@@ -5,7 +5,7 @@ These tools were indispensable in giving us confidence that our algorithms worke
 \subsection{Heatmaps}
 Section~\ref{sec:optimizations} introduces several extensions to algorithm~\ref{alg:bfsv1} that were required to get good performance for scalafmt.
 In general, the extensions involved eliminating search states.
-To identify code patterns that triggered excessive search growth, we developed heatmaps.
+To identify code patterns that triggered excessive search growth, we used heatmaps.
 
 Heatmaps are a visualization that displays which code regions are most frequently visited in the best-first search.
 Figure~\ref{fig:heatmap} shows an example heatmap.
@@ -29,7 +29,7 @@ We developed an extension to heatmaps that allows us to visually compare the dif
 Figure~\ref{fig:heatmap2} shows an example of such a diff report.
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{img/heatmap2.png}
+  \includegraphics[width=\textwidth]{img/heatmap2-annot.png}
   \caption{Example diff heatmap}
   \label{fig:heatmap2}
 \end{figure}
