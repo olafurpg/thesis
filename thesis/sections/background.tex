@@ -17,13 +17,13 @@ Scala combines features from object-oriented and functional programming paradigm
 Scala can run on multiple platforms.
 Most commonly, Scala programs compile to bytecode and run on the JVM.
 With the releases of Scala.js\autocite{doeraene_scala.js_2015}, JavaScript has recently become a popular target platform for Scala developers.
-Even more recently, the announcement of Scala Native\autocite{_scala-native/scala-native_????} shows that LLVM and may become yet another viable target platform for Scala developers.
+Even more recently, the announcement of Scala Native\autocite{_scala-native/scala-native_????} shows that LLVM may become yet another viable target platform for Scala developers.
 
 Scala is a popular programming language.
-The Scala Center estimates that more than half a million developers are using Scala\autocite{odersky_scala_2016}.
+The Scala Center --- a not-for-profit organization focused on Scala open-source and education --- estimates that more than half a million developers use Scala\autocite{odersky_scala_2016}.
 Large organizations such as Goldman Sachs, Twitter, IBM and Verizon rely on Scala code to run business critical applications.
 The 2015 Stack Overflow Developer Survey shows that Scala is the 6th most loved technology and 4th best paying technology to work with\autocite{_stack_????}.
-The popularity of Apache Spark\autocite{_apache_????-1}, a cluster computing framework for large-scala data processing, has made Scala a language of choice for many developers and scientists working in big data and machine learning.
+The popularity of Apache Spark\autocite{_apache_????-1}, a cluster computing framework for large-scale data processing, has made Scala a language of choice for many developers and scientists working in big data and machine learning.
 
 Scala is a programming language with rich syntax and many idioms.
 The following chapters discuss in detail several prominent syntactic features and idioms of Scala.
@@ -31,7 +31,7 @@ Most importantly, we highlight coding patterns that encourage developers to writ
 
 \subsubsection{Higher order functions}
 Higher order functions (HOFs) are a common concept in functional programming languages as well as mathematics.
-HOFs are functions that can take other functions as arguments as well as return functions as values.
+HOFs are functions that can take other functions as arguments and return functions as values.
 Languages that provide a convenient syntax to manipulate HOFs are said to make functions first-class citizens.
 
 Functions are first-class citizens in Scala.
@@ -40,14 +40,24 @@ Consider listing~\ref{lst:hof}.
 The method \texttt{twice} takes an argument \texttt{f}, which is a function from an integer to an integer.
 The method returns a new function that will apply \texttt{f} twice to an integer argument.
 This small example takes advantage of several syntactic conveniences provided by Scala.
-For example, in line 2 the argument \texttt{\_ + 3} creates a new \texttt{Function[Int, Int]} object.
-The function call \texttt{f(x)} is in fact sugar for the method call \texttt{f.apply(x)} on a \texttt{Function[Int, Int]} instance.
+For example, in line 2 the argument \texttt{\_ + 3} creates a new \texttt{Function[Int, Int]} instance.
+The function call \texttt{f(x)} is in fact sugar for the method call \texttt{f.apply(x)} on the \texttt{Function[Int, Int]} instance.
 Listing~\ref{lst:hof_nosugar} shows an equivalent program to listing~\ref{lst:hof}, without using syntactic conveniences.
 \lstinputlisting[label={lst:hof_nosugar}, float, caption=Higher order functions expanded]{code/hof-nosugar.scala}
 Observe that the body of \texttt{twice} was expressed as a single statement in line 1 of listing~\ref{lst:hof} but as two independent statements in listing~\ref{lst:hof_nosugar}.
 
-% \subsubsection{Blocks} TODO
-% Blocks are 
+\subsubsection{Term blocks}
+Scala allows term blocks to appear anywhere in a Scala code.
+A term block is a sequence of statements wrapped by curly braces \texttt{\{\}}.
+Listing~\ref{lst:block} shows two examples of term blocks.
+\lstinputlisting[label={lst:block}, float, caption=Term blocks]{code/block.scala}
+Variables bounds inside a term block do not escape the block.
+Therefore, the variable \texttt{y} can be assigned both inside the first block as well as to the return value of the \texttt{function} call.
+The lightweight syntax to create term blocks in Scala make them a popular feature among Scala developers.
+Observe that without term blocks, the second argument to \texttt{function} would be defined externally.
+Instead, the second argument is defined inline making the entire \texttt{function} call significantly bigger.
+
+% Blocks are .
 % \subsubsection{Immutability}
 % Functional programming encourages stateless functions which operate on immutable data structures and objects.
 % An immutable object is an object that once initialized, cannot be modified.
