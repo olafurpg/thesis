@@ -185,19 +185,19 @@ A language agnostic formatting algorithm can be used for a variety of programmin
 tied to a single language.
 Users provide a preprocessor to integrate a particular programming language with the algorithm.
 Oppen's algorithm runs in $O(n)$ time and uses $O(m)$ memory for an input program of length $n$ and maximum column width $m$.
-Besides impressive performance results, Oppen claims that a key feature of the algorithms is its streaming nature; the algorithm prints formatted lines as soon as they are input instead of waiting until the entire input stream has been read.
+Besides impressive performance results, Oppen claims that a key feature of his algorithm is its streaming nature; the algorithm prints formatted lines as soon as they are read from the input instead of waiting until the entire input stream has been read.
 This feature is typically not a concern for modern code formatters.
 Moreover, Oppen's algorithm shares a worrying limitation with SOAP: it cannot handle the case when the line length is insufficiently large.
 
 Mark van der Brand presented a library in 1996 that generates a formatter given a context-free grammar\autocite{van_den_brand_generation_1996}.
 % Brand correctly identifies that the development of code formatters requires a lot of effort.
 Beyond the usual motivations for developing code formatters, Brand mentions that formatters ``relieve documentation writers from typesetting programs by hand''.
-The focus on documentation is reflected by the fact that the generated formatter could produce both ASCII formatted code as well at \LaTeX{} markup.
+This focus on documentation is reflected by the fact that the generated formatter could produce both ASCII formatted code as well at \LaTeX{} markup.
 Since comments are typically not included in a syntax tree, the presented algorithm has an elaborate scheme to infer the location of comments in the produced output.
 Like Oppen's algorithm, this library requires the user to plug in a preprocessor to integrate a particular programming language into the Brand's library.
 Unlike Oppen's algorithm, Brand does not consider line length limits in his algorithm.
 
-John Hughes extended on Oppen's work on language agnostic formatting in term of functional programming techniques\autocite{hughes_design_1995}.
+John Hughes extended on Oppen's work on language agnostic formatting in terms of functional programming techniques\autocite{hughes_design_1995}.
 Hughes presented a design of a \emph{pretty-printing} library that leverages combinators with algebraic properties to express formatting layouts.
 Hughes claims that such a formal approach was invaluable when designing the pretty-printing library, which has seen wide use, including in the Glasgow Haskell compiler.
 Wadler\autocite{wadler_prettier_2003} and Chitil\autocite{swierstra_linear_2009} extend on Hughes's and Oppen's work in term of performance and programming techniques.
@@ -208,13 +208,13 @@ However, this branch of work has been limited to printing data structures and no
 \gofmt{} was released in the early days of Go in 2009 and is noteworthy for its heavy adoption by the Go programming community.
 Official Go documentation\autocite{CodeR59:online} claims that almost all written Go code --- at Google and elsewhere --- is formatted with \gofmt{}.
 Besides formatting, \gofmt{} is used to automatically migrate Go codebases from legacy versions to new source-incompatible releases.
-However, \gofmt{} supports neither a column limit nor an opinionated setting.
+However, \gofmt{} supports neither a maximum line length setting nor an opinionated setting.
 Line breaks are preserved in the user's input.
-For example, listing~\ref{lst:gofmt} shows a Go program that uses the same layout as the ``unformatted'' code (listing~\ref{lst:unformatted}) in the introduction.
+For example, listing~\ref{lst:gofmt} shows a Go program that uses the same layout as the ``unformatted'' code from listing~\ref{lst:unformatted} in the introduction.
 \lstinputlisting[label={lst:gofmt}, caption=Gofmt example input/output]{target/gofmt.go}
 The output of running \gofmt{} through listing~\ref{lst:gofmt} is identical to the input.
 This un-opinionated behavior may be considered desirable by many software developers.
-However, this thesis is only concerned with opinionated code formatting.
+However, in this thesis, we are concerned with maximum line lengths and opinionated settings.
 
 \subsubsection{Scala}\label{sec:scalariform}
 Scalariform\autocite{russell_scalariform_2010} was released in 2010 and is a widely used code formatter for Scala.
@@ -225,10 +225,10 @@ However, Scalariform shares the same limitations with \gofmt{}: it lacks a line 
 
 Firstly, the line length setting is necessary to implement many popular coding styles in the Scala community.
 For example, the Spark\autocite{xin_spark_2015} and Scala.js\autocite{doeraene_scala.js_2015} coding styles have 100 character and 80 character column limits, respectively.
-As we see in other code formatters, adding a line length setting is non-trivial and doing so would require a significant redesign of Scalariform.
+As we see in other code formatters, it is non-trivial to add a line length setting and doing so would require a significant redesign of Scalariform.
 
 Secondly, the lack of an opinionated setting makes it impossible to enforce certain coding styles.
-For example, the Scala.js coding style enforces \emph{bin-packing}, where arguments should be arranged compactly up to the column length limit and indented by 4 spaces.
+For example, the Scala.js coding style enforces \emph{bin-packing}, where arguments should be arranged compactly up to the column length limit.
 Listings~\ref{lst:bin_pack} and~\ref{lst:non_bin_pack} shows an example of bin packing enabled and disabled, respectively.
 
 \begin{minipage}{.45\textwidth}
@@ -240,16 +240,16 @@ Listings~\ref{lst:bin_pack} and~\ref{lst:non_bin_pack} shows an example of bin p
 \end{minipage}
 
 Since Scalariform preserves the line breaking decisions from the input,
-Scalariform has no setting to convert formatted code like in listing~\ref{lst:non_bin_pack} to the code in listing~\ref{lst:bin_pack}.
+Scalariform is unable to convert formatted code like in listing~\ref{lst:non_bin_pack} to the code in listing~\ref{lst:bin_pack}.
 
 \subsubsection{C-family}
 Daniel Jasper triggered a new trend in optimization based coded formatters with the release of \emph{ClangFormat}\autocite{jasper_clang-format_2014} in 2013.
 ClangFormat is developed at Google and can format an impressive number of languages: C, C++, Java, JavaScript, Objective-C and Protobuf code.
 Figure~\ref{fig:clang_format} shows the architecture of ClangFormat.
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.9\textwidth]{img/clang-format.png}
-  \caption{ClangFormat architecture}
+  \caption{ClangFormat architecture, source \autocite{jasper_clangformat_2013}}
   \label{fig:clang_format}
 \end{figure}
 The main components are the \emph{structural parser} and the \emph{layouter}.
@@ -262,9 +262,9 @@ The parsed unwrapped lines are passed onto the layouter.
 
 The ClangFormat layouter uses a novel approach to implement line wrapping.
 Each line break is assigned a penalty according to several rules such as nesting and token type.
-At each token, the layouter can choose to continue on the same line or break.
-This forms an acyclic weighted directed graph with tokens representing vertices and splits (e.g., space, no space or line break) representing edges.
-The first token of an unwrapped line is the root of the graph and all paths end at the last token of the unwrapped line.
+At each token, the layouter can choose to continue on the same line or break the line.
+This forms an acyclic weighted directed graph with non-whitespace tokens representing vertices and splits (e.g., space, no space or line break) representing edges.
+The first token of an unwrapped line is the root of the graph and the last token is the sink.
 The layouter uses Dijkstra's\autocite{dijkstra_note_1959} shortest path algorithm to find the layout that has the lowest penalty.
 To obtain good performance, the layouter uses several domain specific optimizations to minimize the search space.
 
@@ -272,13 +272,13 @@ Despite supporting several programming languages, ClangFormat does not leverage 
 Support for each language has been added as ad-hoc extensions to the ClangFormat parser and layouter.
 ClangFormat supports a variety of configuration options, including 6 out-of-the-box styles based on coding styles from Google, LLVM and other well-known organizations.
 
-A notable feature of ClangFormat is that it's opinionated.
+Finally, ClangFormat is opinionated.
 ClangFormat produces well-formatted output for even the most egregiously formatted input.
 Listing~\ref{lst:clang_opinion} shows an offensively formatted C++ code snippet.
 \lstinputlisting[label={lst:clang_opinion}, float, language=c, caption=Unformatted C++ code]{code/terrible.cpp}
 Listing~\ref{lst:clang_opinion2} shows the same snippet after being formatted with ClangFormat.
 \lstinputlisting[label={lst:clang_opinion2}, float, language=c, caption=ClangFormat formatted C++ code]{target/unterrible.cpp}
-ClangFormat is opinionated because by default it does not respect the user's line breaking decisions.
+Observe that ClangFormat does not respect the (lack of) line breaking decisions in listing~\ref{lst:clang_opinion}.
 This feature makes it possible to ensure that all code follows the same style guide, regardless of author.
 
 \subsubsection{Dart}
@@ -290,10 +290,10 @@ In his post, Nystrom argues that the design of a code formatters is significantl
 The line wrapping algorithm in dartfmt employs a \emph{best-first search}\autocite{pearl_heuristics:_1984},
 a minor variant of the shortest path search in ClangFormat.
 As with ClangFormat, a range of domain-specific optimizations were required to make the search scale for real-world code.
-Listing~\ref{lst:dead_end} shows an example of such an optimization, \emph{avoiding dead ends}.
+Listing~\ref{lst:dead_end} shows an example of such an optimization: \emph{avoid dead ends}.
 \lstinputlisting[label={lst:dead_end}, float, caption=Avoid dead ends]{code/dead-end.dart}
-The snippets exceeds the 35 character column limit.
-A plain best-first search would perform a lot of redundant search inside the argument list of \texttt{firstCall}.
+Line 4. in the snippet exceeds the 35 character column limit.
+A plain best-first search would fruitlessly explore a lot of line breaking options inside the argument list of \texttt{firstCall}.
 However, \texttt{firstCall} already fits on a line and there is no need to explore line breaks inside its argument list.
 The dartfmt optimized search is able to eliminate such dead ends and quickly figure out to break before the \texttt{"long argument string"} literal.
 
@@ -303,7 +303,7 @@ a code formatter for the statistical programming environment \emph{R}.
 The formatter was released in 2016 -- after the background work on this thesis started -- and like its forerunners is also developed at Google.
 \rfmt{} makes an interesting contribution in that it combines the algebraic combinator approach from Hughes\autocite{hughes_design_1995} and the optimization based approach from \LaTeX{} and ClangFormat.
 
-The algebraic combinator approach makes it easy to express a variety of formatting layouts.
+The algebraic combinator approach employed by rfmt makes it easy to express a variety of formatting layouts.
 \rfmt{} uses 6 layout combinators or \emph{blocks} as they are called in the report.
 % , to express all formatting rules for the R programming language.
 The blocks are the following:
@@ -317,7 +317,7 @@ The blocks are the following:
     Fit as many blocks on each line as possible, break when the column limit is exceeded and align by the first character in $b_1$.
     % Similar to \emph{bin-packing} in other code formatters such as ClangFormat.
 \end{itemize}
-We'll use an example to show how these relatively few combinators allow an impressive amount of flexibility.
+We'll use an example to demonstrate how these relatively few combinators allow an impressive amount of flexibility.
 Listings~\ref{lst:rfmt1} and~\ref{lst:rfmt2} shows two different layouts to format an argument list.
 
 \begin{minipage}{.45\textwidth}
@@ -341,18 +341,20 @@ However, our preference changes if the function name is longer as is shown in li
 
 Here, we clearly prefer the stack block in listing~\ref{lst:rfmt4}.
 Listing~\ref{lst:rfmt-example} shows how we use the 6 fundamental blocks in the \rfmt{} combinator algebra to express the choice between these two formatting layouts.
-\lstinputlisting[numbers=none, label={lst:rfmt-example},
+\begin{minipage}{.45\textwidth}
+  \lstinputlisting[numbers=none, label={lst:rfmt-example},
                  caption=Formatting layout for argument lists]{code/rfmt-example.scala}
+\end{minipage}
 The variable $f$ denotes the function name and $a_1, ... a_m$ denotes the argument list.
 Observe that listing~\ref{lst:rfmt-example} does not express how to find the optimal layout.
 
-To find an optimal layout, \rfmt{} employs a novel indexing scheme.
+To find an optimal layout, \rfmt{} employs dynamic programming with a novel indexing scheme.
 First, it is possible enumerate all layout combinations like the re-predictor algorithm does in section~\ref{sec:lisp}.
 This leads to exponential growth which turns out to be a problem for some cases.
 Dynamic programming alleviates exponential growth by allowing us to reuse partial solutions.
 Instead of re-calculating the layout cost at each (starting column, block) pair, we store the result in an associative array keyed by the starting column.
 However, it turns out that this can still be inefficient in terms of memory and speed\footnote{
-  In fact, ClangFormat started with a similar approach, as explained in this\autocite{clang84:online} video recording, but then switched to Dijkstra's shortest path algorithms (which in itself is another form of dynamic programming).
+  In fact, ClangFormat started with a similar approach, as explained in this\autocite{clang84:online} video recording, but then switched to Dijkstra's shortest path algorithm.
 }.
 To overcome this limitation, Yelland -- the \rfmt{} author -- presents an indexing scheme that makes it possible to extrapolate the layout cost even for missing keys.
 We refer to the original paper\autocite{yelland_new_2016} for details.
