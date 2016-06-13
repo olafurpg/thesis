@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 % \usepackage[document]{ragged2e}
 % \usepackage[a4paper, total={5in, 8in}]{geometry}
-\usepackage[english]{babel}
+\usepackage[icelandic,english]{babel}
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{tablefootnote}
 \usepackage{enumerate}
@@ -38,7 +38,7 @@
 \DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3} } }
 \captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize} }
 
-\hyphenpenalty=10000
+% \hyphenpenalty=10000
 % \pretolerance=9999
 % \tolerance=9999
 % \emergencystretch=0pt
@@ -49,7 +49,7 @@
 
 % Single spacing after dots and colons
 \frenchspacing
-\hyphenation{scalafmt}
+% \hyphenation{scalafmt}
 \hyphenation{ClangFormat}
 % \hyphenation{DSLVirtualization}
 % \hyphenation{ReificationTransformation}
@@ -59,7 +59,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\raggedright
 \normalfont
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -88,6 +87,7 @@
 \include{sections/settings}
 \include{sections/cover}
 \include{sections/abstract}
+\raggedright
 \tableofcontents
 \lstlistoflistings
 \listofalgorithms
