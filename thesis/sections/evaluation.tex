@@ -54,7 +54,7 @@ We believe the current performance is usable in a continuous integration setup, 
 The current performance is usable because a typical diff in a code review touches only a few source files, and definitely far from the 106 thousand lines of code that we format in this benchmark.
 On smaller diffs, the gap between Scalariform and scalafmt is less pronounced.
 However, it is worth considering that continuous integration setups may not have access to the same powerful hardware as we do in this benchmarks.
-We estimate that scalafmt requires at least a 2-3x performance improvement to be integrated in continuous integration setups with less powerful hardware and projects that contains large amounts of code.
+We believe that a 2-3x performance improvement for scalafmt is possible and would go far to greatly improve the experience for users with less powerful hardware and projects with large amounts of code.
 
 
 \subsubsection{Micro benchmark}
@@ -91,7 +91,7 @@ Is this performance gap acceptable for interactive software development?
 We believe this performance is usable for occasional code formatting, but not suitable for a workflow that formats on every compilation.
 Amazon famously showed that sales decreased by 1 percent for every 100ms increase in page load time\autocite{kohavi2007online}.
 We believe similar principles apply to scalafmt, every additional millisecond in the running time hampers user adoption.
-Still, we believe that scalafmts appealing formatting output, in many ways, makes up for its slow performance.
+Still, we believe that scalafmt's appealing formatting output, in many ways, makes up for its slow performance.
 As we'll discuss in the following section, our users seem to agree.
 
 \subsection{Adoption}\label{sec:adoption}

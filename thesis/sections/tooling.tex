@@ -51,7 +51,7 @@ The sample was compressed into a 23mb zip file\footnote{See \url{https://github.
 Our test suite would download the sample and test three properties: \emph{can-format}, \emph{AST integrity} and \emph{idempotency}.
 
 \subsubsection{Can-format}
-The can-format property simply says that if the Scala compilers parser is able to parse the source input file, then scalafmt should be able to format the source file.
+The can-format property simply says that if the Scala compiler's parser is able to parse the source input file, then scalafmt should be able to format the source file.
 Although this may seem like a trivial property, it was by far the most effective property at finding bugs in scalafmt.
 Most commonly, comments in unexpected placed caused the best-first search to not reach the last token in the input.
 An overly strict Policy was usually the culprit of such bugs, which was easy to fix thanks to our tracing techniques described in section~\ref{sec:router}.

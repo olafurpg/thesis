@@ -123,7 +123,7 @@ Keyword is a super-class of all scala.meta keyword token types.
 Now, a good observer will notice that this pattern match can quickly grow unwieldy long once you account for all of Scala's rich syntax.
 How does this solution scale?
 Also, once the match grows bigger how can we know from which case each \texttt{Split} origins?
-It turns out that Scalas pattern matching and scala.meta's algebraically typed tokens are able to help us.
+It turns out that Scala's pattern matching and scala.meta's algebraically typed tokens are able to help us.
 
 The Scala compiler can statically detect unreachable code.
 If we add a case that is already covered higher up in the pattern match, the Scala compiler issues a warning.
