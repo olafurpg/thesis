@@ -1,0 +1,7 @@
+* Opinionated code formatter.
+  * Better things to do, focus on design.
+  * Tedious
+  * Coding styles are hard. Any style guide written in English is either so brief that it’s ambiguous, or so long that no one reads it.
+  * Refactoring
+* Demo: https://gist.github.com/olafurpg/09dbcc78d93b0a06543eb141f4355905
+* 

@@ -1,11 +1,9 @@
+//                                                                             |
 int main(int argc, char const* argv[])
 {
-  
-          Defn.Object(Nil, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-Term.Name("State"), Foo.Bar(1, Template(Nil, Seq( Ctor.Ref.Name("ScalaFmtLogger")),
-Term.Param(
-Nil,
-Name.Anonymous(), None, None)),
-Some()), Term.Name("gofmt") );
+  mediator.expectMsg(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, PubSubMediator.Publish(
+            className[MessageEvent],
+                MessageAdded(flowName, Message("Akka rocks!", time))
+        ));
   return 0;
 }

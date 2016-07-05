@@ -14,6 +14,7 @@
 \usepackage{listings}
 \usepackage{tikz}
 \usepackage{xcolor}
+\usepackage[style=authoryear]{biblatex}
 \usepackage{caption}
 \usetikzlibrary{matrix}
 \usetikzlibrary{arrows}
@@ -25,6 +26,7 @@
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3} } }
 \captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize} }
+\addbibresource{project.bib}
 
 \newcommand{\fancyh}{\mathcal{H}}
 \newcommand{\gangle}[1]{\langle{} #1 \rangle{}}
@@ -51,11 +53,11 @@
   numberstyle=\tiny\color{gray},
   showstringspaces=false,
   stepnumber=1,
+  keepspaces=true,
+  showstringspaces=false,
   stringstyle=\color{mauve},
   tabsize=2,
 }
-
-
 
 \mode<presentation>
 {\setbeamertemplate{navigation symbols}{}
@@ -74,7 +76,7 @@
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{value} = [label, black, font=\tiny, thick, node distance=0.4cm]
 
-\title[Scalafmt]{Scalafmt \\ {\small Pretty-printing Scala}}
+\title[scalafmt]{scalafmt: opinionated \\ code formatter for Scala}
 \author{Ólafur Páll Geirsson}
 % \department{School of Computer and Communication Sciences}
 % \project{Semester Project}
@@ -83,27 +85,26 @@
 \logoepfl}
 \date{\today}
 
-
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
 \AtBeginSection[]
 {\begin{frame}<beamer>{Overview}
-        \tableofcontents[
-            sections={1-6},
+  \tableofcontents[
+    sections={1-6},
             currentsection,
             currentsubsection,
             hideothersubsections,
             sectionstyle=show/shaded,
         subsectionstyle=show/shaded/hide]
-    \end{frame}
+\end{frame}
 }
 
 \begin{document}
 
 \newcommand{\logoepfl}[0]{\begin{center}
-    \includegraphics[width=2cm]{logo_epfl_coul.eps}
+  \includegraphics[width=2cm]{logo_epfl_coul.eps}
     \vspace{-0.5cm}
-  \end{center}
+\end{center}
 }
 
 
@@ -111,54 +112,236 @@
 % 0. Titlepage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-    \titlepage{}
+  \titlepage{}
 \end{frame}
-% \begin{frame}{Today's agenda}
-% \tableofcontents[hideallsubsections,
-%     sections={1-6}
-% ]
-% \end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 1. Motivation
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Motivation} % (fold)
-\label{sec:Motivation}
-\begin{frame}[fragile]
-    \frametitle{Motivation}
-    \begin{block}{Mission statement}
-        ???
-    \end{block}
+\begin{frame}{Today's agenda}
+  \tableofcontents[
+    sections={1-6},
+    hideallsubsections
+  ]
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1. Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction} % (fold)
+\label{sec:Introduction}
+
+\begin{frame}{What is code formatting?}
+  \begin{block}{Unformatted}
+    \lstinputlisting[label={lst:unformatted}]{code/unformatted.scala}
+  \end{block}
+\end{frame}
+
+\begin{frame}{What is code formatting?}
+  \begin{block}{Formatted}
+    \lstinputlisting[label={lst:unformatted}]{target/formatted1.scala}
+  \end{block}
+\end{frame}
+
+\begin{frame}{}
+  \begin{center}
+    \Huge
+    Why?
+  \end{center}
+\end{frame}
+
+\begin{frame}{Reason 1: Collaborative environments}
+  \includegraphics[width=\textwidth]{img/codereview.png}
+\end{frame}
+
+\begin{frame}{Reason 2: Refactoring}
+  Large-Scale Automated Refactoring Using ClangMR\footcite{wright_large-scale_2013}
+  \includegraphics[width=\textwidth]{img/clangmr.png}
+\end{frame}
+
+\begin{frame}{Problem statement}
+  \begin{block}{}
+    What \emph{algorithms} and \emph{data structures} allow us to develop a
+    Scala code formatter with the following features?
+    \begin{itemize}
+      \item \emph{Maximum line length setting}
+      \item \emph{Opinionated setting}
+      \item \emph{Vertical alignment}
+      \item \emph{Good performance}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Maximum line length setting}
+  \lstinputlisting{code/linelength.scala}
+\end{frame}
+
+\begin{frame}{Opinionated setting}
+  \begin{block}{My definition}
+    Disregard line breaking decisions in the original source to ensure that
+    formatted sources follow a uniform coding style.
+  \end{block}
+  \lstinputlisting{code/binpack.scala}
+\end{frame}
+
+\begin{frame}{Vertical alignment}
+  \lstinputlisting{code/align.scala}
+\end{frame}
+
+\begin{frame}{Performance}
+  \begin{itemize}
+    \item IDEs: reformat file on save
+    \item Build tools: reformat file on compile
+    \item Continuous integration: reformat diff before code review
+  \end{itemize}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Scalafmt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Scalafmt} % (fold)
-\label{sec:Scalafmt}
+\section{Background} % (fold)
+\label{sec:Background}
+\subsection{Scalariform (2010)}
+
+\begin{frame}{Scalariform}
+  \begin{itemize}
+    \item No maximum line length setting
+    \item No opinionated setting
+  \end{itemize}
+\end{frame}
+
+\subsection{ClangFormat (2013)}
+
+\begin{frame}{}
+  \begin{center}
+    \Huge ClangFormat
+  \end{center}
+\end{frame}
+\begin{frame}{Parser}
+  \begin{itemize}
+    \item Custom \emph{UnwrappedLine} parser for C, C++, Objective-C, Java,
+      JavaScript and Protobuf\footcite{jasper_clang-format_2014}
+      \begin{itemize}
+        \item handles invalid code code
+        \item $\sim$4.000 LOC
+      \end{itemize}
+      \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/unwrapped.png}
+      \end{center}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Line breaking: shortest path search}
+  \begin{itemize}
+    \item Dijkstra's shortest path for optimal line breaking.\footcite{jasper_clang-format_2014}
+      \begin{itemize}
+        \item Non-whitespace tokens are nodes
+        \item Whitespace tokens are edges
+      \end{itemize}
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{img/dijkstra.png}
+  \end{center}
+\end{frame}
+
+\subsection{rfmt (2016)}
+\begin{frame}{}
+  \begin{center}
+    \Huge rfmt
+  \end{center}
+\end{frame}
+
+\begin{frame}{Formatting algebra}
+  \begin{itemize}
+      \item Three layout operators
+        \begin{center}
+          \includegraphics[width=0.8\textwidth]{img/layouts-rfmt.png}
+        \end{center}
+    \item one \emph{choice} operator ``?''
+  \end{itemize}
+\end{frame}
+\begin{frame}{Translating R to formatting algebra}
+  \begin{itemize}
+    \item Custom R parser
+      \begin{itemize}
+        \item $\sim$1.000 LOC
+        \item Comments are AST nodes
+      \end{itemize}
+      \item ``Block language'' implemented in terms of primitive combinators
+        \begin{center}
+          \includegraphics[width=0.8\textwidth]{img/block-rfmt.png}
+        \end{center}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Line breaking: dynamic programming}
+  \begin{minipage}{0.45\textwidth}
+    \begin{itemize}
+      \item Dynamic programming to find optimal line breaking
+        \begin{itemize}
+          \item (AST node, column) pairs are keys
+          \item can extrapolate missing columns
+        \end{itemize}
+    \end{itemize}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \includegraphics[width=0.9\textwidth]{img/dp-rfmt.png}
+  \end{minipage}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2. Scalafmt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{scalafmt} % (fold)
+\label{sec:scalafmt}
+
+\subsection{Algorithms} % (fold)
+
+\begin{frame}{Title}
+  \begin{itemize}
+    \item bullet
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Example split}
+  \lstinputlisting[label={lst:unformatted}]{code/example-split.scala}
+\end{frame}
+
+\subsection{Tooling} % (fold)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3. Conclusion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results} % (fold)
+\label{sec:Results}
+
+\begin{frame}{Verizon}
+  \begin{quote}
+    ``Verizon is now including scalafmt (with reformat on compile settings) in
+    the default template for all new projects (which, in a sizable
+    microservices shop, is a lot of projects)''
+
+    \hfill --- Daniel Spiewak
+  \end{quote}
+\end{frame}
+
 \section{Conclusion} % (fold)
 \label{sec:Conclusion}
 
 \begin{frame}[fragile]
-    \frametitle{Conclusion}
+  \frametitle{Conclusion}
     \begin{block}{Scalafmt}
-        \begin{itemize}
-            \item ???
-        \end{itemize}
+      \begin{itemize}
+        \item ???
+      \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{The End}
+  \frametitle{The End}
     \begin{center}
-        \Huge
+      \Huge
         Thank you!
     \end{center}
+\end{frame}
+
+\begin{frame}{References}
+  \printbibliography{}
 \end{frame}
 
 % subsection Evaluation (end)

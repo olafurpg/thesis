@@ -1,0 +1,23 @@
+digraph Router {
+  graph [fontsize=46,fontname = "Inconsolata"];
+  node [fontsize=80,shape=box, fontname = "Inconsolata"];
+  edge [fontname = "Inconsolata",arrowhead=none];
+  /* {rank = same case class}; */
+  rankdir="LR";
+  charset="utf-8";
+  x [label="x"];
+  class [label="class"];
+  Point [label="Point"];
+  open [label="("];
+  colon1 [label=":"];
+  int1 [label="Int"];
+  comma1 [style="setlinewidth(0)",label="..."];
+
+  class -> Point [label=""];
+  Point -> open;
+  open -> x;
+  x -> colon1;
+  colon1 -> int1;
+  int1 -> comma1;
+}
+
