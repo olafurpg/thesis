@@ -290,19 +290,91 @@
 \section{scalafmt} % (fold)
 \label{sec:scalafmt}
 
+\begin{frame}{Architecture}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{img/architechture.pdf}
+  \end{center}
+\end{frame}
+
+
+% \subsection{Data structures} % (fold)
+%
+% \begin{frame}{FormatToken}
+%   \lstinputlisting{code/format_token.scala}
+% \end{frame}
+%
+% \begin{frame}{Split}
+%   
+% \end{frame}
+%
 \subsection{Algorithms} % (fold)
 
-\begin{frame}{Title}
+\begin{frame}{LineWrapper + Router}
+  \begin{center}
+    \includegraphics[width=\textwidth]{img/router1.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{LineWrapper + Router}
+  \begin{center}
+    \includegraphics[width=\textwidth]{img/router2.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Plain best-first search}
   \begin{itemize}
-    \item bullet
+    \item Small: $\sim$ 20 LOC
+    \item Exponential running time for basic programs
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Example split}
-  \lstinputlisting[label={lst:unformatted}]{code/example-split.scala}
+
+\begin{frame}{Optimization 1: dequeueOnNewStatements}
+  \lstinputlisting{code/dequeue.scala}
 \end{frame}
 
+\begin{frame}{Optimization 2: OptimalToken}
+  \lstinputlisting{code/optimal.scala}
+\end{frame}
+
+\begin{frame}{Optimization 3: escapeInPathologicalCases}
+  \lstinputlisting{code/pathological.scala}
+\end{frame}
+
+% \begin{frame}{Putting it all together}
+%   \lstinputlisting{code/example-split.scala}
+% \end{frame}
+%
+\begin{frame}{}
+  \begin{center}
+    \Huge Tooling
+  \end{center}
+\end{frame}
 \subsection{Tooling} % (fold)
+\begin{frame}{Heatmap}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{img/heatmap.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Diff heatmap}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{img/heatmap2.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Property 1: can format}
+  \lstinputlisting{code/canformat.scala}
+\end{frame}
+
+\begin{frame}{Property 2: can format}
+  \lstinputlisting{code/astintegrity.scala}
+\end{frame}
+
+\begin{frame}{Property 3: idempotent}
+  \lstinputlisting{code/idempotent.scala}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3. Conclusion

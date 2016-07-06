@@ -1,0 +1,1 @@
+Defn.Object(Nil, Term.Name("State"), Template(Nil, Seq(Ctor.Ref.Name("Logger")), Term.Param(Nil, Name.Anonymous(), None, None), Some(Seq(Defn.Val(Nil, Seq(Pat.Var.Term(Term.Name("start"))), None, Term.Apply(Term.Name("State"), Seq())), Defn.Def( /* ... */)))))

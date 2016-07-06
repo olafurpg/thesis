@@ -1,3 +1,4 @@
-// Column 60                                               |
-statement1(argument1, argument2, argument3, argument5, argument6)
-statement2(argument1, argument2, argument3, argument5, argument6)
+def x = {
+  function1(argument1, argument2, argument3)
+  function2(argument1, argument2, argument3)
+}
