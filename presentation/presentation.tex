@@ -114,6 +114,7 @@
 \begin{frame}
   \titlepage{}
 \end{frame}
+
 \begin{frame}{Today's agenda}
   \tableofcontents[
     sections={1-6},
@@ -151,7 +152,7 @@
 \end{frame}
 
 \begin{frame}{Reason 2: Refactoring}
-  Large-Scale Automated Refactoring Using ClangMR\footcite{wright_large-scale_2013}
+  Large-Scale Automated Refactoring Using ClangMR% \footnote{Source: http://research.google.com/pubs/pub41342.html}
   \includegraphics[width=\textwidth]{img/clangmr.png}
 \end{frame}
 
@@ -210,15 +211,15 @@
 
 \begin{frame}{}
   \begin{center}
-    \Huge ClangFormat
+    \Huge ClangFormat% \footnote{Source: \url{https://www.youtube.com/watch?v=s7JmdCfI__c}}
   \end{center}
 \end{frame}
 \begin{frame}{Parser}
   \begin{itemize}
     \item Custom \emph{UnwrappedLine} parser for C, C++, Objective-C, Java,
-      JavaScript and Protobuf\footcite{jasper_clang-format_2014}
+      JavaScript and Protobuf
       \begin{itemize}
-        \item handles invalid code code
+        \item handles invalid code
         \item $\sim$4.000 LOC
       \end{itemize}
       \begin{center}
@@ -229,7 +230,7 @@
 
 \begin{frame}{Line breaking: shortest path search}
   \begin{itemize}
-    \item Dijkstra's shortest path for optimal line breaking.\footcite{jasper_clang-format_2014}
+    \item Dijkstra's shortest path for optimal line breaking.
       \begin{itemize}
         \item Non-whitespace tokens are nodes
         \item Whitespace tokens are edges
@@ -240,50 +241,50 @@
   \end{center}
 \end{frame}
 
-\subsection{rfmt (2016)}
-\begin{frame}{}
-  \begin{center}
-    \Huge rfmt
-  \end{center}
-\end{frame}
-
-\begin{frame}{Formatting algebra}
-  \begin{itemize}
-      \item Three layout operators
-        \begin{center}
-          \includegraphics[width=0.8\textwidth]{img/layouts-rfmt.png}
-        \end{center}
-    \item one \emph{choice} operator ``?''
-  \end{itemize}
-\end{frame}
-\begin{frame}{Translating R to formatting algebra}
-  \begin{itemize}
-    \item Custom R parser
-      \begin{itemize}
-        \item $\sim$1.000 LOC
-        \item Comments are AST nodes
-      \end{itemize}
-      \item ``Block language'' implemented in terms of primitive combinators
-        \begin{center}
-          \includegraphics[width=0.8\textwidth]{img/block-rfmt.png}
-        \end{center}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Line breaking: dynamic programming}
-  \begin{minipage}{0.45\textwidth}
-    \begin{itemize}
-      \item Dynamic programming to find optimal line breaking
-        \begin{itemize}
-          \item (AST node, column) pairs are keys
-          \item can extrapolate missing columns
-        \end{itemize}
-    \end{itemize}
-  \end{minipage}
-  \begin{minipage}{0.5\textwidth}
-    \includegraphics[width=0.9\textwidth]{img/dp-rfmt.png}
-  \end{minipage}
-\end{frame}
+% \subsection{rfmt (2016)}
+% \begin{frame}{}
+%   \begin{center}
+%     \Huge rfmt% \footnote{Source: \url{http://research.google.com/pubs/pub44667.html}}
+%   \end{center}
+% \end{frame}
+%
+% \begin{frame}{Formatting algebra}
+%   \begin{itemize}
+%       \item Three layout operators
+%         \begin{center}
+%           \includegraphics[width=0.8\textwidth]{img/layouts-rfmt.png}
+%         \end{center}
+%     \item one \emph{choice} operator ``?''
+%   \end{itemize}
+% \end{frame}
+% \begin{frame}{Translating R to formatting algebra}
+%   \begin{itemize}
+%     \item Custom R parser
+%       \begin{itemize}
+%         \item $\sim$1.000 LOC
+%         \item Comments are AST nodes
+%       \end{itemize}
+%       \item ``Block language'' implemented in terms of primitive combinators
+%         \begin{center}
+%           \includegraphics[width=0.8\textwidth]{img/block-rfmt.png}
+%         \end{center}
+%   \end{itemize}
+% \end{frame}
+%
+% \begin{frame}{Line breaking: dynamic programming}
+%   \begin{minipage}{0.45\textwidth}
+%     \begin{itemize}
+%       \item Dynamic programming to find optimal line breaking
+%         \begin{itemize}
+%           \item (AST node, column) pairs are keys
+%           \item can extrapolate missing columns
+%         \end{itemize}
+%     \end{itemize}
+%   \end{minipage}
+%   \begin{minipage}{0.5\textwidth}
+%     \includegraphics[width=0.9\textwidth]{img/dp-rfmt.png}
+%   \end{minipage}
+% \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2. Scalafmt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -309,19 +310,28 @@
 %
 \subsection{Algorithms} % (fold)
 
-\begin{frame}{LineWrapper + Router}
+\begin{frame}{LineWrapper + Router: val x = y + z}
   \begin{center}
     \includegraphics[width=\textwidth]{img/router1.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{LineWrapper + Router}
+\begin{frame}{LineWrapper + Router: val x = y + z}
   \begin{center}
     \includegraphics[width=\textwidth]{img/router2.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{Plain best-first search}
+\begin{frame}{Router}
+  \begin{itemize}
+    \item One big pattern match on pairs of tokens
+  \end{itemize}
+  \lstinputlisting[basicstyle={\scriptsize\ttfamily}]{code/match.scala}
+\end{frame}
+
+\newcommand{\naive}{Na\"{\i}ve}
+
+\begin{frame}{\naive{} best-first search}
   \begin{itemize}
     \item Small: $\sim$ 20 LOC
     \item Exponential running time for basic programs
@@ -338,6 +348,10 @@
 \end{frame}
 
 \begin{frame}{Optimization 3: escapeInPathologicalCases}
+  \begin{itemize}
+    \item Give up, default behavior
+    \item Best-effort, \texttt{--bestEffortInDeeplyNestedCode}
+  \end{itemize}
   \lstinputlisting{code/pathological.scala}
 \end{frame}
 
@@ -345,11 +359,38 @@
 %   \lstinputlisting{code/example-split.scala}
 % \end{frame}
 %
+% \begin{frame}{Vertical alignment}
+%   \begin{itemize}
+%     \item Implementation: 130 LOC imperative
+%     \item Running time: linear
+%     \item Configuration: \texttt{--alignTokens =>;Case,->;Infix,//;.*}
+%   \end{itemize}
+%   \lstinputlisting{code/align2.scala}
+% \end{frame}
+
+\begin{frame}{Summary: algorithms}
+  \begin{table}[H]
+    \centering
+    \label{}
+    \begin{tabular}{ll}
+      Component & Lines of code \\
+      \hline \hline
+      Router & 1.070 \\
+      FormatWriter & 175 \\
+      Best-first search & 369 \\
+      Utilities and data structures & 1.547 \\
+      \hline
+      Total & 3.161
+    \end{tabular}
+  \end{table}
+\end{frame}
+
 \begin{frame}{}
   \begin{center}
     \Huge Tooling
   \end{center}
 \end{frame}
+
 \subsection{Tooling} % (fold)
 \begin{frame}{Heatmap}
   \begin{center}
@@ -363,16 +404,33 @@
   \end{center}
 \end{frame}
 
+\subsection{Testing}
+
+\begin{frame}{}
+  \begin{center}
+    \Huge Testing?
+  \end{center}
+\end{frame}
+
 \begin{frame}{Property 1: can format}
   \lstinputlisting{code/canformat.scala}
 \end{frame}
 
-\begin{frame}{Property 2: can format}
+\begin{frame}{Property 2: AST integrity}
   \lstinputlisting{code/astintegrity.scala}
 \end{frame}
 
 \begin{frame}{Property 3: idempotent}
   \lstinputlisting{code/idempotent.scala}
+\end{frame}
+
+
+\subsection{Demo}
+
+\begin{frame}{Demo}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{img/doingdog.jpg}
+  \end{center}
 \end{frame}
 
 
@@ -382,27 +440,127 @@
 \section{Results} % (fold)
 \label{sec:Results}
 
+\subsection{Performance}
+
+
+\begin{frame}{Macro benchmark}
+  \begin{block}{Insight}
+    How does scalafmt perform in a continuous integration setup?
+  \end{block}
+  \begin{block}{Task}
+    Format Scala.js repo.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Macro benchmark}
+  \begin{table}[H]
+    \centering
+    \input{tables/macro.tex}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Micro benchmark}
+  \begin{block}{Insight}
+     How does scalafmt perform in an interactive software developer workflow?
+  \end{block}
+  \begin{block}{Task}
+    Format single source file.
+  \end{block}
+\end{frame}
+
+\begin{frame}{File sizes}
+  \begin{table}[H]
+    \centering
+    \caption{Lines of code per source file. Collected from sample of $\sim$27.000 source files with total 3.2 million lines of code.}\label{tab:micro}
+    \input{tables/file_sizes.tex}
+  \end{table}
+  \begin{itemize}
+    \item Small: $\sim$ 50 LOC
+    \item Medium: $\sim$ 300 LOC
+    \item Large: $\sim$ 1.000 LOC
+    \item Extra large: $\sim$ 4.500 LOC
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Micro benchmark: results}
+  \begin{table}[H]
+    \centering
+    \input{tables/micro2.tex}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Micro benchmark: results}
+  \begin{table}[H]
+    \centering
+    \input{tables/micro1.tex}
+  \end{table}
+\end{frame}
+
+
+\subsection{User adoption}
+
+\begin{frame}{Installations}
+  \begin{table}[]
+    \centering
+    \caption{Download numbers for scalafmt}
+    \input{tables/installs.tex} 
+  \end{table}
+\end{frame}
+
+\begin{frame}{Installations}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90,width=0.5\textwidth]{tables/month.eps}
+    \caption{Scalafmt installations by month by channel}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Miscellanea}
+  \begin{itemize}
+    \item Libraries that have reformatted their codebase with scalafmt:
+      \begin{itemize}
+        \item scala-native
+        \item scala-js-dom\footnote{With a bit of manual help}
+        \item psp-std
+        \item fetch
+        \item $\ldots$
+      \end{itemize}
+    \item 9 contributors to code and documentation
+    \item 34 users have reported 138 issues on Github
+    \item 66 members in Gitter channel
+    \item 7.469 visits to documentation with 1min 48s avg visit time
+    \item 3 conferences where scalafmt was presented
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Verizon}
   \begin{quote}
     ``Verizon is now including scalafmt (with reformat on compile settings) in
     the default template for all new projects (which, in a sizable
-    microservices shop, is a lot of projects)''
+    microservices shop, is a lot of projects)\\
+    thanks for an awesome tool!''
 
-    \hfill --- Daniel Spiewak
+    \hfill --- Daniel Spiewak% \footnote{Source: \url{https://gitter.im/olafurpg/scalafmt?at=5776b518cdab7a1f4fbefd31}}
   \end{quote}
 \end{frame}
 
 \section{Conclusion} % (fold)
 \label{sec:Conclusion}
 
-\begin{frame}[fragile]
-  \frametitle{Conclusion}
-    \begin{block}{Scalafmt}
-      \begin{itemize}
-        \item ???
-      \end{itemize}
-    \end{block}
+\begin{frame}{Conclusions}
+  \begin{table}
+    \centering
+    \begin{tabular}{ll}
+      Maximum line length setting & $\checkmark$ \\
+      Opinionated settings        & $\checkmark$ \\
+      Vertical alignment          & $\checkmark$ \\
+      Performance                 & ?\footnote{6x slower than scalariform,
+                                               but that seems OK for many users}
+    \end{tabular}
+  \end{table}
 \end{frame}
+
+
 
 \begin{frame}[fragile]
   \frametitle{The End}
@@ -411,12 +569,6 @@
         Thank you!
     \end{center}
 \end{frame}
-
-\begin{frame}{References}
-  \printbibliography{}
-\end{frame}
-
-% subsection Evaluation (end)
 
 
 \end{document}

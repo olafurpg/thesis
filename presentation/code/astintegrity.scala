@@ -1,3 +1,3 @@
 forAll { code =>
-  ast(code) == ast(format(code))
+  ast(code) structuralEquals ast(format(code))
 }

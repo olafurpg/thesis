@@ -578,11 +578,11 @@
                Address("Lausanne", "Switzerland"))
 
     }
-@skipSlide
+@slide
   @input(`type`:="range", min:="20", step:="5", max:="150", id:="demo-slider", value:="80")
   @span(id:="slider-value","80")
   @pre(code(id:="demo", contenteditable:="true", `class`:="hljs scala", """object BestFirstSearch {
-  DBObject(User(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+  DBObject(User(Name("Eugene", "Burmako"), Language("Scala")), Address("Lausanne", "Switzerland"))
 
   StandardOutLogger.print(Error(new LoggerException, logName, this.getClass, "unknown akka.loglevel " + system.settings.LogLevel))
 
