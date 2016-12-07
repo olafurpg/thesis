@@ -181,7 +181,7 @@ object RevealJs {
   class hl(lang: String) {
     def apply(codeToHighlight: String) = {
       pre(
-        style := "font-size: 0.46em", // fits 80 characters on column in my machine
+        style := "font-size: 0.86em", // fits 80 characters on column in my machine
         code(
           `class` := s"hljs $lang",
           contentEdit,

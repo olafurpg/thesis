@@ -1,0 +1,716 @@
+@import com.geirsson.reavealjs.RevealJs._
+
+@def selfSlides = a(href:="https://geirsson.com/assets/scalax-2016/#/", "geirsson.com/assets/scalax-2016")
+
+@slide
+  @h1
+    scalafix
+  @p
+    Smooth migrations to Dotty
+  @p
+    - Ólafur Geirsson, @@olafurpg
+  @p
+    @img(style := "border: none;", `class`:="noborder", width:="15%", src:="img/scalacenter.png")
+@slide
+  @h2
+    About me
+  @ul
+    @li
+      Recent Master's at EPFL
+    @li
+      65% at Scala Center
+    @li
+      35% experimenting with own stuff
+@slide
+  @h2
+    scalafmt
+  @hl.scala
+    -  Repositories.filter { t =>
+    -    (t.origin === repo.bind)
+    -  }.sortBy(_.userName asc).list
+    +  Repositories
+    +    .filter { t =>
+    +      (t.origin === repo.bind)
+    +    }
+    +    .sortBy(_.userName asc)
+    +    .list
+@slide
+  @hl.scala
+    object UserRepo {
+
+    }
+@skipSlide
+  @h2
+    These slides, @selfSlides
+@skipSlide
+  @comment
+    Hello everybody, I'm Olaf.
+    I'm a master's student at Martin Odersky's lab at EPFL.
+    Let me start with a quick survey, how many in this room use code formatters?
+    How many of you **like** your code formatters? Okay, good to know.
+    I've been passionate about code formatting for a while now.
+    Almost a year ago I chose to work on a project at Google to increase
+    adoption of clang-format in C++ projects.
+    In the process, I learned a lot why people like and don't like code formatters.
+    For my master's thesis, I wanted to bring a new code formatter to the Scala community.
+    I contacted Eugene, the author of Scala macros and scala.meta, in November.
+    I'm really excited to share with you where we are today with the project.
+@slide
+  @h2
+    Agenda
+  @ul
+    @li
+      Why?
+    @li
+      Demo.
+    @li
+      Scalariform.
+    @li
+      How it works.
+@slide
+  @h1
+    WHY?
+@slide
+  @h3
+    Reason 1: We have better things to do
+  @p
+    @img(src:="img/time-sink.png")
+@slide
+  @p
+    @img(src:="img/klang.png")
+@slide
+  @p
+    @img(src:="img/fommil.png")
+@slide
+  @h3
+    Reason 2: Refactoring
+  @p
+    @img(style:="width: 100%;", src:="img/refactoring-intellij.png")
+@slide
+  @hl.scala
+    // Before
+    UserRepo hasEmail me.id flatMap { user =>
+      AccountRepo hasStatement user.id flatMap { statement =>
+        BalanceRepo hasBalance statement.id
+      }
+    }
+    // After
+    for {
+      user <- UserRepo.hasEmail(me.id)
+      statement <- AccountRepo.hasStatement(user.id)
+      balance <- BalanceRepo.hasBalance(statement.id)
+    } yield balance
+@slide
+  @p
+    @img(style:="width: 100%;", src:="img/clangmr.png")
+  @p
+    @(fontSize := "0.8em")
+    Wright et al., “Large-Scale Automated Refactoring Using ClangMR.”
+@slide
+  @p
+    @img(style:="width: 100%;", src:="img/cpp11.png")
+@slide
+  @h3
+    Reason 3: It's tedious
+  @hl.scala
+    // Columns 80                                                                  |
+    case class Split(modification: Modification,
+                     cost: Int,
+                     ignoreIf: Boolean = false,
+                     indents: Vector[Indent[Length]],
+                     policy: Policy = NoPolicy,
+                     penalty: Boolean = false,
+                     optimalAt: Option[OptimalToken] = None)
+@slide
+  @hl.scala
+    // Columns 80                                                                  |
+    case class Split(modification: Modification,
+                     cost: Int,
+                     ignoreIf: Boolean = false,
+                     indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
+                     policy: Policy = NoPolicy,
+                     penalty: Boolean = false,
+                     optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
+@slide
+  @hl.scala
+    // Columns 80                                                                  |
+    case class Split(
+        modification: Modification,
+        cost: Int,
+        ignoreIf: Boolean = false,
+        indents: Vector[Indent[Length]] = Vector.empty[Indent[Length]],
+        policy: Policy = NoPolicy,
+        penalty: Boolean = false,
+        optimalAt: Option[OptimalToken] = None)(implicit val line: sourcecode.Line)
+@slide
+  @h3
+    Reason 4: Coding styles are hard
+  @p
+    @img(style:="width: 100%;", src:="img/coding-style.png")
+@slide
+  @blockquote
+    "Any style guide written in English is either so brief that it’s ambiguous, or so long that no one reads it." @br
+    @p
+      @(fontSize := "0.6em")
+      -- Bob Nystrom, @a(href:="http://journal.stuffwithstuff.com/2015/09/08/the-hardest-program-ive-ever-written/", "Hardest Program I've Ever Written")
+      , Dart, Google.
+@slide
+  @p
+    @img(style:="width: 100%;", src:="img/challenge-accepted.jpg")
+@slide
+  @h1
+    Demo
+  @p
+    @img(src:="img/doingdog.jpg")
+@slide
+  @h2
+    Case-study 1: Spark
+  @p
+    @img(width:="20%", src:="img/spark.png")
+ @slide
+  @h3
+    olafurpg/spark/pull/1
+  @tabulate(Seq("Scala files", "2.361"),
+            Seq(Seq("Lines of code", "515.515"),
+                Seq("Time to format", "40.2s"),
+                Seq("Longest line", "158 chars")),
+                 Map.empty)
+  @hl.scala
+    val converters = (0 to x - 1).map(x => s"lazy val converter$x = CatalystTypeConverters.createToScalaConverter(child$x.dataType)").reduce(_ + "\n  " + _)
+    -
+  @p
+    scalafmt command:
+  @hl.scala
+    scalafmt --maxColumn 100 --javaDocs --files . -i
+    //
+@slide
+  @h3
+    Before
+  @hl.scala
+    -  def getJobIdsForGroup(jobGroup: String): Array[Int] = sc.statusTracker.getJobIdsForGroup(jobGroup)
+    -
+  @h3
+    After
+  @hl.scala
+    +  def getJobIdsForGroup(jobGroup: String): Array[Int] =
+    +    sc.statusTracker.getJobIdsForGroup(jobGroup)
+@slide
+  @h3
+    Before
+  @hl.scala
+     -    listenerBus.post(SparkListenerApplicationStart(appName, Some(applicationId),
+     -      startTime, sparkUser, applicationAttemptId, schedulerBackend.getDriverLogUrls))
+  @h3
+    After
+  @hl.scala
+     +    listenerBus.post(
+     +        SparkListenerApplicationStart(appName,
+     +                                      Some(applicationId),
+     +                                      startTime,
+     +                                      sparkUser,
+     +                                      applicationAttemptId,
+     +                                      schedulerBackend.getDriverLogUrls))
+@slide
+  @h3
+    Before
+  @hl.scala
+     -    new JavaPairRDD[K, V](rdd.sampleByKey(
+     -      withReplacement,
+     -      fractions.asScala.mapValues(_.toDouble).toMap, // map to Scala Double; toMap to serialize
+     -      seed))
+  @h3
+    After
+  @hl.scala
+     +    new JavaPairRDD[K, V](
+     +        rdd.sampleByKey(
+     +            withReplacement,
+     +            fractions.asScala.mapValues(_.toDouble).toMap, // map to Scala Double; toMap to serialize
+     +            seed))
+@slide
+  @h2
+    Case-study 2: typelevel/cats
+  @p
+    @img(src:="img/cats2.png")
+  @comment
+    It’s a Play application that’s open source and uses almost every single feature that Play has. Most of the time it’s based off a snapshot build.
+@slide
+  @h2
+    olafurpg/cats/pull/1
+  @tabulate(Seq("Scala files", "295"),
+            Seq(Seq("Lines of code", "17.493"),
+                Seq("Time to format", "4.9s"),
+                Seq("Longest line", "136 chars")),
+                Map.empty)
+  @hl.scala
+    private[data] trait XorTMonadCombine[F[_], L] extends MonadCombine[XorT[F, L, ?]] with XorTMonadFilter[F, L] with XorTSemigroupK[F, L] {
+    -
+  @p
+    scalafmt command:
+  @hl.scala
+    scalafmt --maxColumn 100 --continuationIndentCallSite 2 --javaDocs --files . -i
+@slide
+  @h3
+    Before
+  @hl.scala
+    -  implicit def constSemigroup[A: Semigroup, B]: Semigroup[Const[A, B]] = new Semigroup[Const[A, B]] {
+    -    ...
+    -  }
+  @h3
+    After
+  @hl.scala
+    +  implicit def constSemigroup[A : Semigroup, B]: Semigroup[Const[A, B]] =
+    +    new Semigroup[Const[A, B]] {
+    +      ...
+    +    }
+@skipSlide
+  @h3
+    Before
+  @hl.scala
+    -      override def product[A, B](fa: FA[S, A], fb: FA[S, B]): FA[S, (A, B)] = ap(fa.map((a: A) => (b: B) => (a, b)))(fb)
+    -
+  @h3
+    After
+  @hl.scala
+    +      override def product[A, B](fa: FA[S, A], fb: FA[S, B]): FA[S, (A, B)] =
+    +        ap(fa.map((a: A) => (b: B) => (a, b)))(fb)
+@slide
+  @h3
+    Before
+  @hl.scala
+    -    Arbitrary(Gen.oneOf(
+    -      getArbitrary[A].map(Eval.now(_)),
+    -      getArbitrary[A].map(Eval.later(_)),
+    -      getArbitrary[A].map(Eval.always(_))))
+  @h3
+    After
+  @hl.scala
+    +    Arbitrary(
+    +      Gen.oneOf(getArbitrary[A].map(Eval.now(_)),
+    +                getArbitrary[A].map(Eval.later(_)),
+    +                getArbitrary[A].map(Eval.always(_))))
+@slide
+  @h3
+    Before
+  @hl.scala
+    -   /**
+    -     * Lift a function into the context of an Arrow
+    -     */
+  @h3
+    After
+  @hl.scala
+    +   /**
+    +    * Lift a function into the context of an Arrow
+    +    */
+@slide
+  @h3
+    Before
+  @hl.scala
+    -  def traverse[A: Arbitrary, B: Arbitrary, C: Arbitrary, M: Arbitrary, X[_]: Applicative, Y[_]: Applicative](implicit
+    -    ArbFA: Arbitrary[F[A]],
+    -    ArbXB: Arbitrary[X[B]],
+    -    ArbYB: Arbitrary[Y[B]],
+    -    ArbYC: Arbitrary[Y[C]],
+    -    M: Monoid[M],
+    -    ...
+  @h3
+    After
+  @hl.scala
+    +  def traverse[A : Arbitrary,
+    +               B : Arbitrary,
+    +               C : Arbitrary,
+    +               M : Arbitrary,
+    +               X[_]: Applicative,
+    +               Y[_]: Applicative](implicit ArbFA: Arbitrary[F[A]],
+    +                                  ArbXB: Arbitrary[X[B]],
+    +                                  ArbYB: Arbitrary[Y[B]],
+    +                                  ArbYC: Arbitrary[Y[C]],
+    +                                  M: Monoid[M],
+    +                                  ...
+@slide
+  @h3
+    Before
+  @hl.scala
+     trait AllInstances
+     -  extends FunctionInstances
+     -  with    StringInstances
+     -  with    EitherInstances
+     -  with    ListInstances
+     -  with    OptionInstances
+     -  with    SetInstances
+     -  with    StreamInstances
+  @h3
+    After
+  @hl.scala
+     +    extends FunctionInstances with StringInstances with EitherInstances with ListInstances
+     +    with OptionInstances with SetInstances with StreamInstances
+@slide
+  @h2
+    Case-study 3: lichess.org
+  @p
+    @img(src:="img/lichess.png")
+  @comment
+    It’s a Play application that’s open source and uses almost every single feature that Play has. Most of the time it’s based off a snapshot build.
+@slide
+  @h3
+    olafurpg/lila/pull/1
+  @tabulate(Seq("Scala files", "743"),
+            Seq(Seq("Lines of code", "63.228"),
+                Seq("Time to format", "11.3s"),
+                Seq("Longest line", "147 chars")),
+                 Map.empty)
+  @hl.scala
+    protected def FormFuResult[A, B: Writeable: ContentTypeOf](form: Form[A])(err: Form[A] => Fu[B])(op: A => Fu[Result])(implicit req: Request[_]) =
+    -
+  @p
+    scalafmt command:
+  @hl.scala
+    scalafmt --maxColumn 100 --continuationIndentCallSite 2 --style defaultWithAlign --files . -i
+    //
+@slide
+  @h3
+    Before
+  @hl.scala
+     -  protected def SocketOptionLimited[A: FrameFormatter](consumer: TokenBucket.Consumer, name: String)(f: Context => Fu[Option[(Iteratee[A, _], Enumerator[A])]]) =
+     -
+  @h3
+    After
+  @hl.scala
+     +  protected def SocketOptionLimited[A : FrameFormatter](
+     +      consumer: TokenBucket.Consumer, name: String)(
+     +      f: Context => Fu[Option[(Iteratee[A, _], Enumerator[A])]]) =
+@slide
+  @h3
+    Before
+  @hl.scala
+    -      WS.url(url).get().map(_.body).mon(_.security.proxy.request.time).flatMap { str =>
+    -        ...
+    -      }.addEffects( ... )
+  @h3
+    After
+  @hl.scala
+    +      WS.url(url)
+    +        .get()
+    +        .map(_.body)
+    +        .mon(_.security.proxy.request.time)
+    +        .flatMap { str =>
+    +          ...
+    +        }
+    +        .addEffects( ... )
+@slide
+  @h3
+    Before
+  @hl.scala
+    -      case (((((((((((((nbUsers, ranks), nbPlaying), nbImported), crosstable), ratingChart), nbFollowing), nbFollowers), nbBlockers), nbPosts), isDonor), trophies), insightVisible), playTime) =>
+    -
+  @h3
+    After
+  @hl.scala
+    +      case (((((((((((((nbUsers, ranks), nbPlaying), nbImported), crosstable),
+    +                    ratingChart),
+    +                   nbFollowing),
+    +                  nbFollowers),
+    +                 nbBlockers),
+    +                nbPosts),
+    +               isDonor),
+    +              trophies),
+    +             insightVisible),
+    +            playTime) =>
+@slide
+  @h3
+    Before
+  @hl.scala
+    -        Ok.chunked(Enumerator.outputStream(env.pngExport(game))).withHeaders(
+    -          CONTENT_TYPE -> "image/png",
+    -          CACHE_CONTROL -> "max-age=7200")
+  @h3
+    After
+  @hl.scala
+    +        Ok.chunked(Enumerator.outputStream(env.pngExport(game)))
+    +          .withHeaders(CONTENT_TYPE  -> "image/png",
+    +                       CACHE_CONTROL -> "max-age=7200")
+@slide
+  @hl.scala
+    +Ok(
+    +    Json.obj(
+    +        "api"                                    -> Json.obj("current" -> api.currentVersion,
+    +                          "olds"                 -> api.oldVersions.map { old =>
+    +                        Json.obj("version"       -> old.version,
+    +                                 "deprecatedAt"  -> old.deprecatedAt,
+    +                                 "unsupportedAt" -> old.unsupportedAt)
+    +                      })
+    +    )) as JSON
+  @p
+    @img(`class`:="fragment", src:="img/wat.jpg", width:="30%")
+@slide
+  @h3
+    What it should look like
+  @hl.scala
+    +    Ok(
+    +        Json.obj(
+    +            "api" -> Json.obj("current" -> api.currentVersion,
+    +                              "olds"    -> api.oldVersions.map { old =>
+    +                            Json.obj("version"       -> old.version,
+    +                                     "deprecatedAt"  -> old.deprecatedAt,
+    +                                     "unsupportedAt" -> old.unsupportedAt)
+    +                     })
+    +        )) as JSON
+@slide
+  @h3
+    Try it yourself
+  @ul
+    @li
+      SBT plugin
+    @li
+      IntelliJ plugin
+    @li
+      @code("brew install olafurpg/scalafmt/scalafmt")
+    @li
+      Download @code("scalafmt.jar") via Github releases.
+    @li
+      See @a(href:= "http://scalafmt.org", "documentation").
+@slide
+  @h3
+    Where are we now?
+  @ul
+    @li
+      Can format almost any Scala code.
+    @li
+      Formatting options:
+      @ul
+        @li
+          --style default,
+        @li
+          --style defaultWithAlign,
+        @li
+          --style scalaJs (experimental)
+        @li
+          --maxColumn 120
+        @li
+          --javaDocs / --scalaDocs
+        @li
+          --continuationIndentCallSite 2
+@slide
+  @h1
+    Scalariform?
+@slide
+  @h1
+    --maxColumn
+@slide
+  @h1
+    How does scalafmt work?
+@slide
+  @h3
+    scala.meta
+  @p
+    Tokenizer: String => scala.meta.Tokens
+  @hl.scala
+    scala> import scala.meta._
+    scala> """object Main extends App { world =>
+                println(s"Hello $world!")
+              }
+           """.tokenize.get
+           res3: Tokens = Tokens(
+             BOF (0..0),
+             object (0..6),
+               (6..7),
+             Main (7..11),
+               (11..12),
+             extends (12..19),
+               (19..20),
+             App (20..23),
+               (23..24),
+             { (24..25),
+               (25..26),
+             world (26..31),
+           ...
+@slide
+  @h3
+    scala.meta
+  @p
+    Parser: String => scala.meta.Tree
+  @hl.scala
+    scala> import scala.meta._
+    scala> """object Main extends App { world =>
+                println(s"Hello $world!")
+              }
+              """.parse[Stat].get.show[Structure]
+    res9: String = """
+    Defn.Object(Nil, Term.Name("Main"),
+                Template(Nil, Seq(Ctor.Ref.Name("App")),
+                Term.Param(Nil, Term.Name("world"), None, None),
+                Some(Seq(Term.Apply(Term.Name("println"),
+                                    Seq(Term.Interpolate(Term.Name("s"),
+                                                         Seq(Lit("Hello "),
+                                                         Lit("!")),
+                                                         Seq(Term.Name("world")))))))))
+    """
+@slide
+  @h2
+    TeX: wrapping text
+  @p
+    @img(src:="img/tex.png", width:="70%")
+    @img(src:="img/knuth.jpg", width:="15%")
+@slide
+  @h2
+    Every line break has a penalty
+  @hl.scala
+    // 50 columns                                    |
+    object BestFirstSearch {                                        // 1 penalty
+      DBObject(User(Name("Martin", "Odersky"),                      // 5 penalty
+                    Language("Scala")),                             // 3 penalty
+               Address("Lausanne", "Switzerland"))                  // 0 penalty
+    }                                                               // 0 penalty
+                                                                    //----------
+                                                                    // 9 total
+@slide
+  @h2
+    Exceeding column limit is expensive
+  @hl.scala
+    // 50 columns                                    |
+    object BestFirstSearch {                                       // 1    penalty
+      DBObject(User(Name("Martin", "Odersky"), Language("Scala")), // 1002 penalty
+               Address("Lausanne", "Switzerland"))                 // 0    penalty
+    }                                                              // 0    penalty
+                                                                   //-------------
+                                                                   // 1002 total
+@slide
+  @h3
+    Try all the combinations using best-first search
+  @hl.scala
+    // 50 columns                                    |
+    object BestFirstSearch {
+      DBObject(User(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+      DBObject(
+          User(Name("Martin", "Odersky"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+      DBObject(User(Name("Martin", "Odersky"), Language("Scala")),
+               Address("Lausanne", "Switzerland"))
+
+      DBObject(
+          User(Name("Martin", "Odersky"), Language("Scala")),
+          Address("Lausanne", "Switzerland"))
+
+      DBObject(User(Name("Martin", "Odersky"),
+                    Language("Scala")),
+               Address("Lausanne", "Switzerland"))
+
+    }
+@slide
+  @input(`type`:="range", min:="20", step:="5", max:="150", id:="demo-slider", value:="80")
+  @span(id:="slider-value","80")
+  @pre(code(id:="demo", contenteditable:="true", `class`:="hljs scala", """object BestFirstSearch {
+  DBObject(User(Name("Eugene", "Burmako"), Language("Scala")), Address("Lausanne", "Switzerland"))
+
+  StandardOutLogger.print(Error(new LoggerException, logName, this.getClass, "unknown akka.loglevel " + system.settings.LogLevel))
+
+  checkAll("CofreeZipLazyOption", applicative.laws[CofreeZipLazyOption](implicitly, implicitly, implicitly, CofreeZipLazyOptionEqual))
+
+
+
+
+
+
+
+
+
+
+}"""))
+  @inlineJs("demo.js")
+@slide
+  @h3
+    Testing?
+@slide
+  @h3
+    Property 1: AST preservation
+  @blockquote
+    ast(code) == ast(format(code))
+@slide
+  @h3
+    Property 2: Idempotency
+  @blockquote
+    format(code) == format(format(code))
+  @p
+    @(fontSize := "0.6em")
+    See @a(href:="https://github.com/olafurpg/scalafmt/issues/192", "#192").
+@slide
+  @h3
+    Manual testing...
+  @p
+    @img(`class`:="noborder", width:="100%", src:="img/diff-testing.png")
+@slide
+  @h3
+    More important problems, vertical alignment
+  @p
+    @hl.scala
+      object VerticalAlignment {
+        def name   = column[String]("name")
+        def status = column[Int]("status")
+
+        for {
+          dao  <- olafur   \/> "Can't find olafur"
+          user <- dao.user \/> "Join failed: no user object"
+        }
+
+        libraryDependencies ++= Seq(
+          "org.scalameta" %  "scalameta"  % "0.1.0-RC4-M10",
+          "com.lihaoyi"   %% "sourcecode" % "0.1.1"
+        )
+      }
+@slide
+  @h2
+    Summary.
+  @ul
+    @li
+      @(`class`:="fragment")
+      Code formatting has many benefits.
+    @li
+      @(`class`:="fragment")
+      Coding styles are hard.
+    @li
+      @(`class`:="fragment")
+      scalafmt is out there.
+    @li
+      @(`class`:="fragment")
+      scalafmt is still very young
+@slide
+  @h3
+    Roadmap
+  @ul
+    @li
+      @(`class`:="fragment")
+      Bugs, please report weird formatting output!
+    @li
+      @(`class`:="fragment")
+      More coding styles: spark, typelevel, ...
+    @li
+      @(`class`:="fragment")
+      Coding style detection.
+    @li
+      @(`class`:="fragment")
+      Format @code("git diff").
+    @li
+      @(`class`:="fragment")
+      Format docstrings.
+    @li
+      @(`class`:="fragment")
+      Incremental formatting.
+    @li
+      @(`class`:="fragment")
+      scala-tidy
+    @li
+      @(`class`:="fragment")
+      Dynamic style configuration.
+    @li
+      @(`class`:="fragment")
+      ...
+@slide
+  @(style := "text-align: left;")
+  @h1
+    THANK YOU
+  @p
+      - Visit documentation: @a(href:="http://scalafmt.org", "scalafmt.org") @br
+      - See slides: @selfSlides @br
+      - @a(href:="http://github.com/olafurpg/scalafmt", "Contribute with PRs and reporting issues.") @br
+      - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
+      - @a(href:="http://gitter.im/olafurpg/scalafmt", "Chat on Gitter.") @br

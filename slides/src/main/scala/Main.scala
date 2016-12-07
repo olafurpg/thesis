@@ -21,11 +21,17 @@ object Decks {
     "Ólafur Páll Geirsson",
     Themes.white,
     scalatex.scalaItaly())
+  val scala_eXchange = SlideDeck(
+    "Smooth migrations to Dotty with scalafix",
+    "",
+    "Ólafur Páll Geirsson",
+    Themes.beige,
+    scalatex.scalax())
 }
 
 object Main extends App {
   val pp = new scala.xml.PrettyPrinter(80, 2)
-  val scalatexOutput = RevealJs.render(Decks.scala_Italy)
+  val scalatexOutput = RevealJs.render(Decks.scala_eXchange)
   println(scalatexOutput)
   Files.write(Paths.get("target", "scala-2.11", "classes", "index.html"),
               scalatexOutput.getBytes)
