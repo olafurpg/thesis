@@ -30,7 +30,7 @@ object Themes {
   val moon = "moon"
 }
 
-object RevealJs {
+object RevealJs extends com.geirsson.scalatags.Tags {
 
   def inlineJs(file: String) = {
     val contents = new String(Files.readAllBytes(
@@ -84,11 +84,11 @@ object RevealJs {
           |			// More info https://github.com/hakimel/reveal.js#configuration
           |			Reveal.initialize({
           |				slideNumber: true,
-          |				controls: true,
+          |				controls: false,
           |				progress: true,
           |				history: true,
           |				center: true,
-          |				transition: 'slide', // none/fade/slide/convex/concave/zoom
+          |				transition: 'none', // none/fade/slide/convex/concave/zoom
           |				// More info https://github.com/hakimel/reveal.js#dependencies
           |				dependencies: [
           |					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -181,7 +181,7 @@ object RevealJs {
   class hl(lang: String) {
     def apply(codeToHighlight: String) = {
       pre(
-        style := "font-size: 0.86em", // fits 80 characters on column in my machine
+        style := "font-size: 0.56em", // fits 80 characters on column in my machine
         code(
           `class` := s"hljs $lang",
           contentEdit,
@@ -192,6 +192,7 @@ object RevealJs {
     }
   }
 
+  def lnk(title: String, url: String) = a(href:=url, title)
   def comment(str: String) = span("")
 
   object hl {
