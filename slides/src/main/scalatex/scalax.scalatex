@@ -24,16 +24,8 @@
 @slide
   @h2
     scalafmt
-  @hl.scala
-    -  Repositories.filter { t =>
-    -    (t.origin === repo.bind)
-    -  }.sortBy(_.userName asc).list
-    +  Repositories
-    +    .filter { t =>
-    +      (t.origin === repo.bind)
-    +    }
-    +    .sortBy(_.userName asc)
-    +    .list
+  @p
+    @img(src:="img/scalafmt-diff.png")
 @slide
   @hl.scala
     object UserRepo {
