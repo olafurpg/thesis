@@ -1,0 +1,255 @@
+@import com.geirsson.reavealjs.RevealJs._
+
+@def selfSlides = a(href:="https://geirsson.com/assets/scalax-2016/#/", "geirsson.com/assets/scalax-2016")
+@def twitter = a(href:="https://twitter.com/olafurpg", "@olafurpg")
+
+@slide
+  @h1
+    scalafix
+  @p
+    Smooth migrations to Dotty
+  @p
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
+  @comment
+    img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+@slide
+  @h1
+    scalafix
+  @p
+    Refactoring tools for everyone!
+  @p
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
+@slide
+  @h2
+    About me
+  @ul
+    @li
+      Recent Master's at EPFL
+    @li
+      65% at Scala Center
+    @li
+      35% experimenting with own stuff
+@slide
+  @h2
+    scalafmt
+  @p
+    @img(src:="img/scalafmt-diff.png")
+@slide
+  @h2
+    scalafix
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    Agenda
+  @ol
+    @li
+      Motivation
+    @li
+      Demo
+    @li
+      How it works
+@slide
+  @h1
+    1. Why?
+@slide
+  @h2
+    Move fast and break things
+@slide
+  @h2
+    @s{Move fast and break things} @br
+    Move fast and automatically refactor things
+@slide
+  @h2
+    Scala
+@slide
+  @h2
+    any2stringadd
+  @p
+    @img(src:="img/any2stringadd.png")
+@slide
+  @h2
+    language.postfixOps
+  @p
+    @img(src:="img/postfix.png")
+@slide
+  @h2
+    Xor => Either
+  @p
+    @img(src:="img/xor.png")
+@slide
+  @h2
+    Dotty
+@slide
+  @h2
+    Explicit types for implicit definitions
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    Function arity adaptation
+  @p
+    @img(src:="img/arity.png")
+@slide
+  @h2
+    Implicit function types
+  @p
+    @img(src:="img/implicit-function.png")
+@slide
+  @h2
+    Down the road...
+  @ul
+    @li
+      Effect systems
+    @li
+      Predicate qualified types
+    @li
+      ...
+@slide
+  @h2
+    2. demo
+  @comment
+    - Run on slick, see diff in:
+      slick/src/main/scala/slick/lifted/ExtensionMethods.scala
+@slide
+  @h3
+    Step 1:
+  @hl.scala
+    // sbt
+    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.2.0-RC1")
+    > scalafix
+
+    // Other
+    scalac -Xplugin:scalafix-nsc.jar code.scala
+  @h3
+    Step 2:
+    @lnk("Profit", "https://github.com/olafurpg/cats/commit/79c692564c7478a8a9525ec52ddd0f2979f80689")
+@slide
+  @h2
+    What can scalafix do?
+@slide
+  @h2
+    @code{ExplicitImplicit}
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    @code{ProcedureSyntax}
+  @p
+    @img(src:="img/procedure-syntax.png")
+@slide
+  @h2
+    @code{VolatileLazyVal}
+  @p
+    @img(src:="img/lazyval.png")
+@slide
+  @h2
+    Compared with intellij-scala
+  @ul
+    @li
+      More integrations: cli, sbt, ci server, ...
+    @li
+      Precise types
+    @li
+      @(`class`:="fragment")
+      I'm excited to see IntelliJ @lnk("Migrators API", "https://blog.jetbrains.com/scala/2016/11/11/intellij-idea-2016-3-rc-scala-js-scala-meta-and-more/")
+@slide
+  @h2
+    Compared with scala-refactoring
+  @ul
+    @li
+      Built with scala.meta
+@slide
+  @h2
+    3. How does scalafix work?
+@slide
+  @h2
+    scalafix ♥️ scala.meta
+  @p
+    @img(width:="80%", src:="img/scalameta-sketch.jpg")
+@slide
+  @h2
+    Semantic API
+  @hl.scala
+    trait SemanticApi {
+      /** Returns type annotation for given val/def. */
+      def typeSignature(defn: m.Defn): Option[m.Type]
+    }
+@slide
+  @h2
+    Rewrite
+  @hl.scala
+    abstract class Rewrite {
+      def rewrite(code: m.Tree, ctx: RewriteCtx): Seq[Patch]
+    }
+@slide
+  @h2
+    ExplicitImplicit
+  @hl.scala
+    (code: m.Tree).transform {
+      case q"..$mods implicit val $name = $body" =>
+        val inferredType = ctx.semanticApi.typeSignature(t)
+        q"..$mods implicit val $name: $inferredType = $body"
+    }
+@slide
+  @h2
+    Challenge 1: pretty types
+  @p
+    @img(src:="img/pretty-types.png")
+@slide
+  @h2
+    Challenge 2: formatting
+  @p
+    @img(width:="70%", src:="img/slick-fmt.png")
+@slide
+  @h2
+  @blockquote
+    @(`class`:="solarized")
+    @(style := "width: 80%; background: #fdf6e3; background-color: #fdf6e3;")
+    "If you transform Scala sources, you will break
+     someone's hard earned vertical alignment." @br
+    @p
+      -- me
+  @p
+    @(`class`:="fragment")
+    @img(width:="70%", src:="img/valign.png")
+@slide
+  @h2
+    Challenge 3: testing
+  @blockquote
+    compile => scalafix => compile
+  @p
+    @(`class`:="fragment")
+    Caveat: super slow
+@slide
+  @h2
+    Summary
+  @ul
+    @li
+      @(`class`:="fragment")
+      Move fast and automatically refactor things
+    @li
+      @(`class`:="fragment")
+      Scalafix is already useful
+    @li
+      @(`class`:="fragment")
+      Scalafix uses a new approach: scala.meta
+    @li
+      @(`class`:="fragment")
+      Ask on Gitter, report issues!
+    @li
+      @(`class`:="fragment")
+      Rewrites for Dotty are priority, but I would love to hear your use-case
+
+@slide
+  @(style := "text-align: left;")
+  @h1
+    THANK YOU
+  @p
+      - Visit documentation: @a(href:="https://scalacenter.github.io/scalafix/", "scalacenter.github.io/scalafix") @br
+      - See slides: @selfSlides @br
+      - @a(href:="http://github.com/scalacenter/scalafix", "Contribute with ideas, reporting issues and PRs.") @br
+      - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
+      - @a(href:="https://gitter.im/scalacenter/scalafix", "Chat on Gitter.") @br

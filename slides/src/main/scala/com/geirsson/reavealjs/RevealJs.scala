@@ -30,7 +30,10 @@ object Themes {
   val moon = "moon"
 }
 
-object RevealJs {
+object RevealJs extends com.geirsson.scalatags.Tags {
+  def selfSlides = a(href:="https://geirsson.com/assets/scalax-2016/#/", "geirsson.com/assets/scalax-2016")
+  def twitter = a(href:="https://twitter.com/olafurpg", "@olafurpg")
+  def fragment = `class` := "fragment"
 
   def inlineJs(file: String) = {
     val contents = new String(Files.readAllBytes(
@@ -79,16 +82,25 @@ object RevealJs {
     raw("""
           |		<script src="lib/js/head.min.js"></script>
           |		<script src="js/reveal.js"></script>
+          |  <style>
+          |    body:after {
+          |      content: url(img/scalacenter-small.png);
+          |      position: fixed;
+          |      top: 3.5em;
+          |      right: 3.5em;
+          |      box-shadow: none;
+          |    }
+          |  </style>
           |
           |		<script>
           |			// More info https://github.com/hakimel/reveal.js#configuration
           |			Reveal.initialize({
           |				slideNumber: true,
-          |				controls: true,
+          |				controls: false,
           |				progress: true,
           |				history: true,
           |				center: true,
-          |				transition: 'slide', // none/fade/slide/convex/concave/zoom
+          |				transition: 'none', // none/fade/slide/convex/concave/zoom
           |				// More info https://github.com/hakimel/reveal.js#dependencies
           |				dependencies: [
           |					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -100,6 +112,7 @@ object RevealJs {
           |				]
           |			});
           |		</script>
+          |
     """.stripMargin)
   import com.geirsson.scalatags.Tags._
   def skipSlide(tags: Text.Modifier*) = span("")
@@ -181,7 +194,7 @@ object RevealJs {
   class hl(lang: String) {
     def apply(codeToHighlight: String) = {
       pre(
-        style := "font-size: 0.46em", // fits 80 characters on column in my machine
+        style := "font-size: 0.56em", // fits 80 characters on column in my machine
         code(
           `class` := s"hljs $lang",
           contentEdit,
@@ -192,6 +205,7 @@ object RevealJs {
     }
   }
 
+  def lnk(title: String, url: String) = a(target:="_blank",href:=url, title)
   def comment(str: String) = span("")
 
   object hl {
