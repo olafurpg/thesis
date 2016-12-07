@@ -19,7 +19,7 @@ object Decks {
     "Opinionated, automatic code formatting with scalafmt",
     "",
     "Ólafur Páll Geirsson",
-    Themes.moon,
+    Themes.white,
     scalatex.scalaItaly())
 }
 
