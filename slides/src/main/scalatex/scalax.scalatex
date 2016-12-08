@@ -61,18 +61,14 @@
     img(src:="img/movefast.jpg")
 @slide
   @h2
-    Scala
-  @ul
-    @li
-      Refactor: @code{Xor => Either}
-    @li
-      2.13 collections
-    @li
-      Best practices: explicit type annotations
-    @li
-      @code{any2StringAdd}
-    @li
-      @code{language.postfixOps}
+    any2stringadd
+  @p
+    @img(src:="img/any2stringadd.png")
+@slide
+  @h2
+    language.postfixOps
+  @p
+    @img(src:="img/postfix.png")
 @slide
   @h2
     Xor => Either
@@ -80,19 +76,10 @@
     @img(src:="img/xor.png")
 @slide
   @h2
-    any2stringadd
-  @p
-    @img(src:="img/any2stringadd.png")
-@slide
-  @h2
     Dotty
   @ul
     @li
       Union/Intersection types
-    @li
-      Multiversal equality
-    @li
-      DOT: a sound foundation
     @li
       Implicit function types
     @li
