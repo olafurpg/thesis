@@ -3,9 +3,12 @@ object a {
   val user = User()
   val msg = s"$user logged out"
   List(1,2,3).tail
-  def liftedType = Unit
+  def liftedType = 2
   def doComputation() = Unit
 
+  def foo(a: Int, b: Int) = ???
+
+  type TypedTree[T] = Int
   def main(args: Seq[String]): Unit = {
   }
 
@@ -14,4 +17,10 @@ object a {
   println(1)
 
   implicit val tt: TypedTree[Int] = liftedType
+  val pairs = List.empty[(Int, Int)]
+
+
+  pairs.map {
+    case (a, b) => ???
+  }
 }

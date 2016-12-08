@@ -38,7 +38,7 @@
     @img(src:="img/scalafmt-diff.png")
 @slide
   @h2
-    scalaf@s{mt}ix
+    scalafix
   @p
     @img(src:="img/scalafix-diff.png")
 @slide
@@ -59,7 +59,8 @@
     Move fast and break things
 @slide
   @h2
-    Move fast and @s{break}automatically refactor things
+    @s{Move fast and break things} @br
+    Move fast and automatically refactor things
 @slide
   @h2
     any2stringadd
@@ -83,6 +84,8 @@
       Union/Intersection types
     @li
       Implicit function types
+    @li
+      Function arity adaptation
     @li
       ...
 @slide
