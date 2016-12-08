@@ -21,7 +21,7 @@ object a {
   val pairs = List.empty[(Int, Int)]
 
 
-  def typecheck[T](implicit ctx: Context): T = ???
+  def typecheck[T]: Ctx[T] = ???
 
   pairs.map {
     case (a, b) => a + b
