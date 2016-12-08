@@ -16,7 +16,7 @@
   @h1
     scalafix
   @p
-    Migration tooling for everyone!
+    Refactoring tools for everyone!
   @p
     - Ólafur Geirsson, @twitter
   @p
@@ -53,7 +53,7 @@
       How it works
 @slide
   @h1
-    Why?
+    1. Why?
 @slide
   @h2
     Move fast and automatically refactor things
@@ -75,6 +75,11 @@
       @code{language.postfixOps}
 @slide
   @h2
+    Xor => Either
+  @p
+    @img(src:="img/xor.png")
+@slide
+  @h2
     Dotty
   @ul
     @li
@@ -86,10 +91,10 @@
     @li
       Implicit function types
     @li
-      Tasty: binary compat
+      ...
 @slide
   @h2
-    Experiments
+    Dotty experimental++
   @ul
     @li
       First-class HList
@@ -97,9 +102,11 @@
       Effect systems
     @li
       Predicate qualified types
+    @li
+      ...
 @slide
   @h2
-    Demo
+    2. scalafix demo
   @comment
     - Run on slick, see diff in:
       slick/src/main/scala/slick/lifted/ExtensionMethods.scala
@@ -125,42 +132,99 @@
       Move class
 @slide
   @h2
-    How is this different from IntelliJ?
+    Compared with intellij-scala
   @ul
     @li
-      Integrations: cli, sbt, ci server, ...
+      More integrations: cli, sbt, ci server, ...
     @li
-      Built with scalac:
-      @ul
-        @li
-          Accurate types
-        @li
-          Works for @b{large} projects
+      Accurate types
+    @li
+      Scalability
     @li
       @(`class`:="fragment")
-      I'm excited to see announced @lnk("Migrators API", "???").
+      I'm excited to see IntelliJ @lnk("Migrators API", "???").
 @slide
   @h2
-    How does scalafix work?
+    3. How does scalafix work?
 @slide
   @h2
-    scala.meta
+    scalafix ♥️ scala.meta
   @p
-    @img(src:="img/scalameta-sketch.jpg")
+    @img(width:="80%", src:="img/scalameta-sketch.jpg")
 @slide
   @h2
     Semantic API
-  @p
-    @hl.scala
-      trait SemanticApi {
-        /** Returns type annotation for given val/def. */
-        def typeSignature(defn: m.Defn): Option[m.Type]
-      }
+  @hl.scala
+    trait SemanticApi {
+      /** Returns type annotation for given val/def. */
+      def typeSignature(defn: m.Defn): Option[m.Type]
+    }
 @slide
   @h2
-    Formatting
+    Rewrite
+  @hl.scala
+    abstract class Rewrite {
+      def rewrite(code: m.Tree, ctx: RewriteCtx): Seq[Patch]
+    }
+@slide
+  @h2
+    ExplicitImplicit
+  @hl.scala
+    (code: m.Tree).transform {
+      case t @@ q"..$mods implicit val $name: ${None} = $body" =>
+        val inferredType = ctx.semanaticApi.typeSignature(t)
+        q"..$mods implicit val $name: $inferredType = $body"
+    }
+@slide
+  @h2
+    Challenge 1: pretty types
   @p
-    @img(src:="img/slick-fmt.png")
+    @img(src:="img/pretty-types.png")
+@slide
+  @h2
+    Challenge 2: formatting
+  @p
+    @img(width:="70%", src:="img/slick-fmt.png")
+  @p
+    @(`class`:="fragment")
+    Maybe scalafmt can help :)
+@slide
+  @h2
+  @blockquote
+    @(`class`:="solarized")
+    @(style := "background: #fdf6e3; background-color: #fdf6e3;")
+    "If you transform Scala sources, you will break
+     someone's hard earned vertical alignment." @br
+    @p
+      -- me
+  @p
+    @(`class`:="fragment")
+    @img(width:="70%", src:="img/valign.png")
+
+@slide
+  @h2
+    Future ideas
+  @ul
+    @li
+      IDE integration
+    @li
+      Library migrations
+    @li
+      Code search
+    @li
+      Code review bots
+    @li
+      Your idea idea...
+@slide
+  @h2
+    Summary
+  @ul
+    @li
+      Move fast and automatically refactor things
+    @li
+      New approach: scala.meta
+    @li
+
 @slide
   @(style := "text-align: left;")
   @h1
@@ -168,6 +232,6 @@
   @p
       - Visit documentation: @a(href:="https://scalacenter.github.io/scalafix/", "scalacenter.github.io/scalafix") @br
       - See slides: @selfSlides @br
-      - @a(href:="http://github.com/scalacenter/scalafix", "Contribute with PRs and reporting issues.") @br
+      - @a(href:="http://github.com/scalacenter/scalafix", "Contribute with ideas, reporting issues and PRs.") @br
       - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
       - @a(href:="https://gitter.im/scalacenter/scalafix", "Chat on Gitter.") @br
