@@ -81,13 +81,8 @@
 @slide
   @h2
     any2stringadd
-  @hl.scala
-    val user: User = ???
-    val msg = user + " logged out"
-    // becomes
-    val msg = any2stringadd(user) + " logged out"
-
-    @img(src:="img/xor.png")
+  @p
+    @img(src:="img/any2stringadd.png")
 @slide
   @h2
     Dotty
