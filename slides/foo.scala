@@ -9,9 +9,9 @@ object a {
   def main(args: Seq[String]): Unit = {
   }
 
-  lazy val x = doComputation()
+  @volatile lazy val x = doComputation()
 
   1
 
-  implicit val tt = liftedType
+  implicit val tt: TypedTree[Int] = liftedType
 }
