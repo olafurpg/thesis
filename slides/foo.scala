@@ -6,12 +6,12 @@ object a {
   def liftedType = Unit
   def doComputation() = Unit
 
-  def main(args: Seq[String]) {
+  def main(args: Seq[String]): Unit = {
   }
 
   println(1)
-  lazy val x = doComputation()
+  @volatile lazy val x = doComputation()
   println(1)
 
-  implicit val tt = liftedType
+  implicit val tt: TypedTree[Int] = liftedType
 }
