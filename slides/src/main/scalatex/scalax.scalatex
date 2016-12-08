@@ -79,15 +79,16 @@
 @slide
   @h2
     Dotty
-  @ul
-    @li
-      Union/Intersection types
-    @li
-      Implicit function types
-    @li
-      Function arity adaptation
-    @li
-      ...
+@slide
+  @h2
+    Explicit types for implicit definitions
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    Function arity adaptation
+  @p
+    @img(src:="img/arity.png")
 @slide
   @h2
     Dotty experimental++

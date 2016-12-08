@@ -1,15 +1,17 @@
+trait Context
 object a {
   case class User()
   val user = User()
   val msg = s"$user logged out"
-  List(1, 2, 3).tail
+  List(1,2,3).tail
   def liftedType = 2
   def doComputation() = Unit
 
   def foo(a: Int, b: Int) = ???
 
   type TypedTree[T] = Int
-  def main(args: Seq[String]): Unit = {}
+  def main(args: Seq[String]): Unit = {
+  }
 
   println(1)
   @volatile lazy val x = doComputation()
@@ -18,5 +20,10 @@ object a {
   implicit val tt: TypedTree[Int] = liftedType
   val pairs = List.empty[(Int, Int)]
 
-  pairs.map((a, b) => a + b)
+
+  def typecheck[T](implicit ctx: Context): T = ???
+
+  pairs.map {
+    case (a, b) => a + b
+  }
 }
