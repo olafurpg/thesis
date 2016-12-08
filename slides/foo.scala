@@ -1,5 +1,5 @@
 object a {
   case class User()
   val user = User()
-  val msg = user + " logged out"
+  val msg = s"$user logged out"
 }
