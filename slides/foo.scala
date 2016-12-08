@@ -21,6 +21,6 @@ object a {
 
 
   pairs.map {
-    case (a, b) => ???
+    case (a, b) => a + b
   }
 }
