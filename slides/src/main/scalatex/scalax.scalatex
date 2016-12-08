@@ -59,7 +59,7 @@
     Move fast and break things
 @slide
   @h2
-    Move fast and @{break}automatically refactor things
+    Move fast and @s{break}automatically refactor things
 @slide
   @h2
     any2stringadd
