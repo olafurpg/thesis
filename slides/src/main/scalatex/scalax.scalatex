@@ -56,9 +56,10 @@
     1. Why?
 @slide
   @h2
-    Move fast and automatically refactor things
-  @comment
-    img(src:="img/movefast.jpg")
+    Move fast and break things
+@slide
+  @h2
+    Move fast and @{break}automatically refactor things
 @slide
   @h2
     any2stringadd
