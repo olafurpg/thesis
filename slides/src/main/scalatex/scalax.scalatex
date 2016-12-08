@@ -9,18 +9,18 @@
   @p
     Smooth migrations to Dotty
   @p
-    - Ólafur Geirsson, @twitter
-  @p
-    @img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
+  @comment
+    img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
 @slide
   @h1
     scalafix
   @p
     Refactoring tools for everyone!
   @p
-    - Ólafur Geirsson, @twitter
-  @p
-    @img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
 @slide
   @h2
     About me
@@ -63,6 +63,9 @@
     Move fast and automatically refactor things
 @slide
   @h2
+    Scala
+@slide
+  @h2
     any2stringadd
   @p
     @img(src:="img/any2stringadd.png")
@@ -91,10 +94,13 @@
     @img(src:="img/arity.png")
 @slide
   @h2
-    Dotty experimental++
+    Implicit function types
+  @p
+    @img(src:="img/implicit-function.png")
+@slide
+  @h2
+    Down the road...
   @ul
-    @li
-      First-class HList
     @li
       Effect systems
     @li
@@ -103,30 +109,41 @@
       ...
 @slide
   @h2
-    2. scalafix demo
+    2. demo
   @comment
     - Run on slick, see diff in:
       slick/src/main/scala/slick/lifted/ExtensionMethods.scala
 @slide
-  @h2
-    Implemented rewrites
-  @ul
-    @li
-      @code{ExplicitImplicit*}
-    @li
-      @code{ProcedureSyntax}
-    @li
-      @code{VolatileLazyVal}
+  @h3
+    Step 1
+  @hl.scala
+    // sbt
+    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.2.0")
+    > scalafix
+
+    // Other
+    scalac -Xplugin:scalafix-nsc.jar code.scala
+  @h3
+    Step 2:
+    @lnk("Profit", "https://github.com/olafurpg/cats/commit/79c692564c7478a8a9525ec52ddd0f2979f80689")
 @slide
   @h2
-    Potential rewrites
-  @ul
-    @li
-      Organize imports
-    @li
-      Rename identifier
-    @li
-      Move class
+    What can scalafix do?
+@slide
+  @h2
+    @code{ExplicitImplicit}
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    @code{ProcedureSyntax}
+  @p
+    @img(src:="img/procedure-syntax.png")
+@slide
+  @h2
+    @code{VolatileLazyVal}
+  @p
+    @img(src:="img/lazyval.png")
 @slide
   @h2
     Compared with intellij-scala
@@ -134,12 +151,16 @@
     @li
       More integrations: cli, sbt, ci server, ...
     @li
-      Accurate types
-    @li
-      Scalability
+      Precise types
     @li
       @(`class`:="fragment")
       I'm excited to see IntelliJ @lnk("Migrators API", "???").
+@slide
+  @h2
+    Compared with scala-refactoring
+  @ul
+    @li
+      Built with scala.meta
 @slide
   @h2
     3. How does scalafix work?
@@ -168,8 +189,8 @@
     ExplicitImplicit
   @hl.scala
     (code: m.Tree).transform {
-      case t @@ q"..$mods implicit val $name: ${None} = $body" =>
-        val inferredType = ctx.semanaticApi.typeSignature(t)
+      case q"..$mods implicit val $name = $body" =>
+        val inferredType = ctx.semanticApi.typeSignature(t)
         q"..$mods implicit val $name: $inferredType = $body"
     }
 @slide
@@ -182,14 +203,11 @@
     Challenge 2: formatting
   @p
     @img(width:="70%", src:="img/slick-fmt.png")
-  @p
-    @(`class`:="fragment")
-    Maybe scalafmt can help :)
 @slide
   @h2
   @blockquote
     @(`class`:="solarized")
-    @(style := "background: #fdf6e3; background-color: #fdf6e3;")
+    @(style := "width: 80%; background: #fdf6e3; background-color: #fdf6e3;")
     "If you transform Scala sources, you will break
      someone's hard earned vertical alignment." @br
     @p
@@ -197,30 +215,35 @@
   @p
     @(`class`:="fragment")
     @img(width:="70%", src:="img/valign.png")
-
 @slide
   @h2
-    Future ideas
-  @ul
-    @li
-      IDE integration
-    @li
-      Library migrations
-    @li
-      Code search
-    @li
-      Code review bots
-    @li
-      Your idea idea...
+    Challenge 3: testing
+  @blockquote
+    @(style:="font-size: 0.8em;")
+    compile before scalafix => compile after scalafix
+  @p
+    @(`class`:="fragment")
+    Caveat: super slow
 @slide
   @h2
     Summary
   @ul
     @li
+      @(`class`:="fragment")
       Move fast and automatically refactor things
     @li
-      New approach: scala.meta
+      @(`class`:="fragment")
+      Scalafix is already useful
     @li
+      @(`class`:="fragment")
+      Scalafix uses a new approach: scala.meta
+    @li
+      @(`class`:="fragment")
+      Ask on Gitter, report issues! I get paid to work on scalafix
+    @li
+      @(`class`:="fragment")
+      Rewrites for Dotty are priority, but I would love to collaborate on
+      exploring other refactorings.
 
 @slide
   @(style := "text-align: left;")

@@ -79,6 +79,15 @@ object RevealJs extends com.geirsson.scalatags.Tags {
     raw("""
           |		<script src="lib/js/head.min.js"></script>
           |		<script src="js/reveal.js"></script>
+          |  <style>
+          |    body:after {
+          |      content: url(img/scalacenter-small.png);
+          |      position: fixed;
+          |      top: 3.5em;
+          |      right: 3.5em;
+          |      box-shadow: none;
+          |    }
+          |  </style>
           |
           |		<script>
           |			// More info https://github.com/hakimel/reveal.js#configuration
@@ -100,6 +109,7 @@ object RevealJs extends com.geirsson.scalatags.Tags {
           |				]
           |			});
           |		</script>
+          |
     """.stripMargin)
   import com.geirsson.scalatags.Tags._
   def skipSlide(tags: Text.Modifier*) = span("")

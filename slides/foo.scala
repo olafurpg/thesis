@@ -9,6 +9,7 @@ object a {
 
   def foo(a: Int, b: Int) = ???
 
+  type Ctx[T] = Int
   type TypedTree[T] = Int
   def main(args: Seq[String]): Unit = {
   }
