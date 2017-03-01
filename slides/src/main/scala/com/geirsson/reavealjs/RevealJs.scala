@@ -31,9 +31,10 @@ object Themes {
 }
 
 object RevealJs extends com.geirsson.scalatags.Tags {
-  def selfSlides = a(href:="https://geirsson.com/assets/scalax-2016/#/", "geirsson.com/assets/scalax-2016")
   def twitter = a(href:="https://twitter.com/olafurpg", "@olafurpg")
   def fragment = `class` := "fragment"
+
+  `font` := "white"
 
   def inlineJs(file: String) = {
     val contents = new String(Files.readAllBytes(
