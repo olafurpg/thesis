@@ -1,9 +1,10 @@
 @import com.geirsson.reavealjs.RevealJs._
 
+@def selfSlides = a(href:="https://geirsson.com/assets/scalasphere-2017/#/", "geirsson.com/assets/scalasphere-2017")
 
 @slide
   @h2
-    Refactoring with scalafix and scala.meta
+    Refactor @br with scalafix @br and scala.meta
   @p
   @p
     - Ólafur Páll Geirsson, Scala Center @br
@@ -37,44 +38,24 @@
     @li
       Motivation
     @li
-      Demo
+      Tool demo
     @li
       How it works
+    @li
+      Library demo
 @slide
   @h1
     1. Why?
 @slide
   @h2
-    Move fast and break things
+    Move fast and
+    @br break
+    @br things
 @slide
   @h2
     Move fast and
-    @s{break}
-    refactor
-    things
-@slide
-  @h2
-    What is scalafix?
-  @ul
-    @li
-      @fragment
-      library: implement rewrites in Scala
-    @li
-      @fragment
-      tool: integrations to run rewrites
-@slide
-  @h2
-    IDEs
-  @ul
-    @li
-      @fragment
-      Organize imports
-    @li
-      @fragment
-      Move class
-    @li
-      @fragment
-      Rename
+    @br @s{break} refactor
+    @br things
 @slide
   @h2
     Scala -> Scala
@@ -98,39 +79,67 @@
     Library -> Library
 @slide
   @h2
-    Xor
+    Deprecate Xor
   @p
     @img(src:="img/xor.png")
 @slide
   @h2
-    Functor
+    Cross-build cats/scalaz
   @p
     @img(src:="img/functor.png")
 @slide
   @h2
-    2. demo
-  @comment
-    - Run on slick, see diff in:
-      slick/src/main/scala/slick/lifted/ExtensionMethods.scala
+    -deprecated
+  @p
+    @hl.scala
+      [warn] .../Library.scala:11: method filter in class Foo
+      [warn]                       is deprecated: Use filter2 instead
+      [warn]   foo.filter(_ > 2).headOption
+      [warn]       ^
+      [warn] one warning found
+@slide
+  @h2
+    2. Tool demo
 @slide
   @h3
     Step 1:
   @hl.scala
     // sbt
-    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.2.0-RC1")
+    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.3.1")
     > scalafix
 
     // Other
     scalac -Xplugin:scalafix-nsc.jar code.scala
   @h3
-    Step 2:
-    @lnk("Profit", "https://github.com/olafurpg/cats/commit/79c692564c7478a8a9525ec52ddd0f2979f80689")
+    Step 2: @lnk("Profit", "https://github.com/olafurpg/slick/pull/2/files")
 @slide
   @h2
-    Compared with intellij-scala
+    Problem
+  @dot
+      SbtPlugin [ label = "sbt-scalafix" style=filled];
+      NscPlugin [ label = "scalafix-nsc" style=filled];
+      Core [ label = "scalafix-core" style=filled];
+
+      SbtPlugin -> NscPlugin [color=grey];
+      NscPlugin -> Core [color=grey];
+@comment
+  dot
+      SbtPlugin [ label = "sbt-scalahost" style=filled];
+      NscPlugin [ label = "scalahost" style=filled];
+      Db [ label = "semanticdb" style=filled];
+      Lib [ label = "Your Library" style=filled];
+      Core [ label = "scalafix-core" style=filled];
+
+      NscPlugin -> SbtPlugin [color=grey];
+      Db -> NscPlugin [color=grey];
+      Lib -> Db [color=grey];
+      Lib -> Core [color=grey];
+@slide
+  @h2
+    Compared with @br intellij-scala?
   @ul
     @li
-      CLI-first
+      CLI-first (batch)
     @li
       Types/Symbols from scalac
     @li
@@ -138,20 +147,149 @@
       I'm excited to see IntelliJ @lnk("Migrators API", "https://blog.jetbrains.com/scala/2016/11/11/intellij-idea-2016-3-rc-scala-js-scala-meta-and-more/")
 @slide
   @h2
-    Compared with scala-refactoring
+    Compared with @br scala-refactoring?
   @ul
     @li
-      Built with scala.meta, no more compiler ASTs
+      Built with scala.meta
     @li
-      CLI-first
+      CLI-first (batch)
+@slide
+  @table
+    @(color:="white")
+    @tr
+      @th
+      @th
+        Syntax
+      @th
+        Semantic
+    @tr
+      @td
+        scala-refactoring
+      @td
+        scalac
+      @td
+        scalac
+    @tr
+      @td
+        scala.meta
+      @td
+        custom
+      @td
+        scalac
+    @tr
+      @td
+        intellij-scala
+      @td
+        custom
+      @td
+        custom
 @slide
   @h2
-    3. How does scalafix work?
+    3. How does @br scalafix work?
 @slide
   @h2
     scalafix ♥️ scala.meta
   @p
     @img(width:="80%", src:="img/scalameta-sketch.jpg")
+@slide
+  @h4
+    Rewrite[T]: RewriteCtx[T] => Seq[Patch]
+@slide
+  @h2
+    RewriteCtx[T]
+  @ul
+    @li
+      @code{Tree}
+    @li
+      @code{Tokens}
+    @li
+      @code{Config}
+    @li
+      @code{mirror: T}
+@slide
+  @h2
+    @code{mirror: T}?
+  @ul
+    @li
+      @code{Any} (syntactic)
+    @li
+      @code{scala.meta.Mirror} (sbt-scalahost)
+    @li
+      @code{scalafix.ScalafixMirror}
+    @li
+      @fragment
+      ...
+@slide
+  @h2
+    Patch
+  @ul
+    @li
+      @code{TokenPatch}: low-level
+    @li
+      @code{TreePatch}: high-level
+@slide
+  @h2
+    TokenPatch
+  @hl.scala
+    case class Remove(token: Token) extends TokenPatch
+    case class Add(left: String, tok: Token, right: String)
+        extends TokenPatch
+@slide
+  @h2
+    TreePatch
+  @hl.scala
+    case class Rename(from: Name, to: Name)    extends TreePatch
+    case class Replace(from: Symbol, to: Ref)  extends TreePatch
+    case class AddGlobalImport(i: Importer)    extends TreePatch
+    case class RemoveGlobalImport(i: Importer) extends TreePatch
+@slide
+  @h2
+    @code
+      TreePatch => Seq[TokenPatch]
+@slide
+  @h2
+    As late as possible
+  @hl.scala
+    val fixed: String = Patch(ctx: RewriteCtx[T], patches: Seq[Patch])
+@slide
+  @h2
+    Rewrite[Any]
+  @hl.scala
+    val preferImmutableSeq = Rewrite[Any] { ctx =>
+      ctx.tree.collect {
+        case q"Seq" | t"Seq" =>
+          AddGlobalImport(importer"scala.collect.immmutable.Seq")
+      }
+    }
+@slide
+  @h2
+    Rewrite[Mirror]
+  @hl.scala
+    val preferImmutableSeq = Rewrite[Mirror] { ctx =>
+      implicit val mirror = ctx.mirror
+      val q"${seq: Ref}()" = q"Seq()"
+      ctx.tree.collect {
+        case q"Seq" if t.symbol == seq.symbol =>
+          AddGlobalImport(importer"scala.collect.immmutable.Seq")
+      }
+    }
+@slide
+  @h3
+    Rewrite[ScalafixMirror <: Mirror]
+  @ul
+    @li
+      @code
+        -Ywarn-unused-imports
+    @li
+      @fragment
+      @code
+        -deprecated
+    @li
+      @fragment
+      Plan to merge with scala.meta.Mirror asap.
+@slide
+  @h2
+    4. @lnk("Library demo", "https://github.com/olafurpg/scalafix.g8")
 @slide
   @h2
     Summary
@@ -161,8 +299,10 @@
       Move fast and automatically refactor things
     @li
       @fragment
+      Command-line first (batch)
+    @li
+      @fragment
       Everyone can rewrite!
-
 @slide
   @(style := "text-align: left;")
   @h1

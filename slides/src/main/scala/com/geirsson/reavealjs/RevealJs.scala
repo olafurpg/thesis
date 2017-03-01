@@ -9,11 +9,11 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 case class SlideDeck(
-  title: String,
-  description: String,
-  author: String,
-  theme: String,
-  slides: Text.all.Frag
+    title: String,
+    description: String,
+    author: String,
+    theme: String,
+    slides: Text.all.Frag
 )
 
 object Themes {
@@ -31,14 +31,16 @@ object Themes {
 }
 
 object RevealJs extends com.geirsson.scalatags.Tags {
-  def selfSlides = a(href:="https://geirsson.com/assets/scalax-2016/#/", "geirsson.com/assets/scalax-2016")
-  def twitter = a(href:="https://twitter.com/olafurpg", "@olafurpg")
+  def twitter = a(href := "https://twitter.com/olafurpg", "@olafurpg")
   def fragment = `class` := "fragment"
 
+  `font` := "white"
+
   def inlineJs(file: String) = {
-    val contents = new String(Files.readAllBytes(
-      Paths.get("src", "main", "resources", "js", file).toAbsolutePath
-    ))
+    val contents = new String(
+      Files.readAllBytes(
+        Paths.get("src", "main", "resources", "js", file).toAbsolutePath
+      ))
     script(raw(contents))
   }
 
@@ -62,7 +64,7 @@ object RevealJs extends com.geirsson.scalatags.Tags {
            |		<link rel="stylesheet" href="css/custom.css">
            |
            |		<!-- Theme used for syntax highlighting of code -->
-           |		<link rel="stylesheet" href="lib/css/darkula.css">
+           |		<link rel="stylesheet" href="lib/css/zenburn.css">
            |
            |		<!-- Printing and PDF exports -->
            |		<script>
@@ -78,41 +80,65 @@ object RevealJs extends com.geirsson.scalatags.Tags {
            |		<![endif]-->
            |	</head>
     """.stripMargin)
+
+  def dot(code: String): Frag = {
+    import scala.sys.process._
+    import java.io.ByteArrayInputStream
+    val bais = new ByteArrayInputStream(
+      s"""digraph X {
+         |  rankdir=LR;
+         |  bgcolor=transparent;
+         |  colorscheme=bugn9;
+         |  graph [fontname = "Inconsolata"];
+         |  node [shape=box, fontname = "Inconsolata"];
+         |  edge [fontname = "Inconsolata"];
+         |  $code
+         |}""".stripMargin.toString
+        .getBytes("UTF-8")
+    )
+    val command = List("dot", "-Tsvg")
+    val svg = (command #< bais).!!.trim
+      .replaceFirst("\n<svg.*?\n", "\n<svg width=\"100%\" height=\"30%\"\n")
+    println(svg)
+    raw(svg)
+  }
+
   def footer =
-    raw("""
-          |		<script src="lib/js/head.min.js"></script>
-          |		<script src="js/reveal.js"></script>
-          |  <style>
-          |    body:after {
-          |      content: url(img/scalacenter-small.png);
-          |      position: fixed;
-          |      top: 3.5em;
-          |      right: 3.5em;
-          |      box-shadow: none;
-          |    }
-          |  </style>
-          |
-          |		<script>
-          |			// More info https://github.com/hakimel/reveal.js#configuration
-          |			Reveal.initialize({
-          |				slideNumber: true,
-          |				controls: false,
-          |				progress: true,
-          |				history: true,
-          |				center: true,
-          |				transition: 'none', // none/fade/slide/convex/concave/zoom
-          |				// More info https://github.com/hakimel/reveal.js#dependencies
-          |				dependencies: [
-          |					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          |					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          |					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          |					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          |					{ src: 'plugin/zoom-js/zoom.js', async: true },
-          |					{ src: 'plugin/notes/notes.js', async: true }
-          |				]
-          |			});
-          |		</script>
-          |
+    raw(
+      """
+        |		<script src="lib/js/head.min.js"></script>
+        |		<script src="js/reveal.js"></script>
+        |  <style>
+        |    body:after {
+        |      content: url(img/scalacenter-small.png);
+        |      position: fixed;
+        |      top: 3.9em;
+        |      right: 3.9em;
+        |      box-shadow: none;
+        |    }
+        |  </style>
+        |
+        |		<script>
+        |			// More info https://github.com/hakimel/reveal.js#configuration
+        |			Reveal.initialize({
+        |				slideNumber: true,
+        |				controls: false,
+        |				progress: true,
+        |				history: true,
+        |				center: true,
+        |				transition: 'none', // none/fade/slide/convex/concave/zoom
+        |				// More info https://github.com/hakimel/reveal.js#dependencies
+        |				dependencies: [
+        |					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        |					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        |					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        |					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        |					{ src: 'plugin/zoom-js/zoom.js', async: true },
+        |					{ src: 'plugin/notes/notes.js', async: true }
+        |				]
+        |			});
+        |		</script>
+        |
     """.stripMargin)
   import com.geirsson.scalatags.Tags._
   def skipSlide(tags: Text.Modifier*) = span("")
@@ -138,9 +164,9 @@ object RevealJs extends com.geirsson.scalatags.Tags {
     )
 
   def tabulate(
-    header: Seq[String],
-    rows: Seq[Seq[String]],
-    align: Map[Int, String]
+      header: Seq[String],
+      rows: Seq[Seq[String]],
+      align: Map[Int, String]
   ) = {
     table(
       thead(
@@ -179,15 +205,14 @@ object RevealJs extends com.geirsson.scalatags.Tags {
   private def fixBrokenIndent(frag: String): String = {
     // Fix broken indentation by scalatex
     val toStrip =
-      " " * Try(frag.trim.lines
-        .drop(1)
-        .withFilter(_.nonEmpty)
-        .map(_.takeWhile(_ == ' ').length)
-        .min).getOrElse(0)
+      " " * Try(
+        frag.trim.lines
+          .drop(1)
+          .withFilter(_.nonEmpty)
+          .map(_.takeWhile(_ == ' ').length)
+          .min).getOrElse(0)
     frag.lines.map(_.stripPrefix(toStrip)).mkString("\n")
   }
-
-
 
   def highlight(codeToHighlight: String) = hl.scala(codeToHighlight)
 
@@ -205,7 +230,8 @@ object RevealJs extends com.geirsson.scalatags.Tags {
     }
   }
 
-  def lnk(title: String, url: String) = a(target:="_blank",href:=url, title)
+  def lnk(title: String, url: String) =
+    a(target := "_blank", href := url, title)
   def comment(str: String) = span("")
 
   object hl {
