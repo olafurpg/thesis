@@ -102,8 +102,7 @@ object RevealJs extends com.geirsson.scalatags.Tags {
     println(svg)
     raw(svg)
   }
-
-  def footer =
+def footer =
     raw(
       """
         |		<script src="lib/js/head.min.js"></script>

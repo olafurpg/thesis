@@ -9,7 +9,7 @@ import com.geirsson.reavealjs.SlideDeck
 import com.geirsson.reavealjs.Themes
 
 object Decks {
-  val flatMap_Oslo = SlideDeck(
+  val flatMap_Oslo_2016 = SlideDeck(
     "Opinionated, automatic code formatting with scalafmt",
     "",
     "Ólafur Páll Geirsson",
@@ -26,19 +26,23 @@ object Decks {
                                  "Ólafur Páll Geirsson",
                                  Themes.beige,
                                  scalatex.scalax())
-  @deprecated("Don't use this!")
   val scalasphere = SlideDeck("Refactor with scalafix and scala.meta",
                               "",
                               "Ólafur Páll Geirsson",
                               Themes.blood,
                               scalatex.scalasphere())
+  val flatmap_Oslo_2017 = SlideDeck("Move fast and refactor things",
+                                    "",
+                                    "Ólafur Páll Geirsson",
+                                    Themes.blood,
+                                    scalatex.flatMap2017())
 }
 
 object Main extends App {
+
   val pp = new scala.xml.PrettyPrinter(80, 2)
-  val scalatexOutput = RevealJs.render(Decks.scalasphere)
+  val scalatexOutput = RevealJs.render(Decks.flatmap_Oslo_2017)
 //  println(scalatexOutput)
   Files.write(Paths.get("target", "scala-2.11", "classes", "index.html"),
               scalatexOutput.getBytes)
 }
-

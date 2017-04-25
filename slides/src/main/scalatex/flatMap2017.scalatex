@@ -1,0 +1,225 @@
+@import com.geirsson.reavealjs.RevealJs._
+
+@def selfSlides = a(href:="https://geirsson.com/assets/scalasphere-2017/#/", "geirsson.com/assets/scalasphere-2017")
+
+@slide
+  @h2
+    Move fast and @br refactor with @br scalafix
+  @p
+  @p
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
+  @comment
+    img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+@slide
+  @h2
+    About me
+  @ul
+    @li
+      Recent Master's at EPFL
+    @li
+      65% at Scala Center
+    @li
+      35% experimenting with stuff
+@slide
+  @h2
+    scalafmt
+  @p
+    @img(src:="img/scalafmt-diff.png")
+@slide
+  @h2
+    scalafix
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    Agenda
+  @ol
+    @li
+      Motivation
+    @li
+      Tool demo
+    @li
+      How it works
+    @li
+      Library demo
+@slide
+  @h1
+    1. Why?
+@slide
+  @h2
+    Move fast and
+    @br break
+    @br things
+@slide
+  @h2
+    Move fast and
+    @br @s{break} refactor
+    @br things
+@slide
+  @h2
+    Scala -> Scala
+@slide
+  @h2
+    language.postfixOps
+  @p
+    @img(src:="img/postfix.png")
+@slide
+  @h2
+    Explicit types for implicit definitions
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    Function arity adaptation
+  @p
+    @img(src:="img/arity.png")
+@slide
+  @h2
+    Library -> Library
+@slide
+  @h2
+    Deprecate Xor
+  @p
+    @img(src:="img/xor.png")
+@slide
+  @h2
+    Cross-build cats/scalaz
+  @p
+    @img(src:="img/functor.png")
+@slide
+  @h2
+    -deprecated
+  @p
+    @hl.scala
+      [warn] .../Library.scala:11: method filter in class Foo
+      [warn]                       is deprecated: Use filter2 instead
+      [warn]   foo.filter(_ > 2).headOption
+      [warn]       ^
+      [warn] one warning found
+@slide
+  @h2
+    2. Tool demo
+@slide
+  @h3
+    Step 1:
+  @hl.scala
+    // sbt
+    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "???")
+    > core/scalafix monix/v1.0
+
+    // cli (syntactic api)
+    $ scalafix monix/v1.0
+  @h3
+    Step 2: @lnk("Profit", "https://github.com/olafurpg/slick/pull/2/files")
+@slide
+  @h2
+    Compared with @br intellij-scala?
+  @ul
+    @li
+      Types/Symbols from scalac
+    @li
+      CLI-first (batch)
+    @li
+      @fragment
+      I'm excited to see IntelliJ @lnk("Migrators API", "https://blog.jetbrains.com/scala/2016/11/11/intellij-idea-2016-3-rc-scala-js-scala-meta-and-more/")
+@slide
+  @h2
+    Compared with @br scala-refactoring?
+  @ul
+    @li
+      Built with scala.meta
+    @li
+      CLI-first (batch)
+@slide
+  @table
+    @(color:="white")
+    @tr
+      @th
+      @th
+        Syntax
+      @th
+        Semantic
+    @tr
+      @td
+        scala-refactoring
+      @td
+        scalac
+      @td
+        scalac
+    @tr
+      @td
+        scala.meta
+      @td
+        custom
+      @td
+        scalac
+    @tr
+      @td
+        intellij-scala
+      @td
+        custom
+      @td
+        custom
+@slide
+  @h2
+    3. How does @br scalafix work?
+@slide
+  @h2
+    scalafix ♥️ scala.meta
+  @p
+    @img(width:="80%", src:="img/scalameta-sketch.jpg")
+@slide
+  @h4
+    Rewrite: RewriteCtx => Patch
+@slide
+  @h2
+    RewriteCtx
+  @ul
+    @li
+      @code{Tree}
+    @li
+      @code{Tokens}
+    @li
+      @code{Config}
+@slide
+  @h2
+    Patch
+  @ul
+    @li
+      @code{Patch + Patch}
+    @li
+      @code{Patch.applied}
+    @li
+      @code{Patch.appliedDiff}
+@slide
+  @h2
+    Rewrite
+  @hl.scala
+    val renameFoobar = Rewrite.semantic { implicit mirror => ctx =>
+      ctx.renameSymbol(Symbol("_root_.foo.Bar."), "Kas") +
+      ctx.renameSymbol(Symbol("_root_.foo.Bar.get"), "unsafeGet")
+    }
+@slide
+  @h2
+    Summary
+  @ul
+    @li
+      @fragment
+      Move fast and automatically refactor things
+    @li
+      @fragment
+      Command-line first (batch)
+    @li
+      @fragment
+      Everyone can rewrite!
+@slide
+  @(style := "text-align: left;")
+  @h1
+    THANK YOU
+  @p
+      - Visit documentation: @a(href:="https://scalacenter.github.io/scalafix/", "scalacenter.github.io/scalafix") @br
+      - See slides: @selfSlides @br
+      - @a(href:="http://github.com/scalacenter/scalafix", "Contribute with ideas, reporting issues and PRs.") @br
+      - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
+      - @a(href:="https://gitter.im/scalacenter/scalafix", "Chat on Gitter.") @br
