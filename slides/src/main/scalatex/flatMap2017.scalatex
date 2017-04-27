@@ -4,7 +4,7 @@
 
 @slide
   @h2
-    Move fast and @br refactor with @br scalafix
+    Move fast and @br automatically refactor with @br scalafix
   @p
   @p
     - Ólafur Páll Geirsson, Scala Center @br
