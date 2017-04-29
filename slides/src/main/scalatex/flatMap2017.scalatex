@@ -4,7 +4,7 @@
 
 @slide
   @h2
-    Move fast and @br automatically refactor with @br scalafix
+    Move fast and @br refactor with @br scalafix
   @p
   @p
     - Ólafur Páll Geirsson, Scala Center @br
@@ -58,7 +58,7 @@
     @br things
 @slide
   @h2
-    Scala -> Scala
+    Scala => Scala
 @slide
   @h2
     language.postfixOps
@@ -76,12 +76,17 @@
     @img(src:="img/arity.png")
 @slide
   @h2
-    Library -> Library
+    Library => Library
 @slide
   @h2
-    Deprecate Xor
+    Xor => Either
   @p
     @img(src:="img/xor.png")
+@slide
+  @h2
+    Task => IO
+  @p
+    @img(src:="img/task.png")
 @slide
   @h2
     Cross-build cats/scalaz
@@ -105,13 +110,19 @@
     Step 1:
   @hl.scala
     // sbt
-    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "???")
-    > core/scalafix monix/v1.0
-
-    // cli (syntactic api)
-    $ scalafix monix/v1.0
+    addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.3.1")
+    $ sbt scalafix
   @h3
     Step 2: @lnk("Profit", "https://github.com/olafurpg/slick/pull/2/files")
+@slide
+  @h3
+    Coming soon!
+  @p
+    > scalafix org/repo/v1.0
+@slide
+  @h2
+    Compared with @br
+    @lnk("perl/bash", "https://github.com/japgolly/scalajs-react/blob/master/doc/changelog/1.0.0-migrate.sh")?
 @slide
   @h2
     Compared with @br intellij-scala?
@@ -128,7 +139,7 @@
     Compared with @br scala-refactoring?
   @ul
     @li
-      Built with scala.meta
+      Built with scalameta
     @li
       CLI-first (batch)
 @slide
@@ -149,7 +160,7 @@
         scalac
     @tr
       @td
-        scala.meta
+        scalameta
       @td
         custom
       @td
@@ -166,9 +177,17 @@
     3. How does @br scalafix work?
 @slide
   @h2
-    scalafix ♥️ scala.meta
+    scalafix ♥️ scalameta
   @p
     @img(width:="80%", src:="img/scalameta-sketch.jpg")
+@slide
+  @(color := "white")
+  @h4
+    Scalameta semantic API
+  @dot
+    compile -> mirror;
+    mirror -> scalafix;
+    mirror -> "???";
 @slide
   @h4
     Rewrite: RewriteCtx => Patch
