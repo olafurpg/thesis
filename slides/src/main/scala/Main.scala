@@ -34,7 +34,7 @@ object Decks {
   val flatmap_Oslo_2017 = SlideDeck("Move fast and refactor things",
                                     "",
                                     "Ólafur Páll Geirsson",
-                                    Themes.blood,
+                                    Themes.simple,
                                     scalatex.flatMap2017())
 }
 

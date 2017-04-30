@@ -16,9 +16,9 @@
     About me
   @ul
     @li
-      Recent Master's at EPFL
+      Devtools for ~2 years
     @li
-      65% at Scala Center
+      65% employed at Scala Center
     @li
       35% experimenting with stuff
 @slide
@@ -61,19 +61,24 @@
     Scala => Scala
 @slide
   @h2
-    language.postfixOps
-  @p
-    @img(src:="img/postfix.png")
-@slide
-  @h2
-    Explicit types for implicit definitions
+    Explicit type annotations
   @p
     @img(src:="img/scalafix-diff.png")
+@slide
+  @h2
+    any2stringadd
+  @p
+    @img(src:="img/any2stringadd.png")
 @slide
   @h2
     Function arity adaptation
   @p
     @img(src:="img/arity.png")
+@slide
+  @h2
+    language.postfixOps
+  @p
+    @img(src:="img/postfix.png")
 @slide
   @h2
     Library => Library
@@ -153,6 +158,13 @@
         Semantic
     @tr
       @td
+        perl/bash
+      @td
+        n/a
+      @td
+        n/a
+    @tr
+      @td
         scala-refactoring
       @td
         scalac
@@ -181,44 +193,47 @@
   @p
     @img(width:="80%", src:="img/scalameta-sketch.jpg")
 @slide
-  @(color := "white")
   @h4
-    Scalameta semantic API
-  @dot
-    compile -> mirror;
-    mirror -> scalafix;
-    mirror -> "???";
-@slide
-  @h4
-    Rewrite: RewriteCtx => Patch
-@slide
-  @h2
-    RewriteCtx
+    Semantic DB
   @ul
     @li
-      @code{Tree}
+      Schema for symbols, types, implicits
     @li
-      @code{Tokens}
+      50 lines of protobuf definitions
     @li
-      @code{Config}
+      See @lnk("Semantic tooling at Twitter", "http://scalameta.org/talks/2017-04-21-SemanticToolingAtTwitter.pdf")
+@slide
+  @h2
+    Scalameta semantic API vision
+  @dot
+    scalac -> semanticdb;
+    dotc -> semanticdb;
+    intellij -> semanticdb;
+    semanticdb -> scalafix;
+    semanticdb -> "Your app here...";
+@slide
+  @dot
+    cli -> core;
+    cli -> reflect;
+    reflect -> core;
+    sbt -> cli;
+    testkit -> reflect;
+    testkit -> core;
+@slide
+  @h2
+    Rewrite: Tree => Patch
 @slide
   @h2
     Patch
   @ul
+    @li
+      @code{Patch.empty}
     @li
       @code{Patch + Patch}
     @li
       @code{Patch.applied}
     @li
       @code{Patch.appliedDiff}
-@slide
-  @h2
-    Rewrite
-  @hl.scala
-    val renameFoobar = Rewrite.semantic { implicit mirror => ctx =>
-      ctx.renameSymbol(Symbol("_root_.foo.Bar."), "Kas") +
-      ctx.renameSymbol(Symbol("_root_.foo.Bar.get"), "unsafeGet")
-    }
 @slide
   @h2
     Summary
