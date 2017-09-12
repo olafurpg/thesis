@@ -1,6 +1,6 @@
 @import com.geirsson.reavealjs.RevealJs._
 
-@def selfSlides = a(href:="https://geirsson.com/assets/scalasphere-2017/#/", "geirsson.com/assets/scalasphere-2017")
+@def selfSlides = a(href:="https://geirsson.com/assets/flatmap-2017/#/", "geirsson.com/assets/flatmap-2017")
 
 @slide
   @h2
@@ -285,18 +285,15 @@
       @code{RemoveToken}
     @li
       ...
-@comment
-  dot
+@slide
+  @dot
     cli -> core;
     cli -> reflect;
     reflect -> core;
     sbt -> cli;
     pants -> cli;
     cbt -> cli;
-    testkit -> reflect;
     testkit -> core;
-    intellij -> reflect;
-    intellij -> core;
 @slide
   @h2
     4. Library demo
@@ -320,6 +317,9 @@
           publish
         @li
           consume
+    @li
+      @fragment
+      Contributors wanted!
 @slide
   @(style := "text-align: left;")
   @h1
@@ -327,5 +327,6 @@
   @p
       - Visit documentation: @a(href:="https://scalacenter.github.io/scalafix/", "scalacenter.github.io/scalafix") @br
       - @a(href:="http://github.com/scalacenter/scalafix", "Contribute with ideas, reporting issues and PRs.") @br
+      - See slides: @selfSlides @br
       - @a(href:="http://twitter.com/olafurpg", "Follow @olafurpg on Twitter.") @br
       - @a(href:="https://gitter.im/scalacenter/scalafix", "Chat on Gitter.") @br
