@@ -34,14 +34,19 @@ object Decks {
   val flatmap_Oslo_2017 = SlideDeck("Move fast and refactor things",
                                     "",
                                     "Ólafur Páll Geirsson",
-                                    Themes.simple,
+                                    Themes.white,
                                     scalatex.flatMap2017())
+  val cake_2017 = SlideDeck("Scalafix",
+                            "",
+                            "Ólafur Páll Geirsson",
+                            Themes.sky,
+                            scalatex.cake2017())
 }
 
 object Main extends App {
 
-  val pp = new scala.xml.PrettyPrinter(80, 2)
-  val scalatexOutput = RevealJs.render(Decks.flatmap_Oslo_2017)
+//  val pp = new scala.xml.PrettyPrinter(80, 2)
+  val scalatexOutput = RevealJs.render(Decks.cake_2017)
 //  println(scalatexOutput)
   Files.write(Paths.get("target", "scala-2.11", "classes", "index.html"),
               scalatexOutput.getBytes)

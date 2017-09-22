@@ -141,6 +141,11 @@
     // project/plugins.sbt
     addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.3.2")
     $ sbt "scalafix Dotty"
+@markdownSlide
+  # Hello world
+
+  - b
+  - c
 @slide
   @h3
     Step 3:
@@ -287,7 +292,6 @@
       ...
 @slide
   @dot
-    cli -> core;
     cli -> reflect;
     reflect -> core;
     sbt -> cli;

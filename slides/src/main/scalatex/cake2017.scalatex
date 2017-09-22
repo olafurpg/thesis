@@ -1,0 +1,154 @@
+@import com.geirsson.reavealjs.RevealJs._
+
+@def selfSlides = a(href:="https://geirsson.com/assets/flatmap-2017/#/", "geirsson.com/assets/flatmap-2017")
+
+@slide
+  @h1
+    Scalafix
+  @p
+  @p
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
+  @comment
+    img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+@slide
+  @h2
+    @s{Scalafix} @br{}
+    Next-generation Scala developer tooling
+  @p
+  @p
+    - Ólafur Páll Geirsson, Scala Center @br
+    @twitter
+  @comment
+    img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+@slide
+  @h2
+    About me
+  @ul
+    @li
+      @@ Scala Center
+    @li
+      ❤️ devtools
+@slide
+  @h2
+    scalafmt
+  @p
+    @img(src:="img/scalafmt-diff.png")
+@slide
+  @h2
+    Scala Center
+  @p
+    @img(style := "border: none; width: 15%; box-shadow: none;", src:="img/scalacenter.png")
+  @blockquote
+    "For open source. For education."
+@slide
+  @h2
+    Scala Center
+  @ul
+    @li
+      Scalafix
+    @li
+      Sbt / Zinc
+    @li
+      Scaladex / Scastie
+    @li
+      Coursera Functional Programming MOOC
+    @li
+      Scala Native
+    @li
+      Compiler profiling
+    @li
+      ...
+@slide
+  @h2
+    ... macros!
+  @p
+    @img(style := "border: none; width: 75%; box-shadow: none;", src:="img/scalamacros.png")
+@slide
+  @h2
+    Scala Center
+  @p
+    @img(style := "border: none; width: 65%; box-shadow: none;", src:="img/scalaworld-spree.jpg")
+@slide
+  @h2
+    Agenda
+  @ol
+    @li
+      Refactoring with scalafix
+    @li
+      @(cls := "fragment")
+      Linting with scalafix
+    @li
+      @(cls := "fragment")
+      Code browsing with metadoc
+@slide
+  @h1
+    Refactoring
+@slide
+  @h2
+    @lnk("RemoveUnusedImports", "https://github.com/slick/slick/pull/1736")
+  @p
+    @img(src:="img/scalafix-imports.png")
+@slide
+  @h2
+    ExplicitResultTypes
+  @p
+    @img(src:="img/scalafix-diff.png")
+@slide
+  @h3
+    replace:cats.data.Xor/scala.Either
+  @p
+    @img(src:="img/xor.png")
+@slide
+  @h3
+    github:typelevel/cats/v1.0.0
+  @p
+    @img(src:="img/scalafix-cats.png")
+@slide
+  @h1
+    Linting
+@slide
+  @h2
+    Disable
+  @hl.scala
+    app/Server.scala:37: error: Option.get is disabled
+    Option(1).get
+              ^
+  @hl.scala
+    Disable.symbols = [
+      "scala.Any.asInstanceOf"
+      "scala.Option.get"
+      "test.Disable.D.disabledFunction"
+    ]
+@slide
+  @h2
+    NoInfer
+  @hl.scala
+    app/Server.scala:37: error: Inferred Any
+    List(1, "")
+        ^
+  @hl.scala
+    NoInfer.extraSymbols = [
+      "Serializable"
+    ]
+@slide
+  @h2
+    Code browsing
+@slide
+  @h2
+    Find references
+  @p
+    @img(src:="img/metadoc.png")
+@slide
+  @h2
+    Go to definition
+  @p
+    @img(src:="img/metadoc-goto.png")
+@slide
+  @h2
+    Find symbol
+  @p
+    @img(src:="img/metadoc-symbol.png")
+@slide
+  @h1
+    Thank you!
